@@ -1,0 +1,93 @@
+<section class="content">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="box box-body">
+        <div class="col-xs-8">
+          <h4><i class="fa fa-list"></i> &nbsp; Pay Records</h4>
+        </div>
+
+        <div class="col-xs-4 text-right">
+          <button class="btn btn-success" (click)="openUploadDialog()">
+            Upload Payroll
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="box border-top-solid">
+    <!-- /.box-header -->
+    <div class="box-body table-responsive">
+      <table
+        class="table table-striped table-bordered table-sm row-border hover"
+        datatable
+        [dtOptions]="dtOptions"
+        [dtTrigger]="dtTrigger"
+      >
+        <thead>
+          <tr>
+            <th style="width: 3%;"><b>No.</b></th>
+            <th style="width: 70%;">Name</th>
+            <th>Option</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of (payrolls | async); let i = index">
+            <td>
+              <b>{{ i + 1 }}</b>
+            </td>
+            <td>{{ item.name }}</td>
+
+            <td class="pull-right">
+              <a
+                (click)="download(item.downloadURL)"
+                href="#"
+                class="btn btn-sm btn-default"
+                title="Download {{ item.name }}"
+                ><i class="fa fa-download"></i
+              ></a>
+              <a
+                (click)="delete(item.fileName)"
+                href="#"
+                class="btn btn-sm btn-default"
+                title="Delete {{ item.name }}"
+                ><i class="fa fa-trash"></i
+              ></a>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <!-- /.box-body -->
+  </div>
+
+  <app-dialog
+    #uploadDialog
+    [title]="'Upload Files'"
+    [confirmText]="'Start Upload'"
+    (addFileListener)="addFIle($event)"
+    (uploadListener)="upload($event)"
+    [showUpload]="this.addedFile && !this.uploading"
+    [disableAddFile]="this.addedFile"
+  >
+    <input
+      type="file"
+      #file
+      style="display: none"
+      (change)="onFilesAdded()"
+      accept=".xls,.xlsx, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,application/vnd.ms-excel"
+    />
+
+    <div class="progress-group" *ngIf="addedFile">
+      <span class="progress-text">{{ addedFile.name }}</span>
+      <span *ngIf="progress" class="progress-number">
+        {{ progress.progress | async }}%</span
+      >
+
+      <app-progress
+        *ngIf="progress"
+        [percentageCompleted]="progress.progress | async"
+      ></app-progress>
+    </div>
+  </app-dialog>
+</section>

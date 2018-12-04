@@ -1,0 +1,43 @@
+{
+  "appId": "com.hoversoftsoln.YeaNotifier",
+  "productName": "YEA Notifier",
+  "copyright": "Copyright © 2018 - YEA",
+  "directories": {
+    "output": "release/"
+  },
+  "files": [
+    "**/*",
+    "!**/*.ts",
+    "!*.code-workspace",
+    "!LICENSE.md",
+    "!package.json",
+    "!package-lock.json",
+    "!src/",
+    "!e2e/",
+    "!hooks/",
+    "!angular.json",
+    "!_config.yml",
+    "!karma.conf.js",
+    "!tsconfig.json",
+    "!tslint.json"
+  ],
+  "win": {
+    "icon": "dist/favicon.ico",
+    "legalTrademarks": "YEA Notifier",
+    "target": ["portable", "nsis"]
+  },
+  "nsis": {
+    "oneClick": "true",
+    "perMachine": "false",
+    "installerIcon": "dist/favicon.ico",
+    "createDesktopShortcut": "always"
+  },
+  "mac": {
+    "icon": "dist",
+    "target": ["dmg"]
+  },
+  "linux": {
+    "icon": "dist",
+    "target": ["AppImage"]
+  }
+}

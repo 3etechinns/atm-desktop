@@ -1,0 +1,39 @@
+<div class="modal fade" id="myModal">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <a href="#" data-dismiss="modal" class="close" type="button"
+          ><span>x</span></a
+        >
+
+        <h4 class="modal-title">{{ title }}</h4>
+      </div>
+      <div class="modal-body"><ng-content></ng-content></div>
+      <div class="modal-footer">
+        <div class="btn-group pull-center">
+          <button
+            *ngIf="!disableAddFile"
+            (click)="onclicked()"
+            type="button"
+            class="btn btn-default btn-flat"
+            title="Add Files"
+          >
+            <i class="fa fa-plus"></i>
+          </button>
+
+          <button
+            title="Upload"
+            *ngIf="showUpload"
+            (click)="onupload()"
+            type="button"
+            class="btn btn-default btn-flat"
+          >
+            {{ confirmText }}
+          </button>
+        </div>
+      </div>
+    </div>
+    <!-- /.modal-content -->
+  </div>
+  <!-- /.modal-dialog -->
+</div>

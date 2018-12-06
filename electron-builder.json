@@ -24,13 +24,16 @@
   "win": {
     "icon": "dist/favicon.ico",
     "legalTrademarks": "YEA Notifier",
-    "target": ["portable", "nsis"]
+    "target": ["nsis"]
   },
   "nsis": {
-    "oneClick": "true",
+    "oneClick": "false",
     "perMachine": "false",
     "installerIcon": "dist/favicon.ico",
-    "createDesktopShortcut": "always"
+    "createDesktopShortcut": true,
+    "deleteAppDataOnUninstall": "true",
+    "menuCategory": "YEA",
+    "shortcutName": "YEA Admin"
   },
   "mac": {
     "icon": "dist",

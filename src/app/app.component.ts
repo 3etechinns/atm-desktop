@@ -2,14 +2,17 @@ import { Component, ViewEncapsulation, OnInit } from '@angular/core';
 import { ElectronService } from './providers/electron.service';
 import { TranslateService } from '@ngx-translate/core';
 import { AppConfig } from '../environments/environment';
+import { fadeAnimation } from '../app/app.animations';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
+  animations: [fadeAnimation]
 })
 export class AppComponent implements OnInit {
-  ourApp;
+  ourApp: Electron.BrowserWindow;
+  appTitle: string;
 
   constructor(
     public elSvc: ElectronService,
@@ -20,12 +23,14 @@ export class AppComponent implements OnInit {
 
     if (elSvc.isElectron()) {
       this.ourApp = elSvc.getAppWindow();
-      console.log('Electron ipcRenderer', elSvc.ipcRenderer);
-      console.log('NodeJS childProcess', elSvc.childProcess);
-    } else {
-      console.log('Mode web');
     }
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.appTitle = 'YEA Smart App';
+  }
+
+  public getRouterOutletState(outlet) {
+    return outlet.isActivated ? outlet.activatedRoute : '';
+  }
 }

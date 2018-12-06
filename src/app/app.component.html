@@ -1,9 +1,11 @@
 <app-titlebar
   class="main-header"
-  [title]="'YEA Pay'"
+  [title]="appTitle"
   [appwindow]="ourApp"
 ></app-titlebar>
 
 <app-sidebar></app-sidebar>
 
-<div class="content-wrapper"><router-outlet></router-outlet></div>
+<div class="content-wrapper" [@fadeAnimation]="getRouterOutletState(o)">
+  <router-outlet #o="outlet"></router-outlet>
+</div>

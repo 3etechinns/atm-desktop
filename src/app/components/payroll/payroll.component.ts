@@ -55,7 +55,7 @@ export class PayrollComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.dtTrigger.unsubscribe();
+    this.uploadDialog.close();
   }
 
   public openUploadDialog() {

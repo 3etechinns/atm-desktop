@@ -1,6 +1,6 @@
 {
   "name": "yea-desktop",
-  "version": "5.0.0",
+  "version": "1.0.0",
   "description": "Angular 7 with Electron (Typescript + SASS + Hot Reload)",
   "homepage": "https://code_keyz@bitbucket.org/hover-devs/yea-desktop.git",
   "author": {
@@ -31,7 +31,7 @@
     "electron:serve": "wait-on http-get://localhost:4200/ && npm run electron:serve-tsc && electron . --serve",
     "electron:local": "npm run build:prod && electron .",
     "electron:linux": "npm run build:prod && npx electron-builder build --linux",
-    "electron:windows": "npm run build:prod && npx electron-builder build --windows",
+    "electron:windows": "npm run build:prod && npx electron-builder build --windows -p always",
     "electron:mac": "npm run build:prod && npx electron-builder build --mac",
     "test": "npm run postinstall:web && ng test",
     "e2e": "npm run postinstall:web && ng e2e",
@@ -39,9 +39,12 @@
   },
   "dependencies": {
     "@angular/fire": "^5.1.1",
+    "angular-calendar": "^0.26.4",
     "angular-datatables": "^7.0.0",
     "datatables.net": "^1.10.19",
     "datatables.net-dt": "^1.10.19",
+    "date-fns": "^1.29.0",
+    "electron-updater": "^4.0.5",
     "firebase": "^5.6.0",
     "jquery": "^3.3.1"
   },
@@ -71,7 +74,7 @@
     "conventional-changelog-cli": "^2.0.11",
     "core-js": "2.5.6",
     "electron": "^3.0.10",
-    "electron-builder": "^20.38.2",
+    "electron-builder": "^19.53.1",
     "electron-reload": "1.2.2",
     "jasmine-core": "3.1.0",
     "jasmine-spec-reporter": "4.2.1",

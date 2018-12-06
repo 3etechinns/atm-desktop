@@ -5,7 +5,7 @@
   width: 100%;
   display: flex;
   flex-direction: row;
-  height: 35px;
+  height: 30px;
   background: #388e3c;
   border-bottom: 1px solid rgb(48, 121, 51);
 
@@ -43,7 +43,7 @@
       -webkit-app-region: no-drag;
       display: inline-block;
       position: relative;
-      width: 45px;
+      width: 40px;
       height: 100%;
       padding: 0;
       margin: 0;
@@ -67,7 +67,7 @@
       }
 
       &:hover {
-        background-color: #388e3c;
+        background-color: #9cc5a37c;
         color: #fff;
       }
 

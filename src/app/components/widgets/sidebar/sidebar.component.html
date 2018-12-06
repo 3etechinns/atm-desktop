@@ -14,27 +14,6 @@
       </div>
     </div>
 
-    <form action="#" method="get" class="sidebar-form">
-      <div class="input-group">
-        <input
-          type="text"
-          name="q"
-          class="form-control"
-          placeholder="Search..."
-        />
-        <span class="input-group-btn">
-          <button
-            type="submit"
-            name="search"
-            id="search-btn"
-            class="btn btn-flat"
-          >
-            <i class="fa fa-search"></i>
-          </button>
-        </span>
-      </div>
-    </form>
-
     <ul class="sidebar-menu" data-widget="tree">
       <li class="header">MAIN NAVIGATION</li>
 
@@ -46,24 +25,60 @@
         [routerLink]="['/dashboard']"
         [class.active]="das.isActive"
       >
-        <a href="#"> <i class="fa fa-dashboard"></i> <span>Dashboard</span> </a>
+        <a href="#"> <i class="fa fa-dashboard"></i> <span> Dashboard</span> </a>
       </li>
 
       <li
-        title="Youths"
+        title="announcements"
         class="treeview"
         routerLinkActive
-        #tim="routerLinkActive"
-        [routerLink]="['/youths']"
-        [class.active]="tim.isActive"
+        #ann="routerLinkActive"
+        [routerLink]="['/announcements']"
+        [class.active]="ann.isActive"
       >
-        <a href="#"> <i class="fa fa-users"></i> <span>Youths</span> </a>
+        <a href="#">
+          <i class="fa fa-bell-o"></i> <span> Announcements</span>
+        </a>
+      </li>
+
+      <li
+        title="Calender"
+        class="treeview"
+        routerLinkActive
+        #cal="routerLinkActive"
+        [routerLink]="['/calender']"
+        [class.active]="cal.isActive"
+      >
+        <a href="#"> <i class="fa fa-calendar"></i> <span> Calender</span> </a>
+      </li>
+
+      <li class="treeview"
+          routerLinkActive
+          #not="routerLinkActive"
+          [class.active]="not.isActive">
+        <a href="#">
+          <i class="fa fa-bullhorn"></i> <span> Send Notification</span>
+          <span class="pull-right-container">
+            <i class="fa fa-angle-left pull-right"></i>
+          </span>
+        </a>
+        <ul class="treeview-menu" style="display: none;">
+          <li>
+            <a [routerLink]="['/sendnotification/national']"><i class="fa fa-circle-o"></i> National</a>
+          </li>
+          <li>
+            <a [routerLink]="['/sendnotification/regional']"><i class="fa fa-circle-o"></i> Regional</a>
+          </li>
+          <li>
+            <a [routerLink]="['/sendnotification/district']"><i class="fa fa-circle-o"></i> District</a>
+          </li>
+        </ul>
       </li>
 
       <li title="Sign Out" class="treeview" (click)="logout()">
         <a href="#">
           <i class="fa fa-sign-out" aria-hidden="true"></i>
-          <span>Sign Out</span>
+          <span> Sign Out</span>
         </a>
       </li>
     </ul>

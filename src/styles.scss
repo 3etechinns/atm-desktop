@@ -1,17 +1,4 @@
-// Globals
-//
-// This file is for things that have to apply globally, if your style
-// doesn't fit into that description it probably belongs in ui/
-
-// Reset the box-sizing, lifted from bootstrap reboot css, see:
-//   https://github.com/twbs/bootstrap/blob/bfc16c4a829ba596db28f5f42d7a3e429e6ea2e1/scss/_reboot.scss#L9
-//
-// Change from `box-sizing: content-box` to `border-box` so that when you add
-// `padding` or `border`s to an element, the overall declared `width` does not
-// change. For example, `width: 100px;` will always be `100px` despite the
-// `border: 10px solid red;` and `padding: 20px;`.
-//
-// Credit: https://css-tricks.com/inheriting-box-sizing-probably-slightly-better-best-practice/
+@import "../node_modules/angular-calendar/css/angular-calendar.css";
 
 html {
   box-sizing: border-box;
@@ -31,9 +18,8 @@ html {
 // or be placed into a scrollable container.
 html,
 body {
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
-    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", Arial,
-    sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
   height: 100%;
   width: 100%;
   margin: 0;

@@ -27,7 +27,19 @@ export class DialogComponent implements OnInit {
   ngOnInit() {}
 
   show(options$) {
-    $('#myModal').modal(options$);
+    $('#myModal').modal('show');
+    $('#myModal').appendTo('.content-wrapper');
+    $('.modal-backdrop').appendTo('.content-wrapper');
+
+    // appending modal background inside the content-wrapper div
+    // remove the padding right and modal-open class from the body tag which bootstrap adds when a modal is shown
+    $('body').removeClass('modal-open');
+    $('body').css('padding-right', '');
+  }
+
+  close() {
+    $('.content-wrapper>#myModal').remove();
+    $('.content-wrapper>.modal-backdrop').remove();
   }
 
   onclicked() {

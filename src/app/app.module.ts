@@ -13,6 +13,8 @@ import { AngularFireModule } from '@angular/fire';
 import { AngularFirestoreModule } from '@angular/fire/firestore';
 import { AngularFireStorageModule } from '@angular/fire/storage';
 import { AngularFireAuthModule } from '@angular/fire/auth';
+import { CalendarModule, DateAdapter } from 'angular-calendar';
+import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
 
 // NG Translate
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
@@ -34,6 +36,10 @@ import { ProgressComponent } from './components/widgets/progress/progress.compon
 import { DialogComponent } from './components/widgets/dialog/dialog.component';
 import * as bootstrap from 'bootstrap';
 import { UploaderService } from './providers/uploader.service';
+import { AnnouncementsComponent } from './components/announcements/announcements.component';
+import { NotificationComponent } from './components/notification/notification.component';
+import {NoticeboardComponent} from './components/noticeboard/noticeboard.component';
+import { DashboardComponent } from './components/dashboard/dashboard.component';
 
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(http: HttpClient) {
@@ -51,12 +57,19 @@ export function HttpLoaderFactory(http: HttpClient) {
     YouthsComponent,
     PayrollComponent,
     ProgressComponent,
-    DialogComponent
-  ],
+    DialogComponent,
+    AnnouncementsComponent,
+    NotificationComponent,
+    NoticeboardComponent,
+    DashboardComponent],
   imports: [
     BrowserModule,
     AngularFireModule.initializeApp(AppConfig.firebase),
     BrowserAnimationsModule,
+    CalendarModule.forRoot({
+      provide: DateAdapter,
+      useFactory: adapterFactory
+    }),
     FormsModule,
     DataTablesModule,
     AppRoutingModule,

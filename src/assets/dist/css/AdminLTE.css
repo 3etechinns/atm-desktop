@@ -139,7 +139,6 @@ body {
 /* Content */
 .content {
   min-height: 250px;
-  padding: 15px;
   margin-right: auto;
   margin-left: auto;
   padding-left: 15px;
@@ -197,7 +196,7 @@ a:focus {
   margin-bottom: 0;
   /* margin-left: 230px; */
   border: none;
-  min-height: 35px;
+  min-height: 30px;
   border-radius: 0;
 }
 .layout-top-nav .main-header .navbar {
@@ -412,7 +411,7 @@ a:focus {
   position: absolute;
   top: 0;
   left: 0;
-  padding-top: 35px;
+  padding-top: 30px;
   min-height: 100%;
   width: 230px;
   z-index: 810;
@@ -421,11 +420,6 @@ a:focus {
   -o-transition: -o-transform 0.3s ease-in-out, width 0.3s ease-in-out;
   transition: transform 0.3s ease-in-out, width 0.3s ease-in-out;
 }
-/* @media (max-width: 767px) {
-  .main-sidebar {
-    padding-top: 100px;
-  }
-} */
 /* @media (max-width: 767px) {
   .main-sidebar {
     -webkit-transform: translate(-230px, 0);
@@ -459,7 +453,7 @@ a:focus {
 .user-panel {
   position: relative;
   width: 100%;
-  padding: 10px;
+  padding: 20px 10px 20px;
   overflow: hidden;
 }
 .user-panel:before,
@@ -555,7 +549,7 @@ a:focus {
 /*
  * Component: Sidebar Mini
  */
-@media (min-width: 768px) {
+@media (min-width: 700px) {
   .sidebar-mini.sidebar-collapse .content-wrapper,
   .sidebar-mini.sidebar-collapse .right-side,
   .sidebar-mini.sidebar-collapse .main-footer {
@@ -609,7 +603,7 @@ a:focus {
     display: none;
   }
   .sidebar-mini.sidebar-collapse .main-header .navbar {
-    margin-left: 50px;
+    /* margin-left: 50px; */
   }
 }
 .sidebar-mini:not(.sidebar-mini-expand-feature).sidebar-collapse .sidebar-menu > li:hover > a > span:not(.pull-right),

@@ -28,6 +28,24 @@ export class AppComponent implements OnInit {
 
   ngOnInit(): void {
     this.appTitle = 'YEA Smart App';
+    this.setupResizer();
+  }
+
+  setupResizer() {
+    $(window).resize(function() {
+      const width = $(window).width();
+      const hasClass = $('body').hasClass('sidebar-collapse');
+
+      if (width <= 850) {
+        if (hasClass !== true) {
+          $('body').addClass('sidebar-collapse');
+        }
+      } else {
+        if (hasClass === true) {
+          $('body').removeClass('sidebar-collapse');
+        }
+      }
+    });
   }
 
   public getRouterOutletState(outlet) {

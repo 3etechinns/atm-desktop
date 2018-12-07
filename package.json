@@ -39,13 +39,16 @@
   },
   "dependencies": {
     "@angular/fire": "^5.1.1",
+    "@tinymce/tinymce-angular": "^2.3.2",
     "angular-calendar": "^0.26.4",
     "angular-datatables": "^7.0.0",
     "datatables.net": "^1.10.19",
     "datatables.net-dt": "^1.10.19",
     "date-fns": "^1.29.0",
+    "electron-settings": "^3.2.0",
     "electron-updater": "^4.0.5",
     "firebase": "^5.6.0",
+    "izitoast": "^1.4.0",
     "jquery": "^3.3.1"
   },
   "devDependencies": {

@@ -25,7 +25,9 @@
         [routerLink]="['/dashboard']"
         [class.active]="das.isActive"
       >
-        <a href="#"> <i class="fa fa-dashboard"></i> <span> Dashboard</span> </a>
+        <a href="#">
+          <i class="fa fa-dashboard"></i> <span> Dashboard</span>
+        </a>
       </li>
 
       <li
@@ -52,10 +54,13 @@
         <a href="#"> <i class="fa fa-calendar"></i> <span> Calender</span> </a>
       </li>
 
-      <li class="treeview"
-          routerLinkActive
-          #not="routerLinkActive"
-          [class.active]="not.isActive">
+      <li
+        title="Send Notification"
+        class="treeview"
+        routerLinkActive
+        #not="routerLinkActive"
+        [class.active]="not.isActive"
+      >
         <a href="#">
           <i class="fa fa-bullhorn"></i> <span> Send Notification</span>
           <span class="pull-right-container">
@@ -63,14 +68,32 @@
           </span>
         </a>
         <ul class="treeview-menu" style="display: none;">
-          <li>
-            <a [routerLink]="['/sendnotification/national']"><i class="fa fa-circle-o"></i> National</a>
+          <li
+            routerLinkActive
+            #notnal="routerLinkActive"
+            [class.active]="notnal.isActive"
+          >
+            <a [routerLink]="['/sendnotification/national']"
+              ><i class="fa fa-circle-o"></i> National</a
+            >
           </li>
-          <li>
-            <a [routerLink]="['/sendnotification/regional']"><i class="fa fa-circle-o"></i> Regional</a>
+          <li
+            routerLinkActive
+            #notreg="routerLinkActive"
+            [class.active]="notreg.isActive"
+          >
+            <a [routerLink]="['/sendnotification/regional']"
+              ><i class="fa fa-circle-o"></i> Regional</a
+            >
           </li>
-          <li>
-            <a [routerLink]="['/sendnotification/district']"><i class="fa fa-circle-o"></i> District</a>
+          <li
+            routerLinkActive
+            #notdis="routerLinkActive"
+            [class.active]="notdis.isActive"
+          >
+            <a [routerLink]="['/sendnotification/district']"
+              ><i class="fa fa-circle-o"></i> District</a
+            >
           </li>
         </ul>
       </li>

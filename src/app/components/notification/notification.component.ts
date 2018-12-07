@@ -7,9 +7,15 @@ import { Component, OnInit } from '@angular/core';
 })
 export class NotificationComponent implements OnInit {
 
+  formData;
+
   constructor() { }
 
-  ngOnInit() {
+
+  ngOnInit() {}
+
+  display() {
+    console.log(this.formData);
   }
 
 }

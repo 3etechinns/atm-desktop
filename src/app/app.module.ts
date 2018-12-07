@@ -19,6 +19,7 @@ import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
 // NG Translate
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+import { EditorModule } from '@tinymce/tinymce-angular';
 
 import { ElectronService } from './providers/electron.service';
 
@@ -64,6 +65,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     DashboardComponent],
   imports: [
     BrowserModule,
+    EditorModule,
     AngularFireModule.initializeApp(AppConfig.firebase),
     BrowserAnimationsModule,
     CalendarModule.forRoot({

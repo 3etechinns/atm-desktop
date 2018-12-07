@@ -11,17 +11,23 @@
     <script>
       window["jQuery"] = window["$"] = require("jquery");
     </script>
+
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic"
+    />
   </head>
   <body class="fixed sidebar-mini skin-green">
     <div class="wrapper">
       <app-root> <p>Loading...</p> </app-root>
     </div>
 
-  <script>
-    //at bottom/footer of the page
-    $(document).ready(function () {
-      $(document).trigger("resize");
-    });
-  </script>
+    <script type="text/javascript">
+      //at bottom/footer of the page
+      $(document).ready(function() {
+        $(document).trigger("resize");
+      });
+
+    </script>
   </body>
 </html>

@@ -1,17 +1,30 @@
+export interface DataList<T> {
+  links: Links;
+  meta: Meta;
+  data: T[];
+}
+
 export interface AuthResponse {
   access_token: string;
   token: string;
   expires_in: number;
 }
 
-export interface ATMData {
-  id: number;
-  name: string;
-  lat: number;
-  lng: number;
-  status: number;
-  bank_id: number;
-  city: string;
+interface Meta {
+  current_page: number;
+  from: number;
+  last_page: number;
+  path: string;
+  per_page: number;
+  to: number;
+  total: number;
+}
+
+interface Links {
+  first: string;
+  last: string;
+  prev: string;
+  next: string;
 }
 
 export interface BankData {
@@ -21,6 +34,21 @@ export interface BankData {
   desc: string;
   country: string;
   city: string;
+}
+
+export interface ATMData {
+    id: number;
+    name: string;
+    status: number;
+    city: string;
+    coordinate: Coordinate;
+    created_at: Date;
+    updated_at: Date;
+}
+
+export interface Coordinate {
+   lat: number;
+   lng: number;
 }
 
 export interface ATMQuery {

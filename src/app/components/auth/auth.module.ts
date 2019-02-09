@@ -7,7 +7,8 @@ import { RouterModule, Routes } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { AuthService } from '../../providers/auth.service';
 import { AuthComponent } from './auth.component';
-import { AuthGuard } from '../../guards/auth.guard';
+import {NonAuthGuard} from '../../guards/non-auth.guard';
+import {AuthGuard} from '../../guards/auth.guard';
 
 const mainauthRoutes: Routes = [
   {

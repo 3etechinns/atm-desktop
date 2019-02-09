@@ -9,6 +9,7 @@ import { TitlebarComponent } from './titlebar/titlebar.component';
 import { RouterModule } from '@angular/router';
 import { SmallBoxComponent } from './small-box/small-box.component';
 import { SwitchComponent } from './switch/switch.component';
+import { PaginaterComponent } from './paginater/paginater.component';
 
 @NgModule({
   declarations: [
@@ -19,7 +20,8 @@ import { SwitchComponent } from './switch/switch.component';
     TitlebarComponent,
     SidebarComponent,
     SmallBoxComponent,
-    SwitchComponent
+    SwitchComponent,
+    PaginaterComponent
   ],
   exports: [
     ContentHeaderComponent,
@@ -29,7 +31,8 @@ import { SwitchComponent } from './switch/switch.component';
     TitlebarComponent,
     SidebarComponent,
     SmallBoxComponent,
-    SwitchComponent
+    SwitchComponent,
+    PaginaterComponent
   ],
   imports: [CommonModule, RouterModule]
 })

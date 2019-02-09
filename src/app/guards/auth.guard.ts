@@ -1,19 +1,20 @@
-import { Injectable } from '@angular/core';
-import { CanActivate, CanActivateChild } from '@angular/router';
-import { Observable } from 'rxjs';
-import { AngularFireAuth } from '@angular/fire/auth';
+import {Injectable} from '@angular/core';
+import {ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot} from '@angular/router';
+import {JwtHelperService} from '@auth0/angular-jwt';
 
-@Injectable({
-  providedIn: 'root'
-})
-export class AuthGuard implements CanActivate, CanActivateChild {
-  constructor(private afAuth: AngularFireAuth) {}
+@Injectable()
+export class AuthGuard implements CanActivate {
 
-  canActivate(): Observable<boolean> | Promise<boolean> | boolean {
-    return true;
+  constructor(private router: Router, public jwtHelper: JwtHelperService) {
   }
 
-  canActivateChild(): Observable<boolean> | Promise<boolean> | boolean {
-    return this.afAuth.authState !== null;
+  canActivate(next: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
+    if (!this.jwtHelper.isTokenExpired()) {
+      return true;
+    }
+
+    // not logged in so redirect to login page
+    this.router.navigate(['/banks/auth'], { queryParams: { returnUrl: state.url }});
+    return false;
   }
 }

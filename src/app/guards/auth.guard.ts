@@ -1,12 +1,15 @@
-import {Injectable} from '@angular/core';
-import {ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot} from '@angular/router';
-import {JwtHelperService} from '@auth0/angular-jwt';
+import { Injectable } from '@angular/core';
+import {
+  ActivatedRouteSnapshot,
+  CanActivate,
+  Router,
+  RouterStateSnapshot
+} from '@angular/router';
+import { JwtHelperService } from '@auth0/angular-jwt';
 
 @Injectable()
 export class AuthGuard implements CanActivate {
-
-  constructor(private router: Router, public jwtHelper: JwtHelperService) {
-  }
+  constructor(private router: Router, public jwtHelper: JwtHelperService) {}
 
   canActivate(next: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
     if (!this.jwtHelper.isTokenExpired()) {
@@ -14,7 +17,9 @@ export class AuthGuard implements CanActivate {
     }
 
     // not logged in so redirect to login page
-    this.router.navigate(['/banks/auth'], { queryParams: { returnUrl: state.url }});
+    this.router.navigate(['/auth/signin'], {
+      queryParams: { returnUrl: state.url }
+    });
     return false;
   }
 }

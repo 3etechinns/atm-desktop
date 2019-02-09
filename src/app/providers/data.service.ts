@@ -1,63 +1,37 @@
 import { Injectable } from '@angular/core';
+import { AppConfig } from '../../environments/environment';
+import { HttpClient } from '@angular/common/http';
+import { interval, Observable } from 'rxjs';
+import { startWith, switchMap } from 'rxjs/operators';
 
-import { AngularFireDatabase } from '@angular/fire/database';
-import { AngularFireAuth } from '@angular/fire/auth';
-import { Bank } from '../data/bank';
-import { map } from 'rxjs/operators';
-import { ATM } from '../data/atm';
-import { Report } from '../data/report';
-import { Observable } from 'rxjs';
-
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable()
 export class DataService {
-  private atmRef = 'ATMS';
-  private reportRef = 'Reports';
+  ourBaseUrl: string;
 
-  constructor(private database: AngularFireDatabase) {}
-
-  getUserData(userID: string = '') {
-    return this.database
-      .object<Bank>('Banks/' + userID)
-      .snapshotChanges();
+  constructor(private http: HttpClient) {
+    this.ourBaseUrl = AppConfig.baseUrl;
   }
 
-  getMyATMs(userID: string = '') {
-    return this.database
-      .list<ATM>(this.atmRef, ref =>
-        ref.orderByChild('bank_id').equalTo(userID)
-      )
-      .snapshotChanges()
-      .pipe(
-        map(datalist => {
-          const atmsList: ATM[] = [];
-          datalist.forEach(data => {
-            const atm: ATM = data.payload.val();
-            atm.atm_id = data.payload.key;
-            atmsList.push(atm);
-          });
-          return atmsList;
-        })
-      );
+  getMyAccount<T>(): Observable<T> {
+    return this.http.post<T>(`${this.ourBaseUrl}/banks/me`, '');
   }
 
-  getMyReports(userID: string = '') {
-    return this.database
-      .list<Report>(this.reportRef, ref =>
-        ref.orderByChild('bankID').equalTo(userID)
+  getATMs<T>(
+    pollInterval: number = 5000,
+    url: string = `${this.ourBaseUrl}/banks/me/atms`
+  ): Observable<Array<T>> {
+    return interval(pollInterval).pipe(
+      startWith(0),
+      switchMap(() => this.http.get<Array<T>>(url))
+    );
+  }
+
+  getManagers<T>(pollInterval?: number | 3000): Observable<Array<T>> {
+    return interval(pollInterval).pipe(
+      startWith(0),
+      switchMap(() =>
+        this.http.get<Array<T>>(`${this.ourBaseUrl}/banks/me/managers`)
       )
-      .snapshotChanges()
-      .pipe(
-        map(datalist => {
-          const atmsList: Report[] = [];
-          datalist.forEach(data => {
-            const report: Report = data.payload.val();
-            report.id = data.payload.key;
-            atmsList.push(report);
-          });
-          return atmsList;
-        })
-      );
+    );
   }
 }

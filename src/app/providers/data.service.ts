@@ -12,26 +12,30 @@ export class DataService {
     this.ourBaseUrl = AppConfig.baseUrl;
   }
 
-  getMyAccount<T>(): Observable<T> {
-    return this.http.post<T>(`${this.ourBaseUrl}/banks/me`, '');
+  getMyAccount<T>(pollInterval: number = 5000): Observable<T> {
+    return interval(pollInterval).pipe(
+      startWith(0),
+      switchMap(() => this.http.get<T>(`${this.ourBaseUrl}/banks/me`))
+    );
   }
 
   getATMs<T>(
     pollInterval: number = 5000,
     url: string = `${this.ourBaseUrl}/banks/me/atms`
-  ): Observable<Array<T>> {
+  ): Observable<T> {
     return interval(pollInterval).pipe(
       startWith(0),
-      switchMap(() => this.http.get<Array<T>>(url))
+      switchMap(() => this.http.get<T>(url))
     );
   }
 
-  getManagers<T>(pollInterval?: number | 3000): Observable<Array<T>> {
+  getManagers<T>(
+    pollInterval: number = 5000,
+    url: string = `${this.ourBaseUrl}/banks/me/managers`
+  ): Observable<T> {
     return interval(pollInterval).pipe(
       startWith(0),
-      switchMap(() =>
-        this.http.get<Array<T>>(`${this.ourBaseUrl}/banks/me/managers`)
-      )
+      switchMap(() => this.http.get<T>(url))
     );
   }
 }

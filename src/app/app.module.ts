@@ -20,30 +20,45 @@ import { ElectronService } from './providers/electron.service';
 import { WebviewDirective } from './directives/webview.directive';
 
 import { AppComponent } from './app.component';
-import { AppConfig } from '../environments/environment.prod';
 import * as bootstrap from 'bootstrap';
-import * as slimScroll from 'jquery-slimscroll';
 import { WidgetsModule } from './components/widgets/widgets.module';
-import { AngularFireDatabaseModule } from '@angular/fire/database';
+import {JwtModule} from '@auth0/angular-jwt';
+import {DataService} from './providers/data.service';
+import {AuthService} from './providers/auth.service';
 
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
 }
 
+export function tokenGetter() {
+  return localStorage.getItem('access_token');
+}
+
 @NgModule({
   declarations: [AppComponent, WebviewDirective],
   imports: [
     BrowserModule,
-    AngularFireModule.initializeApp(AppConfig.firebase),
     BrowserAnimationsModule,
     FormsModule,
     ReactiveFormsModule,
     WidgetsModule,
     AppRoutingModule,
     HttpClientModule,
-    AngularFireAuthModule,
-    AngularFireDatabaseModule,
+    JwtModule.forRoot({
+      config: {
+        tokenGetter,
+        skipWhenExpired: true,
+        whitelistedDomains: [
+          '127.0.0.1:8000',
+          'atm-hotspot-backend.herokuapp.com'
+        ],
+        blacklistedRoutes: [
+          '127.0.0.1:8000/banks/login',
+          'atm-hotspot-backend.herokuapp.com/banks/login'
+        ]
+      }
+    }),
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,
@@ -52,7 +67,7 @@ export function HttpLoaderFactory(http: HttpClient) {
       }
     })
   ],
-  providers: [ElectronService],
+  providers: [ElectronService, DataService],
   bootstrap: [AppComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })

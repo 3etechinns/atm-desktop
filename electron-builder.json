@@ -1,7 +1,7 @@
 {
-  "appId": "com.hoversoftsoln.YeaNotifier",
-  "productName": "YEA Notifier",
-  "copyright": "Copyright © 2018 - YEA",
+  "appId": "com.hoversoftsoln.SmartATMManager",
+  "productName": "Smart ATM Manager",
+  "copyright": "Copyright © 2018 - SAM",
   "directories": {
     "output": "release/"
   },
@@ -23,7 +23,7 @@
   ],
   "win": {
     "icon": "dist/favicon.ico",
-    "legalTrademarks": "YEA Notifier",
+    "legalTrademarks": "Hover Software Solutions",
     "target": ["nsis"]
   },
   "nsis": {
@@ -32,8 +32,8 @@
     "installerIcon": "dist/favicon.ico",
     "createDesktopShortcut": true,
     "deleteAppDataOnUninstall": "true",
-    "menuCategory": "YEA",
-    "shortcutName": "YEA Admin"
+    "menuCategory": "ATM",
+    "shortcutName": "Smart ATM Manager"
   },
   "mac": {
     "icon": "dist",

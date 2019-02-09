@@ -1,0 +1,71 @@
+<app-content-header [title]="'ATM\'s List'"></app-content-header>
+
+<section class="content">
+  <div class="row">
+    <div class="col-md-12">
+      <!-- MAP & BOX PANE -->
+      <div id="myBox" class="box box-primary">
+        <div class="box-header with-border">
+          <h3 class="box-title">Showing All ATM's</h3>
+
+          <div class="box-tools pull-right">
+            <button
+              type="button"
+              class="btn btn-box-tool"
+              data-widget="collapse"
+            >
+              <i class="fa fa-minus"></i>
+            </button>
+            <button type="button" class="btn btn-box-tool" data-widget="remove">
+              <i class="fa fa-times"></i>
+            </button>
+          </div>
+        </div>
+        <!-- /.box-header -->
+        <div class="box-body">
+          <table class="table table-bordered table-striped">
+            <!-- <table class="table table-bordered table-hover dataTable"> -->
+            <thead class="no-select">
+              <tr>
+                <th>Localized Name</th>
+                <th>Bank</th>
+                <th>Location</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody *ngIf="atmList">
+              <tr *ngFor="let atm of atmList">
+                <td>
+                  <a style="cursor: pointer;">{{ atm.localizedName }}</a>
+                </td>
+                <td>{{ atm.bank_name }}</td>
+                <td>{{ atm.locality }}</td>
+                <td>
+                  <span
+                    class="label"
+                    [class.label-success]="atm.status == 0"
+                    [class.label-warning]="atm.status == 1"
+                    [class.label-danger]="atm.status == 2"
+                  >
+                    <span *ngIf="atm.status == 0">Online</span>
+                    <span *ngIf="atm.status == 1">Offline</span>
+                    <span *ngIf="atm.status == 2">Offline</span>
+                  </span>
+                </td>
+                <td>
+                  <app-switch
+                    #switch
+                    class="center"
+                    [isChecked]="atm.status == 0 || atm.status == 1"
+                    (ontoggled)="toggle($event, atm.atm_id)"
+                  ></app-switch>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <!-- /.box-body -->
+      </div>
+    </div>
+  </div>
+</section>

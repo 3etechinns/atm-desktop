@@ -1,0 +1,70 @@
+<!-- <app-content-header [title]="'Dashboard'"></app-content-header> -->
+<section class="content">
+  <div class="row">
+    <div class="col-md-6 col-sm-6 col-xs-12">
+      <app-small-box
+        [title]="'ATM\'s Count'"
+        [color]="'bg-aqua'"
+        [icon]="'fa fa-credit-card'"
+        [value]="atmList.length"
+      >
+      </app-small-box>
+    </div>
+
+    <div class="col-md-6 col-sm-6 col-xs-12">
+      <app-small-box
+        [title]="'ATM Reports'"
+        [color]="'bg-red'"
+        [icon]="'glyphicon glyphicon-bullhorn'"
+        [value]="reportsList.length"
+      >
+      </app-small-box>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-12">
+      <!-- MAP & BOX PANE -->
+      <div id="myBox" class="box box-primary">
+        <div class="box-header with-border">
+          <h3 class="box-title">ATM Reports</h3>
+
+          <div class="box-tools pull-right">
+            <button
+              type="button"
+              class="btn btn-box-tool"
+              data-widget="collapse"
+            >
+              <i class="fa fa-minus"></i>
+            </button>
+            <button type="button" class="btn btn-box-tool" data-widget="remove">
+              <i class="fa fa-times"></i>
+            </button>
+          </div>
+        </div>
+        <!-- /.box-header -->
+        <div class="box-body" id="scrollingBox">
+          <ul class="products-list product-list-in-box" *ngIf="reportsList">
+            <li class="item" *ngFor="let report of reportsList">
+              <div class="product-img">
+                <img
+                  src="../../../assets/images/default-50x50.gif"
+                  alt="{{ report.personName }}"
+                />
+              </div>
+              <div class="product-info">
+                <span class="product-title"
+                  ><b>From: </b> {{ report.personName }}</span
+                >
+                <span class="label label-warning pull-right">dd</span>
+
+                <span class="product-description"> {{ report.query }} </span>
+              </div>
+            </li>
+          </ul>
+        </div>
+        <!-- /.box-body -->
+      </div>
+    </div>
+  </div>
+</section>

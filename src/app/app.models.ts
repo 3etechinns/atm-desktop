@@ -1,5 +1,7 @@
-export interface Payroll {
+export interface Region {
   name: string;
-  timeAdded: Date;
-  downloadLink: string;
+}
+
+export interface District extends Region {
+  regionID: string;
 }

@@ -1,18 +1,16 @@
-import { Component, ViewEncapsulation, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ElectronService } from './providers/electron.service';
 import { TranslateService } from '@ngx-translate/core';
 import { AppConfig } from '../environments/environment';
-import { fadeAnimation } from '../app/app.animations';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss'],
-  animations: [fadeAnimation]
+  styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit {
-  ourApp: Electron.BrowserWindow;
   appTitle: string;
+  appWindow: Electron.BrowserWindow;
 
   constructor(
     public elSvc: ElectronService,
@@ -20,15 +18,15 @@ export class AppComponent implements OnInit {
   ) {
     this.translate.setDefaultLang('en');
     console.log('AppConfig', AppConfig);
-
-    if (elSvc.isElectron()) {
-      this.ourApp = elSvc.getAppWindow();
-    }
   }
 
   ngOnInit(): void {
-    this.appTitle = 'YEA Smart App';
+    this.appTitle = 'Smart ATM Management';
     this.setupResizer();
+
+    if (this.elSvc.isElectron()) {
+      this.appWindow = this.elSvc.getAppWindow();
+    }
   }
 
   setupResizer() {
@@ -36,7 +34,7 @@ export class AppComponent implements OnInit {
       const width = $(window).width();
       const hasClass = $('body').hasClass('sidebar-collapse');
 
-      if (width <= 850) {
+      if (width <= 820) {
         if (hasClass !== true) {
           $('body').addClass('sidebar-collapse');
         }
@@ -46,9 +44,5 @@ export class AppComponent implements OnInit {
         }
       }
     });
-  }
-
-  public getRouterOutletState(outlet) {
-    return outlet.isActivated ? outlet.activatedRoute : '';
   }
 }

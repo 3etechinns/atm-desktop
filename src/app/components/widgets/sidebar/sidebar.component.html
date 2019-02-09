@@ -5,12 +5,12 @@
         <img
           src="./assets/images/dp.png"
           class="img-circle"
-          alt="Precious Keyz Image"
+          alt="{{ bank != null ? bank.bank_name : '---' }}"
         />
       </div>
       <div class="pull-left info">
-        <p>The Administrator</p>
-        <a><i class="fa fa-circle text-success"></i> Online</a>
+        <p>{{ bank != null ? bank.bank_name : '---' }}</p>
+        <a *ngIf="bank"><i class="fa fa-circle text-success"></i> Online</a>
       </div>
     </div>
 
@@ -22,7 +22,7 @@
         class="treeview"
         routerLinkActive
         #das="routerLinkActive"
-        [routerLink]="['/dashboard']"
+        [routerLink]="['/admin/dashboard']"
         [class.active]="das.isActive"
       >
         <a href="#">
@@ -31,71 +31,40 @@
       </li>
 
       <li
-        title="announcements"
+        title="My ATM's"
         class="treeview"
         routerLinkActive
-        #ann="routerLinkActive"
-        [routerLink]="['/announcements']"
-        [class.active]="ann.isActive"
+        #atms="routerLinkActive"
+        [routerLink]="['myatms']"
+        [class.active]="atms.isActive"
       >
         <a href="#">
-          <i class="fa fa-bell-o"></i> <span> Announcements</span>
+          <i class="fa fa-credit-card"></i> <span> My ATM's</span>
         </a>
       </li>
 
       <li
-        title="Calender"
+        title="ATM Reports"
         class="treeview"
         routerLinkActive
-        #cal="routerLinkActive"
-        [routerLink]="['/calender']"
-        [class.active]="cal.isActive"
+        #brod="routerLinkActive"
+        [routerLink]="['/admin/messaging']"
+        [class.active]="brod.isActive"
       >
-        <a href="#"> <i class="fa fa-calendar"></i> <span> Calender</span> </a>
+        <a href="#">
+          <i class="fa fa-bullhorn"></i> <span> ATM Reports</span>
+        </a>
       </li>
 
       <li
-        title="Send Notification"
+        title="App Settings"
         class="treeview"
         routerLinkActive
-        #not="routerLinkActive"
-        [class.active]="not.isActive"
+        #apset="routerLinkActive"
+        [routerLink]="['/admin/settings']"
+        [class.active]="apset.isActive"
       >
-        <a href="#">
-          <i class="fa fa-bullhorn"></i> <span> Send Notification</span>
-          <span class="pull-right-container">
-            <i class="fa fa-angle-left pull-right"></i>
-          </span>
-        </a>
-        <ul class="treeview-menu" style="display: none;">
-          <li
-            routerLinkActive
-            #notnal="routerLinkActive"
-            [class.active]="notnal.isActive"
-          >
-            <a [routerLink]="['/sendnotification/national']"
-              ><i class="fa fa-circle-o"></i> National</a
-            >
-          </li>
-          <li
-            routerLinkActive
-            #notreg="routerLinkActive"
-            [class.active]="notreg.isActive"
-          >
-            <a [routerLink]="['/sendnotification/regional']"
-              ><i class="fa fa-circle-o"></i> Regional</a
-            >
-          </li>
-          <li
-            routerLinkActive
-            #notdis="routerLinkActive"
-            [class.active]="notdis.isActive"
-          >
-            <a [routerLink]="['/sendnotification/district']"
-              ><i class="fa fa-circle-o"></i> District</a
-            >
-          </li>
-        </ul>
+        <a href="#"> <i class="fa fa-gears"></i> <span> App Settings</span> </a>
       </li>
 
       <li title="Sign Out" class="treeview" (click)="logout()">

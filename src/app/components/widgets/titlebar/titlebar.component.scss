@@ -6,8 +6,8 @@
   display: flex;
   flex-direction: row;
   height: 30px;
-  background: #388e3c;
-  border-bottom: 1px solid rgb(48, 121, 51);
+  background: #3c8dbc;
+  border-bottom: 1px solid #3c8dbc;
 
   .app-icon {
     fill: #fff;
@@ -67,7 +67,7 @@
       }
 
       &:hover {
-        background-color: #9cc5a37c;
+        background-color: rgba(0, 0, 0, 0.1);
         color: #fff;
       }
 
@@ -76,7 +76,7 @@
       // controls behave when someone hovers, clicks and then
       // moves away from the hitbox.
       &:active {
-        background-color: #388e3c;
+        background-color: rgba(0, 0, 0, 0.1);
 
         // Immediate feedback when clicking
         transition: none;

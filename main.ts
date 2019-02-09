@@ -8,14 +8,17 @@ serve = args.some(val => val === '--serve');
 
 function createWindow() {
   const minWidth = 820;
-  const minHeight = 480;
+  const minHeight = 570;
 
   // Create the browser window.
   win = new BrowserWindow({
     x: 0,
     y: 0,
+    width: minWidth,
+    height: minHeight,
     minWidth: minWidth,
     minHeight: minHeight,
+    center: true,
     frame: false,
     backgroundColor: '#fff',
     webPreferences: {

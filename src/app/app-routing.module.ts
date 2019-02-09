@@ -1,20 +1,27 @@
 import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
-import {AnnouncementsComponent} from './components/announcements/announcements.component';
-import {NotificationComponent} from './components/notification/notification.component';
-import {NoticeboardComponent} from './components/noticeboard/noticeboard.component';
-import {DashboardComponent} from './components/dashboard/dashboard.component';
+import { Routes, RouterModule, PreloadAllModules } from '@angular/router';
+import { WidgetsModule } from './components/widgets/widgets.module';
 
 const routes: Routes = [
-  { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
-  { path: 'dashboard', component: DashboardComponent },
-  { path: 'announcements', component: AnnouncementsComponent },
-  { path: 'sendnotification/:userType', component: NotificationComponent},
-  { path: 'calender', component: NoticeboardComponent}
+  { path: '', redirectTo: 'admin', pathMatch: 'full' },
+  {
+    path: 'auth',
+    loadChildren: './components/auth/auth.module#AuthModule'
+  },
+  {
+    path: 'admin',
+    loadChildren: './components/mainapp/mainapp.module#MainappModule'
+  }
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes, { useHash: true })],
+  imports: [
+    WidgetsModule,
+    RouterModule.forRoot(routes, {
+      useHash: true,
+      preloadingStrategy: PreloadAllModules
+    })
+  ],
   exports: [RouterModule]
 })
 export class AppRoutingModule {}

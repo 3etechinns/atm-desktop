@@ -1,11 +1,7 @@
 <app-titlebar
   class="main-header"
   [title]="appTitle"
-  [appwindow]="ourApp"
+  [appwindow]="appWindow"
 ></app-titlebar>
 
-<app-sidebar></app-sidebar>
-
-<div class="content-wrapper" [@fadeAnimation]="getRouterOutletState(o)">
-  <router-outlet #o="outlet"></router-outlet>
-</div>
+<router-outlet></router-outlet>

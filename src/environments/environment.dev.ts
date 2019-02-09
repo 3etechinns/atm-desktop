@@ -7,11 +7,11 @@ export const AppConfig = {
   production: false,
   environment: 'DEV',
   firebase: {
-    apiKey: 'AIzaSyCp26XjTepOq2sZC9z9vFiw85dA_qTW4gc',
-    authDomain: 'yea-project-27c5d.firebaseapp.com',
-    databaseURL: 'https://yea-project-27c5d.firebaseio.com',
-    projectId: 'yea-project-27c5d',
-    storageBucket: 'yea-project-27c5d.appspot.com',
-    messagingSenderId: '776409342660'
+    apiKey: 'AIzaSyCZaNrfr3dsRF-yTaA5iHU0vELjbu8-gWs',
+    authDomain: 'atmfinder-6c915.firebaseapp.com',
+    databaseURL: 'https://atmfinder-6c915.firebaseio.com',
+    projectId: 'atmfinder-6c915',
+    storageBucket: 'atmfinder-6c915.appspot.com',
+    messagingSenderId: '9956651539'
   }
 };

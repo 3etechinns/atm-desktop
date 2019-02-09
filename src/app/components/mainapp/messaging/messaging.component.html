@@ -1,0 +1,62 @@
+<app-content-header
+  [title]="'Reports'"
+  [subtitle]="'Quickly respond to queries on ATMs'"
+></app-content-header>
+
+<section class="content">
+  <div class="row">
+    <div class="col-xs-3">
+      <a
+        [routerLink]="['/admin/messaging/compose']"
+        routerLinkActive="router-link-active"
+        class="btn btn-primary btn-block margin-bottom"
+        >Compose</a
+      >
+      <div class="box box-solid">
+        <div class="box-header with-border">
+          <h3 class="box-title">Folders</h3>
+
+          <div class="box-tools">
+            <button
+              type="button"
+              class="btn btn-box-tool"
+              data-widget="collapse"
+            >
+              <i class="fa fa-minus"></i>
+            </button>
+          </div>
+        </div>
+        <div class="box-body no-padding">
+          <ul class="nav nav-pills nav-stacked">
+            <li
+              routerLinkActive
+              #inb="routerLinkActive"
+              [class.active]="inb.isActive"
+              [routerLink]="['/admin/messaging/inbox']"
+            >
+              <a [routerLink]="['/admin/messaging/inbox']"
+                ><i class="fa fa-inbox"></i> Reports
+                <span
+                  *ngIf="unreadCount > 0"
+                  class="label label-primary pull-right"
+                  >{{ unreadCount }}</span
+                ></a
+              >
+            </li>
+            <li
+              routerLinkActive
+              #sen="routerLinkActive"
+              [class.active]="sen.isActive"
+              [routerLink]="['/admin/messaging/sent']"
+            >
+              <a [routerLink]="['/admin/messaging/sent']"
+                ><i class="fa fa-envelope-o"></i> Responses</a
+              >
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <router-outlet></router-outlet>
+  </div>
+</section>

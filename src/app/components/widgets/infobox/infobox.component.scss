@@ -1,4 +1,8 @@
 .info-box {
   user-select: none;
   cursor: default;
+
+  .info-box-number {
+    font-size: 25px;
+  }
 }

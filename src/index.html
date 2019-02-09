@@ -2,14 +2,14 @@
 <html>
   <head>
     <meta charset="utf-8" />
-    <title>AngularElectron</title>
+    <title>Smart ATM Management</title>
     <base href="" />
 
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="icon" type="image/x-icon" href="favicon.ico" />
 
     <script>
-      window["jQuery"] = window["$"] = require("jquery");
+      window['jQuery'] = window['$'] = require('jquery');
     </script>
 
     <link
@@ -17,7 +17,7 @@
       href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic"
     />
   </head>
-  <body class="fixed sidebar-mini skin-green">
+  <body class="fixed sidebar-mini skin-blue">
     <div class="wrapper">
       <app-root> <p>Loading...</p> </app-root>
     </div>
@@ -25,9 +25,8 @@
     <script type="text/javascript">
       //at bottom/footer of the page
       $(document).ready(function() {
-        $(document).trigger("resize");
+        $(document).trigger('resize');
       });
-
     </script>
   </body>
 </html>

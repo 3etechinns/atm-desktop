@@ -1,26 +1,30 @@
-import { Injectable } from '@angular/core';
-import { AngularFireAuth } from '@angular/fire/auth';
-import { auth } from 'firebase/app';
+import {Injectable} from '@angular/core';
+import {HttpClient} from '@angular/common/http';
+import {Observable} from 'rxjs';
+import {map} from 'rxjs/operators';
+import {AppConfig} from '../../environments/environment';
+import {AuthResponse} from '../app.models';
 
 @Injectable()
 export class AuthService {
-  private user: firebase.User;
 
-  constructor(private af: AngularFireAuth) {
-    af.authState.subscribe(user => {
-      this.user = user;
-    });
+  ourBaseUrl: string;
+
+  constructor(private http: HttpClient) {
+    this.ourBaseUrl = AppConfig.baseUrl;
   }
 
-  get authstate() {
-    return this.af.authState;
+  logout(): void {
+    localStorage.removeItem('access_token');
   }
 
-  signin(email: string, password: string): Promise<auth.UserCredential> {
-    return this.af.auth.signInWithEmailAndPassword(email, password);
-  }
-
-  get userdata() {
-    return this.user;
+  login(email: string, password: string): Observable<AuthResponse> {
+    return this.http.post<AuthResponse>(`${this.ourBaseUrl}/banks/login`, {email, password})
+      .pipe(
+        map(result => {
+          localStorage.setItem('access_token', result.token);
+          return result;
+        })
+      );
   }
 }

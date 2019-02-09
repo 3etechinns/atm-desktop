@@ -6,7 +6,6 @@
         [title]="'ATM\'s Count'"
         [color]="'bg-aqua'"
         [icon]="'fa fa-credit-card'"
-        [value]="atmList.length"
       >
       </app-small-box>
     </div>
@@ -16,7 +15,6 @@
         [title]="'ATM Reports'"
         [color]="'bg-red'"
         [icon]="'glyphicon glyphicon-bullhorn'"
-        [value]="reportsList.length"
       >
       </app-small-box>
     </div>
@@ -44,23 +42,23 @@
         </div>
         <!-- /.box-header -->
         <div class="box-body" id="scrollingBox">
-          <ul class="products-list product-list-in-box" *ngIf="reportsList">
-            <li class="item" *ngFor="let report of reportsList">
-              <div class="product-img">
-                <img
-                  src="../../../assets/images/default-50x50.gif"
-                  alt="{{ report.personName }}"
-                />
-              </div>
-              <div class="product-info">
-                <span class="product-title"
-                  ><b>From: </b> {{ report.personName }}</span
-                >
-                <span class="label label-warning pull-right">dd</span>
+          <ul class="products-list product-list-in-box">
+            <!--<li class="item" *ngFor="let report of reportsList">-->
+            <!--<div class="product-img">-->
+            <!--<img-->
+            <!--src="../../../assets/images/default-50x50.gif"-->
+            <!--alt="{{ report.personName }}"-->
+            <!--/>-->
+            <!--</div>-->
+            <!--<div class="product-info">-->
+            <!--<span class="product-title"-->
+            <!--&gt;<b>From: </b> {{ report.personName }}</span-->
+            <!--&gt;-->
+            <!--<span class="label label-warning pull-right">dd</span>-->
 
-                <span class="product-description"> {{ report.query }} </span>
-              </div>
-            </li>
+            <!--<span class="product-description"> {{ report.query }} </span>-->
+            <!--</div>-->
+            <!--</li>-->
           </ul>
         </div>
         <!-- /.box-body -->

@@ -1,6 +1,7 @@
 import { Component, OnInit, NgZone } from '@angular/core';
 import { AuthService } from '../../../providers/auth.service';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
+import { first } from 'rxjs/operators';
 
 @Component({
   selector: 'app-signin',
@@ -11,34 +12,27 @@ export class SigninComponent implements OnInit {
   email = '';
   password = '';
   isloading = false;
+  returnUrl: string;
 
   constructor(
-    private authSvc: AuthService,
+    private route: ActivatedRoute,
     private router: Router,
-    private ngzone: NgZone
+    private authSvc: AuthService
   ) {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    // get return url from route parameters or default to '/'
+    this.returnUrl =
+      this.route.snapshot.queryParams.returnUrl || '/admin/dashboard';
+  }
 
   login() {
-    if (this.email.trim().length === 0 || this.password.length === 0) {
-      return;
-    }
-    this.isloading = true;
     this.authSvc
-      .signin(this.email, this.password)
-      .then(
-        user => {
-          this.isloading = false;
-          console.log(user, 'logged in just now');
-          this.ngzone.run(() => this.router.navigate(['admin']));
-        },
-        err => {
-          this.isloading = false;
-        }
-      )
-      .catch(err => {
-        this.isloading = false;
-      });
+      .login(this.email, this.password)
+      .pipe(first())
+      .subscribe(
+        () => this.router.navigateByUrl(this.returnUrl),
+        error => console.log(`${error.toString()} occurred`)
+      );
   }
 }

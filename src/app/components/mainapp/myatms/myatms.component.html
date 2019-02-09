@@ -33,35 +33,35 @@
                 <th>Status</th>
               </tr>
             </thead>
-            <tbody *ngIf="atmList">
-              <tr *ngFor="let atm of atmList">
-                <td>
-                  <a style="cursor: pointer;">{{ atm.localizedName }}</a>
-                </td>
-                <td>{{ atm.bank_name }}</td>
-                <td>{{ atm.locality }}</td>
-                <td>
-                  <span
-                    class="label"
-                    [class.label-success]="atm.status == 0"
-                    [class.label-warning]="atm.status == 1"
-                    [class.label-danger]="atm.status == 2"
-                  >
-                    <span *ngIf="atm.status == 0">Online</span>
-                    <span *ngIf="atm.status == 1">Offline</span>
-                    <span *ngIf="atm.status == 2">Offline</span>
-                  </span>
-                </td>
-                <td>
-                  <app-switch
-                    #switch
-                    class="center"
-                    [isChecked]="atm.status == 0 || atm.status == 1"
-                    (ontoggled)="toggle($event, atm.atm_id)"
-                  ></app-switch>
-                </td>
-              </tr>
-            </tbody>
+            <!--<tbody *ngIf="atmList">-->
+              <!--<tr *ngFor="let atm of atmList">-->
+                <!--<td>-->
+                  <!--<a style="cursor: pointer;">{{ atm.localizedName }}</a>-->
+                <!--</td>-->
+                <!--<td>{{ atm.bank_name }}</td>-->
+                <!--<td>{{ atm.locality }}</td>-->
+                <!--<td>-->
+                  <!--<span-->
+                    <!--class="label"-->
+                    <!--[class.label-success]="atm.status == 0"-->
+                    <!--[class.label-warning]="atm.status == 1"-->
+                    <!--[class.label-danger]="atm.status == 2"-->
+                  <!--&gt;-->
+                    <!--<span *ngIf="atm.status == 0">Online</span>-->
+                    <!--<span *ngIf="atm.status == 1">Offline</span>-->
+                    <!--<span *ngIf="atm.status == 2">Offline</span>-->
+                  <!--</span>-->
+                <!--</td>-->
+                <!--<td>-->
+                  <!--<app-switch-->
+                    <!--#switch-->
+                    <!--class="center"-->
+                    <!--[isChecked]="atm.status == 0 || atm.status == 1"-->
+                    <!--(ontoggled)="toggle($event, atm.atm_id)"-->
+                  <!--&gt;</app-switch>-->
+                <!--</td>-->
+              <!--</tr>-->
+            <!--</tbody>-->
           </table>
         </div>
         <!-- /.box-body -->

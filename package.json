@@ -39,6 +39,7 @@
   },
   "dependencies": {
     "@angular/fire": "^5.1.1",
+    "@auth0/angular-jwt": "^2.1.0",
     "@tinymce/tinymce-angular": "^2.3.2",
     "angular-datatables": "^7.0.0",
     "datatables.net": "^1.10.19",

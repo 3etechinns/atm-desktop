@@ -1,9 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { Subscription } from 'rxjs';
-import { AuthService } from '../../../providers/auth.service';
 import { DataService } from '../../../providers/data.service';
-import { map, flatMap } from 'rxjs/operators';
-import { ATM } from '../../../data/atm';
+import { ATMData } from '../../../app.models';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-myatms',
@@ -11,26 +9,25 @@ import { ATM } from '../../../data/atm';
   styleUrls: ['./myatms.component.scss']
 })
 export class MyatmsComponent implements OnInit, OnDestroy {
-  atmList: ATM[] = [];
+  atmList: ATMData[] = [];
 
-  private atmSubscription: Subscription;
+  subscriptions: Subscription[] = [];
 
-  constructor(private authSvc: AuthService, private dataSvc: DataService) {}
+  atmSub: Subscription;
+
+  constructor(private dataSvc: DataService) {}
 
   ngOnInit() {
-    this.atmSubscription = this.authSvc.authstate
-      .pipe(
-        flatMap(user => {
-          return this.dataSvc.getMyATMs(user.uid);
-        })
-      )
+    this.atmSub = this.dataSvc
+      .getATMs<ATMData>()
       .subscribe(data => (this.atmList = data));
+    this.subscriptions.push(this.atmSub);
   }
 
   ngOnDestroy() {
-    if (this.atmSubscription) {
-      this.atmSubscription.unsubscribe();
-    }
+    this.subscriptions.forEach(sub => {
+      sub.unsubscribe();
+    });
   }
 
   toggle($event, atmID) {}

@@ -1,4 +1,7 @@
-<app-sidebar>
+<app-sidebar
+  [userName]="myData == null ? '' : myData.name"
+  [moreText]="myData == null ? '' : myData.desc"
+>
   <li class="header">MAIN NAVIGATION</li>
 
   <li
@@ -9,7 +12,9 @@
     [routerLink]="['dashboard']"
     [class.active]="das.isActive"
   >
-    <a href="#"> <i class="fa fa-dashboard"></i> <span> Dashboard</span> </a>
+    <a [routerLink]="['dashboard']">
+      <i class="fa fa-dashboard"></i> <span> Dashboard</span>
+    </a>
   </li>
 
   <li
@@ -20,7 +25,9 @@
     [routerLink]="['myatms']"
     [class.active]="atms.isActive"
   >
-    <a href="#"> <i class="fa fa-credit-card"></i> <span> My ATM's</span> </a>
+    <a [routerLink]="['myatms']">
+      <i class="fa fa-credit-card"></i> <span> My ATM's</span>
+    </a>
   </li>
 
   <li
@@ -31,7 +38,7 @@
     [routerLink]="['/admin/settings']"
     [class.active]="apset.isActive"
   >
-    <a href="#"> <i class="fa fa-gears"></i> <span> App Settings</span> </a>
+    <a href=""> <i class="fa fa-gears"></i> <span> App Settings</span> </a>
   </li>
 
   <li title="Sign Out" class="treeview">

@@ -2,11 +2,72 @@
 
 <section class="content">
   <div class="row">
-    <div class="col-md-12">
-      <!-- MAP & BOX PANE -->
+    <div class="{{ canshowFull ? 'col-md-12 anim' : 'col-md-8 anim' }}">
       <div id="myBox" class="box box-primary">
         <div class="box-header with-border">
           <h3 class="box-title">Showing All ATM's</h3>
+
+          <div class="box-tools pull-right" *ngIf="!canshowAdd">
+              <a type="button" style="display:inline-block; width: auto; margin-top: 0;" (click)="showAddNew()" class="btn btn-block btn-success">Add
+                New ATM</a>
+            </div>
+
+        </div>
+        <!-- /.box-header -->
+        <div class="box-body">
+          <table class="table table-bordered table-striped">
+            <!-- <table class="table table-bordered table-hover dataTable"> -->
+            <thead class="no-select">
+              <tr>
+                <th>Name</th>
+                <th>Location</th>
+                <th>Coordinate</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody *ngIf="atmData">
+              <tr *ngFor="let atm of atmData.data">
+                <td>
+                  <a (click)="showATMDetails(atm)" style="cursor: pointer;">{{
+                    atm.name
+                  }}</a>
+                </td>
+                <td>{{ atm.city }}</td>
+                <td>{{ atm.coordinate.lat }} , {{ atm.coordinate.lng }}</td>
+                <td>
+                  <span
+                    class="label"
+                    [class.label-success]="atm.status == 0"
+                    [class.label-warning]="atm.status == 1"
+                    [class.label-danger]="atm.status == 2"
+                  ></span>
+                  <span *ngIf="atm.status === 1">Online</span>
+                  <span *ngIf="atm.status === 0">Out Of Cash</span>
+                  <span *ngIf="atm.status === -1">Offline</span>
+                </td>
+                <td>
+                  <app-switch
+                    #switch
+                    class="center"
+                    [isChecked]="atm.status == 0 || atm.status == 1"
+                    (ontoggled)="toggle($event, atm.id)"
+                  ></app-switch>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <!-- /.box-body -->
+      </div>
+    </div>
+    <div
+      class="col-md-4 anim"
+      *ngIf="!canshowFull"
+      [class.loading]="selectedATM === null"
+    >
+      <div class="box box-primary" *ngIf="selectedATM">
+        <div class="box-header with-border">
+          <h3 class="box-title">ATM Details</h3>
 
           <div class="box-tools pull-right">
             <button
@@ -16,55 +77,73 @@
             >
               <i class="fa fa-minus"></i>
             </button>
-            <button type="button" class="btn btn-box-tool" data-widget="remove">
+            <button
+              type="button"
+              class="btn btn-box-tool"
+              (click)="canshowFull = true"
+            >
               <i class="fa fa-times"></i>
             </button>
           </div>
         </div>
         <!-- /.box-header -->
         <div class="box-body">
-          <table class="table table-bordered table-striped">
-            <!-- <table class="table table-bordered table-hover dataTable"> -->
-            <thead class="no-select">
-              <tr>
-                <th>Localized Name</th>
-                <th>Bank</th>
-                <th>Location</th>
-                <th>Status</th>
-              </tr>
-            </thead>
-            <!--<tbody *ngIf="atmList">-->
-              <!--<tr *ngFor="let atm of atmList">-->
-                <!--<td>-->
-                  <!--<a style="cursor: pointer;">{{ atm.localizedName }}</a>-->
-                <!--</td>-->
-                <!--<td>{{ atm.bank_name }}</td>-->
-                <!--<td>{{ atm.locality }}</td>-->
-                <!--<td>-->
-                  <!--<span-->
-                    <!--class="label"-->
-                    <!--[class.label-success]="atm.status == 0"-->
-                    <!--[class.label-warning]="atm.status == 1"-->
-                    <!--[class.label-danger]="atm.status == 2"-->
-                  <!--&gt;-->
-                    <!--<span *ngIf="atm.status == 0">Online</span>-->
-                    <!--<span *ngIf="atm.status == 1">Offline</span>-->
-                    <!--<span *ngIf="atm.status == 2">Offline</span>-->
-                  <!--</span>-->
-                <!--</td>-->
-                <!--<td>-->
-                  <!--<app-switch-->
-                    <!--#switch-->
-                    <!--class="center"-->
-                    <!--[isChecked]="atm.status == 0 || atm.status == 1"-->
-                    <!--(ontoggled)="toggle($event, atm.atm_id)"-->
-                  <!--&gt;</app-switch>-->
-                <!--</td>-->
-              <!--</tr>-->
-            <!--</tbody>-->
-          </table>
+          <ul class="list-group list-group-unbordered" *ngIf="selectedATM">
+            <li class="list-group-item">
+              <b>ATM Name</b> <a class="pull-right">{{ selectedATM.name }}</a>
+            </li>
+
+            <li class="list-group-item">
+              <b>City</b> <a class="pull-right">{{ selectedATM.city }}</a>
+            </li>
+
+            <li class="list-group-item">
+              <b>Coordinate</b>
+              <a class="pull-right"
+                >{{ selectedATM.coordinate.lat }} ,
+                {{ selectedATM.coordinate.lng }}</a
+              >
+            </li>
+
+            <li class="list-group-item">
+              <b>Created On</b>
+              <a class="pull-right">{{ selectedATM.created_at }}</a>
+            </li>
+
+            <li class="list-group-item">
+              <b>Last Updated</b>
+              <a class="pull-right">{{ selectedATM.updated_at }}</a>
+            </li>
+
+            <li class="list-group-item">
+              <b>Status</b>
+              <span
+                class="label pull-right"
+                [class.label-success]="selectedATM.status === 1"
+                [class.label-danger]="selectedATM.status !== 1"
+              >
+                <span *ngIf="selectedATM.status === 1">Online</span>
+                <span *ngIf="selectedATM.status === 0">Out Of Cash</span>
+                <span *ngIf="selectedATM.status === -1">Offline</span>
+              </span>
+            </li>
+
+            <div class="row">
+              <!-- /.col -->
+              <div class="col-xs-12">
+                <button class="btn btn-warning btn-block btn-flat">
+                  DELETE ATM
+                </button>
+              </div>
+              <!-- /.col -->
+            </div>
+          </ul>
         </div>
         <!-- /.box-body -->
+
+        <div class="overlay" *ngIf="selectedATM === null">
+          <i class="fa fa-refresh fa-spin primary" style="color:#2196f3"></i>
+        </div>
       </div>
     </div>
   </div>

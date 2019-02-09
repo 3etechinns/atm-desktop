@@ -1,18 +1,39 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { DataService } from '../../../providers/data.service';
 import * as $ from 'jquery';
+import { Subscription } from 'rxjs';
+import { DataList, ATMData, ManagerData } from '../../../app.models';
+import { BaseComponent } from '../../base/BaseComponent';
 
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.scss']
 })
-export class DashboardComponent implements OnInit, OnDestroy {
+export class DashboardComponent extends BaseComponent implements OnInit {
+  private atmPoll: Subscription;
+  private managerPoll: Subscription;
 
-  constructor(private dataSvc: DataService) {}
+  atmData: DataList<ATMData>;
+  managerData: DataList<ManagerData>;
+
+  constructor(private dataSvc: DataService) {
+    super();
+  }
 
   ngOnInit() {
     this.init();
+
+    this.atmPoll = this.dataSvc
+      .getATMs<DataList<ATMData>>()
+      .subscribe(data => (this.atmData = data));
+
+    this.managerPoll = this.dataSvc
+      .getManagers<DataList<ManagerData>>()
+      .subscribe(data => (this.managerData = data));
+
+    this.getSubscriptions().push(this.atmPoll);
+    this.getSubscriptions().push(this.managerPoll);
   }
 
   init() {
@@ -29,6 +50,5 @@ export class DashboardComponent implements OnInit, OnDestroy {
     });
   }
 
-  ngOnDestroy() {
-  }
+  toggle($event, $id) {}
 }

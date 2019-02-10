@@ -19,6 +19,7 @@ import { WebviewDirective } from './directives/webview.directive';
 import { AppComponent } from './app.component';
 import * as bootstrap from 'bootstrap';
 import { WidgetsModule } from './components/widgets/widgets.module';
+import { Ng2IziToastModule } from 'ng2-izitoast';
 import { JwtModule } from '@auth0/angular-jwt';
 import { DataService } from './providers/data.service';
 
@@ -36,6 +37,7 @@ export function tokenGetter() {
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
+    Ng2IziToastModule,
     WidgetsModule,
     AppRoutingModule,
     HttpClientModule,

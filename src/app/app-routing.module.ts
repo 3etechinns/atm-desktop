@@ -1,8 +1,8 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule, PreloadAllModules } from '@angular/router';
 import { WidgetsModule } from './components/widgets/widgets.module';
-import {AuthGuard} from './guards/auth.guard';
-import {NonAuthGuard} from './guards/non-auth.guard';
+import { AuthGuard } from './guards/auth.guard';
+import { NonAuthGuard } from './guards/non-auth.guard';
 
 const routes: Routes = [
   { path: '', redirectTo: 'auth', pathMatch: 'full' },
@@ -22,8 +22,8 @@ const routes: Routes = [
   imports: [
     WidgetsModule,
     RouterModule.forRoot(routes, {
-      useHash: true
-      // preloadingStrategy: PreloadAllModules
+      useHash: true,
+      preloadingStrategy: PreloadAllModules
     })
   ],
   exports: [RouterModule],

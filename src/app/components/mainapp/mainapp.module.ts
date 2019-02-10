@@ -6,6 +6,7 @@ import { WidgetsModule } from '../widgets/widgets.module';
 import { MyatmsComponent } from './myatms/myatms.component';
 import { SettingsComponent } from './settings/settings.component';
 import { MainappComponent } from './mainapp.component';
+import { FormsModule } from '@angular/forms';
 
 const mainapproutes: Routes = [
   {
@@ -21,8 +22,7 @@ const mainapproutes: Routes = [
         path: 'dashboard',
         component: DashboardComponent
       },
-      { path: 'myatms',
-        component: MyatmsComponent },
+      { path: 'myatms', component: MyatmsComponent },
       {
         path: 'settings',
         component: SettingsComponent
@@ -38,7 +38,12 @@ const mainapproutes: Routes = [
     MyatmsComponent,
     SettingsComponent
   ],
-  imports: [CommonModule, RouterModule.forChild(mainapproutes), WidgetsModule],
+  imports: [
+    CommonModule,
+    FormsModule,
+    RouterModule.forChild(mainapproutes),
+    WidgetsModule
+  ],
   exports: [RouterModule]
 })
 export class MainappModule {}

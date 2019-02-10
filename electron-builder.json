@@ -31,6 +31,7 @@
     "perMachine": "false",
     "installerIcon": "dist/favicon.ico",
     "createDesktopShortcut": true,
+    "allowToChangeInstallationDirectory": true,
     "deleteAppDataOnUninstall": "true",
     "menuCategory": "ATM",
     "shortcutName": "Smart ATM Manager"

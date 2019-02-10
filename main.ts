@@ -1,4 +1,6 @@
 import { app, BrowserWindow } from 'electron';
+import * as windowStateKeeper from 'electron-window-state';
+
 import * as path from 'path';
 import * as url from 'url';
 
@@ -7,18 +9,20 @@ const args = process.argv.slice(1);
 serve = args.some(val => val === '--serve');
 
 function createWindow() {
-  const minWidth = 820;
-  const minHeight = 570;
+  // Load the previous state with fallback to defaults
+  const mainWindowState = windowStateKeeper({
+    defaultWidth: 820,
+    defaultHeight: 570
+  });
 
   // Create the browser window.
   win = new BrowserWindow({
-    x: 0,
-    y: 0,
-    width: minWidth,
-    height: minHeight,
-    minWidth: minWidth,
-    minHeight: minHeight,
-    center: true,
+    x: mainWindowState.x,
+    y: mainWindowState.y,
+    width: mainWindowState.width,
+    height: mainWindowState.height,
+    minWidth: 820,
+    minHeight: 570,
     frame: false,
     backgroundColor: '#fff',
     webPreferences: {
@@ -29,6 +33,11 @@ function createWindow() {
     acceptFirstMouse: true,
     icon: path.join(__dirname, 'favicon.png')
   });
+
+  // Let us register listeners on the window, so we can update the state
+  // automatically (the listeners will be removed when the window is closed)
+  // and restore the maximized or full screen state
+  mainWindowState.manage(win);
 
   if (serve) {
     require('electron-reload')(__dirname, {

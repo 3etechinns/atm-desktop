@@ -3,13 +3,10 @@ import '../polyfills';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 
 import { AppRoutingModule } from './app-routing.module';
-import { AngularFireModule } from '@angular/fire';
-import { AngularFireAuthModule } from '@angular/fire/auth';
 
 // NG Translate
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
@@ -22,9 +19,8 @@ import { WebviewDirective } from './directives/webview.directive';
 import { AppComponent } from './app.component';
 import * as bootstrap from 'bootstrap';
 import { WidgetsModule } from './components/widgets/widgets.module';
-import {JwtModule} from '@auth0/angular-jwt';
-import {DataService} from './providers/data.service';
-import {AuthService} from './providers/auth.service';
+import { JwtModule } from '@auth0/angular-jwt';
+import { DataService } from './providers/data.service';
 
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(http: HttpClient) {
@@ -40,8 +36,6 @@ export function tokenGetter() {
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
-    FormsModule,
-    ReactiveFormsModule,
     WidgetsModule,
     AppRoutingModule,
     HttpClientModule,

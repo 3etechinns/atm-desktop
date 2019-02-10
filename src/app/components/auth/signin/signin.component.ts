@@ -2,6 +2,7 @@ import { Component, OnInit, NgZone } from '@angular/core';
 import { AuthService } from '../../../providers/auth.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { first } from 'rxjs/operators';
+import { Ng2IzitoastService } from 'ng2-izitoast';
 
 @Component({
   selector: 'app-signin',
@@ -17,7 +18,8 @@ export class SigninComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private router: Router,
-    private authSvc: AuthService
+    private authSvc: AuthService,
+    private iziToast: Ng2IzitoastService
   ) {}
 
   ngOnInit() {
@@ -27,12 +29,49 @@ export class SigninComponent implements OnInit {
   }
 
   login() {
+    if (this.email.trim().length === 0) {
+      this.iziToast.error({
+        id: 'error',
+        title: 'Error',
+        message: 'Your Email is required.',
+        position: 'bottomRight',
+        transitionIn: 'bounceInLeft'
+      });
+      return;
+    }
+    if (this.password.trim().length === 0) {
+      this.iziToast.error({
+        id: 'error',
+        title: 'Error',
+        message: 'Your Password is required.',
+        position: 'bottomRight',
+        transitionIn: 'bounceInLeft'
+      });
+      return;
+    }
     this.authSvc
       .login(this.email, this.password)
       .pipe(first())
       .subscribe(
-        () => this.router.navigateByUrl(this.returnUrl),
-        error => console.log(`${error.toString()} occurred`)
+        () => {
+          this.iziToast.success({
+            id: 'success',
+            title: 'Success',
+            message: 'We are preparing your dashboard, Please wait.',
+            position: 'bottomRight',
+            transitionIn: 'bounceInLeft'
+          });
+          setTimeout(() => this.router.navigateByUrl(this.returnUrl), 6000);
+        },
+        error => {
+          this.iziToast.error({
+            id: 'error',
+            title: 'Error',
+            message: 'Login was not successful. Try again',
+            position: 'bottomRight',
+            transitionIn: 'bounceInLeft'
+          });
+        }
       );
   }
 }

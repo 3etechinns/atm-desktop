@@ -1,4 +1,7 @@
-<app-content-header [title]="'ATM\'s List'"></app-content-header>
+<app-content-header
+  *ngIf="showHeader"
+  [title]="'ATM\'s List'"
+></app-content-header>
 
 <section class="content">
   <div class="row">
@@ -8,10 +11,14 @@
           <h3 class="box-title">Showing All ATM's</h3>
 
           <div class="box-tools pull-right" *ngIf="!canshowAdd">
-              <a type="button" style="display:inline-block; width: auto; margin-top: 0;" (click)="showAddNew()" class="btn btn-block btn-success">Add
-                New ATM</a>
-            </div>
-
+            <a
+              type="button"
+              style="display:inline-block; width: auto; margin-top: 0;"
+              (click)="showAddNew()"
+              class="btn btn-block btn-success"
+              >Add New ATM</a
+            >
+          </div>
         </div>
         <!-- /.box-header -->
         <div class="box-body">
@@ -60,12 +67,129 @@
         <!-- /.box-body -->
       </div>
     </div>
+
+    <div class="col-md-4 col-sm-6 anim" *ngIf="canshowAdd">
+      <div class="box box-info">
+        <div class="box-header with-border">
+          <h3 class="box-title">Add New ATM</h3>
+          <div class="box-tools pull-right">
+            <button
+              type="button"
+              class="btn btn-box-tool"
+              (click)="this.canshowAdd = false; this.canshowFull = true"
+            >
+              <i class="fa fa-times"></i>
+            </button>
+          </div>
+        </div>
+
+        <div class="box-body">
+          <form (ngSubmit)="addNewATM()">
+            <div class="form-group has-feedback">
+              <label>ATM Name</label>
+              <div class="input-group">
+                <div class="input-group-addon">
+                  <i class="fa fa-credit-card"></i>
+                </div>
+
+                <input
+                  type="text"
+                  style="text-transform: capitalize;"
+                  class="form-control"
+                  placeholder="eg: xoxo ATM"
+                  name="name"
+                  [(ngModel)]="atmName"
+                />
+              </div>
+            </div>
+            <div class="form-group has-feedback">
+              <label>Location</label>
+              <div class="input-group">
+                <div class="input-group-addon">
+                  <i class="fa fa-map"></i>
+                </div>
+
+                <input
+                  type="text"
+                  style="text-transform: capitalize;"
+                  class="form-control"
+                  placeholder="eg: Accra"
+                  name="location"
+                  [(ngModel)]="atmlocation"
+                />
+              </div>
+            </div>
+            <div class="form-group has-feedback">
+              <label>Coordinate</label>
+              <div class="input-group">
+                <div class="input-group-addon">
+                  <i class="fa fa-map-marker"></i>
+                </div>
+
+                <div class="input-group">
+                  <span class="input-group-addon">Lat  </span>
+                  <input
+                    type="number"
+                    class="form-control"
+                    name="lat"
+                    [(ngModel)]="atmLat"
+                  />
+                </div>
+
+                <div class="input-group">
+                  <span class="input-group-addon">Lng</span>
+                  <input
+                    type="number"
+                    class="form-control"
+                    name="lng"
+                    [(ngModel)]="atmLng"
+                  />
+                </div>
+
+                <!-- <input type="text" class="form-control" placeholder="eg: XX.X, XX.X" name="coordinate" [(ngModel)]="atmCoordinate"> -->
+              </div>
+            </div>
+            <div class="form-group">
+              <label>Set a Status</label>
+              <select
+                class="form-control"
+                style="width: 100%;"
+                [(ngModel)]="atmStatus"
+                name="status"
+              >
+                <option>Online</option>
+                <option>Offline</option>
+                <option>Out Of Cash</option>
+              </select>
+            </div>
+
+            <div class="row">
+              <!-- /.col -->
+              <div class="col-xs-12">
+                <button
+                  type="submit"
+                  class="btn btn-primary btn-block btn-flat"
+                >
+                  SUBMIT
+                </button>
+              </div>
+              <!-- /.col -->
+            </div>
+          </form>
+        </div>
+
+        <div class="overlay" *ngIf="isAddLoading">
+          <i class="fa fa-refresh fa-spin primary" style="color:#2196f3"></i>
+        </div>
+      </div>
+    </div>
+
     <div
       class="col-md-4 anim"
-      *ngIf="!canshowFull"
+      *ngIf="!canshowFull && !canshowAdd"
       [class.loading]="selectedATM === null"
     >
-      <div class="box box-primary" *ngIf="selectedATM">
+      <div class="box box-primary">
         <div class="box-header with-border">
           <h3 class="box-title">ATM Details</h3>
 

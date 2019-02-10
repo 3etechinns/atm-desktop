@@ -23,67 +23,6 @@
   </div>
 
   <div class="row">
-    <div class="col-md-12">
-      <!-- MAP & BOX PANE -->
-      <div id="myBox" class="box box-primary">
-        <div class="box-header with-border">
-          <h3 class="box-title">ATM List</h3>
-
-          <div class="box-tools pull-right">
-            <button type="button" class="btn btn-default pull-right">
-              <i class="fa fa-plus"></i> Add ATM
-            </button>
-          </div>
-        </div>
-        <!-- /.box-header -->
-        <div class="box-body">
-          <table class="table table-bordered table-striped">
-            <thead class="no-select">
-              <tr>
-                <th>Name</th>
-                <th>Location</th>
-                <th>Coordinate</th>
-                <th>Status</th>
-              </tr>
-            </thead>
-            <tbody *ngIf="atmData">
-              <tr *ngFor="let atm of atmData.data">
-                <td>
-                  <a style="cursor: pointer;">{{ atm.name }}</a>
-                </td>
-                <td>{{ atm.city }}</td>
-                <td>
-                  <b>Lat:</b>{{ atm.coordinate.lat }} <b>Lng:</b
-                  >{{ atm.coordinate.lng }}
-                </td>
-                <td>
-                  <span
-                    class="label"
-                    [class.label-success]="atm.status == 0"
-                    [class.label-warning]="atm.status == 1"
-                    [class.label-danger]="atm.status == 2"
-                  ></span>
-                  <span *ngIf="atm.status == 0">Online</span>
-                  <span *ngIf="atm.status == 1">Offline</span>
-                  <span *ngIf="atm.status == 2">Offline</span>
-                </td>
-                <td>
-                  <app-switch
-                    #switch
-                    class="center"
-                    [isChecked]="atm.status == 0 || atm.status == 1"
-                    (ontoggled)="toggle($event, atm.id)"
-                  ></app-switch>
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-        <!-- /.box-body -->
-        <div class="box-footer clearfix no-border">
-          <app-paginater [max]="5" [upto]="5"></app-paginater>
-        </div>
-      </div>
-    </div>
+    <app-myatms [showHeader]="false"></app-myatms>
   </div>
 </section>

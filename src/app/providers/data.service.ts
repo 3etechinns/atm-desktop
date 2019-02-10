@@ -29,6 +29,16 @@ export class DataService {
     );
   }
 
+  addATM<T>($data: {
+    name: string;
+    status: number;
+    city: string;
+    lat: number;
+    lng: number;
+  }): Observable<T> {
+    return this.http.post<T>(`${this.ourBaseUrl}/banks/me/atms`, $data);
+  }
+
   getManagers<T>(
     pollInterval: number = 5000,
     url: string = `${this.ourBaseUrl}/banks/me/managers`

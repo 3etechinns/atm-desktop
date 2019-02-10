@@ -1,7 +1,10 @@
-export interface DataList<T> {
+export interface DataList<T> extends Data<T[]> {
   links: Links;
   meta: Meta;
-  data: T[];
+}
+
+export interface Data<T> {
+  data: T;
 }
 
 export interface AuthResponse {
@@ -37,18 +40,18 @@ export interface BankData {
 }
 
 export interface ATMData {
-    id: number;
-    name: string;
-    status: number;
-    city: string;
-    coordinate: Coordinate;
-    created_at: Date;
-    updated_at: Date;
+  id: number;
+  name: string;
+  status: number;
+  city: string;
+  coordinate: Coordinate;
+  created_at: Date;
+  updated_at: Date;
 }
 
 export interface Coordinate {
-   lat: number;
-   lng: number;
+  lat: number;
+  lng: number;
 }
 
 export interface ATMQuery {

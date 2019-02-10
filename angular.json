@@ -30,13 +30,15 @@
               "src/assets/bower_components/font-awesome/css/font-awesome.min.css",
               "src/assets/dist/css/AdminLTE.css",
               "src/assets/dist/css/skins/skin-blue.css",
-              "node_modules/datatables.net-dt/css/jquery.dataTables.css"
+              "node_modules/datatables.net-dt/css/jquery.dataTables.css",
+              "node_modules/izitoast/dist/css/iziToast.min.css"
             ],
             "scripts": [
               "node_modules/jquery/dist/jquery.js",
-              "src/assets/bower_components/bootstrap/dist/js/bootstrap.min.js",
               "node_modules/jquery-slimscroll/jquery.slimscroll.min.js",
               "node_modules/datatables.net/js/jquery.dataTables.js",
+              "node_modules/izitoast/dist/js/iziToast.min.js",
+              "src/assets/bower_components/bootstrap/dist/js/bootstrap.min.js",
               "src/assets/bower_components/iCheck/icheck.min.js",
               "src/assets/dist/js/adminlte.js"
             ]

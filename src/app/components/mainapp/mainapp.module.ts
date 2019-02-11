@@ -7,6 +7,7 @@ import { MyatmsComponent } from './myatms/myatms.component';
 import { SettingsComponent } from './settings/settings.component';
 import { MainappComponent } from './mainapp.component';
 import { FormsModule } from '@angular/forms';
+import { NgSlimScrollModule, SLIMSCROLL_DEFAULTS } from 'ngx-slimscroll';
 
 const mainapproutes: Routes = [
   {
@@ -41,9 +42,18 @@ const mainapproutes: Routes = [
   imports: [
     CommonModule,
     FormsModule,
+    NgSlimScrollModule,
     RouterModule.forChild(mainapproutes),
     WidgetsModule
   ],
-  exports: [RouterModule]
+  exports: [RouterModule],
+  providers: [
+    {
+      provide: SLIMSCROLL_DEFAULTS,
+      useValue: {
+        alwaysVisible: false
+      }
+    }
+  ]
 })
 export class MainappModule {}

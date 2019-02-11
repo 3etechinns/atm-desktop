@@ -11,7 +11,6 @@ import { AppRoutingModule } from './app-routing.module';
 // NG Translate
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
-
 import { ElectronService } from './providers/electron.service';
 
 import { WebviewDirective } from './directives/webview.directive';

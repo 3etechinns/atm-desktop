@@ -4,6 +4,7 @@ import { ATMData, DataList, Data } from '../../../app.models';
 import { Subscription } from 'rxjs';
 import { BaseComponent } from '../../base/BaseComponent';
 import { Ng2IzitoastService } from 'ng2-izitoast';
+import * as $ from 'jquery';
 
 @Component({
   selector: 'app-myatms',
@@ -37,10 +38,22 @@ export class MyatmsComponent extends BaseComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.atmSub = this.dataSvc
-      .getATMs<DataList<ATMData>>()
-      .subscribe(data => (this.atmData = data));
+    this.atmSub = this.dataSvc.getATMs<DataList<ATMData>>().subscribe(data => {
+      this.atmData = data;
+    });
     this.getSubscriptions().push(this.atmSub);
+
+    this.setupHeight();
+  }
+
+  setupHeight() {
+    $(window).resize(() => {
+      // min content-wrapper height = 520;
+      const minHeight = $('div.content-wrapper').height();
+      if (minHeight <= 520) {
+        $('div.box-body').css('max-height', 330);
+      }
+    });
   }
 
   toggle($event, atmID) {}

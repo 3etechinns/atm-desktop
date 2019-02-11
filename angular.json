@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "yea-desktop": {
+    "atm-admin-desktop": {
       "root": "",
       "sourceRoot": "src",
       "projectType": "application",
@@ -35,7 +35,6 @@
             ],
             "scripts": [
               "node_modules/jquery/dist/jquery.js",
-              "node_modules/jquery-slimscroll/jquery.slimscroll.min.js",
               "node_modules/datatables.net/js/jquery.dataTables.js",
               "node_modules/izitoast/dist/js/iziToast.min.js",
               "src/assets/bower_components/bootstrap/dist/js/bootstrap.min.js",
@@ -83,21 +82,21 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "yea-desktop:build"
+            "browserTarget": "atm-admin-desktop:build"
           },
           "configurations": {
             "dev": {
-              "browserTarget": "yea-desktop:build:dev"
+              "browserTarget": "atm-admin-desktop:build:dev"
             },
             "production": {
-              "browserTarget": "yea-desktop:build:production"
+              "browserTarget": "atm-admin-desktop:build:production"
             }
           }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "yea-desktop:build"
+            "browserTarget": "atm-admin-desktop:build"
           }
         },
         "test": {
@@ -128,7 +127,7 @@
         }
       }
     },
-    "yea-desktop-e2e": {
+    "atm-admin-desktop-e2e": {
       "root": "e2e",
       "projectType": "application",
       "architect": {
@@ -136,7 +135,7 @@
           "builder": "@angular-devkit/build-angular:protractor",
           "options": {
             "protractorConfig": "e2e/protractor.conf.js",
-            "devServerTarget": "yea-desktop:serve"
+            "devServerTarget": "atm-admin-desktop:serve"
           }
         },
         "lint": {
@@ -147,9 +146,42 @@
           }
         }
       }
+    },
+    "@atmhotspot/bank": {
+      "root": "projects/atmhotspot/bank",
+      "sourceRoot": "projects/atmhotspot/bank/src",
+      "projectType": "library",
+      "prefix": "lib",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-ng-packagr:build",
+          "options": {
+            "tsConfig": "projects/atmhotspot/bank/tsconfig.lib.json",
+            "project": "projects/atmhotspot/bank/ng-package.json"
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/atmhotspot/bank/src/test.ts",
+            "tsConfig": "projects/atmhotspot/bank/tsconfig.spec.json",
+            "karmaConfig": "projects/atmhotspot/bank/karma.conf.js"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "projects/atmhotspot/bank/tsconfig.lib.json",
+              "projects/atmhotspot/bank/tsconfig.spec.json"
+            ],
+            "exclude": ["**/node_modules/**"]
+          }
+        }
+      }
     }
   },
-  "defaultProject": "yea-desktop",
+  "defaultProject": "atm-admin-desktop",
   "schematics": {
     "@schematics/angular:component": {
       "prefix": "app",

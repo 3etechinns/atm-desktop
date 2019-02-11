@@ -6,7 +6,7 @@
 <section class="content">
   <div class="row">
     <div class="{{ canshowFull ? 'col-md-12 anim' : 'col-md-8 anim' }}">
-      <div id="myBox" class="box box-primary">
+      <div class="box box-primary">
         <div class="box-header with-border">
           <h3 class="box-title">Showing All ATM's</h3>
 
@@ -21,7 +21,7 @@
           </div>
         </div>
         <!-- /.box-header -->
-        <div class="box-body">
+        <div class="box-body" slimScroll [enabled]="true">
           <table class="table table-bordered table-striped">
             <!-- <table class="table table-bordered table-hover dataTable"> -->
             <thead class="no-select">
@@ -127,7 +127,7 @@
                 </div>
 
                 <div class="input-group">
-                  <span class="input-group-addon">Lat  </span>
+                  <span class="input-group-addon">Lat </span>
                   <input
                     type="number"
                     class="form-control"

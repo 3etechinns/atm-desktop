@@ -17,8 +17,8 @@
   "main": "main.js",
   "private": true,
   "scripts": {
-    "npm_pack": "cd dist/atmhotspot/bank && npm pack",
-    "install_lib": "npm run npm_pack && npm install dist/atmhotspot/bank/atmhotspot-bank-0.0.1.tgz",
+    "npm_pack": "ng build @atmhotspot/bank && cd dist/atmhotspot/bank && npm pack",
+    "install_lib": "npm run npm_pack && npm install dist/atmhotspot/bank/atmhotspot-bank-1.0.0.tgz",
     "postinstall": "npm run postinstall:electron && npx electron-builder install-app-deps",
     "postinstall:web": "node postinstall-web",
     "postinstall:electron": "node postinstall",
@@ -40,6 +40,7 @@
     "version": "conventional-changelog -i CHANGELOG.mbd -s -r 0 && git add CHANGELOG.md"
   },
   "dependencies": {
+    "@atmhotspot/bank": "file:dist/atmhotspot/bank/atmhotspot-bank-1.0.0.tgz",
     "@auth0/angular-jwt": "^2.1.0",
     "datatables.net": "^1.10.19",
     "datatables.net-dt": "^1.10.19",

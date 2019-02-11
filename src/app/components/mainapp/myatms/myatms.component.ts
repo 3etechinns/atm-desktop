@@ -1,10 +1,11 @@
-import { Component, OnInit, OnDestroy, Input } from '@angular/core';
-import { DataService } from '../../../providers/data.service';
-import { ATMData, DataList, Data } from '../../../app.models';
-import { Subscription } from 'rxjs';
+import { Component, OnInit, Input } from '@angular/core';
+import { Subscription, interval } from 'rxjs';
 import { BaseComponent } from '../../base/BaseComponent';
 import { Ng2IzitoastService } from 'ng2-izitoast';
 import * as $ from 'jquery';
+import { BankService } from '@atmhotspot/bank';
+import { PaginatedData, ATMData } from '@atmhotspot/bank/lib/bank.models';
+import { startWith, switchMap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-myatms',
@@ -14,7 +15,7 @@ import * as $ from 'jquery';
 export class MyatmsComponent extends BaseComponent implements OnInit {
   @Input() showHeader = true;
 
-  atmData: DataList<ATMData>;
+  atmData: PaginatedData<ATMData>;
 
   atmSub: Subscription;
 
@@ -31,16 +32,19 @@ export class MyatmsComponent extends BaseComponent implements OnInit {
   atmStatus = 'Online';
 
   constructor(
-    private dataSvc: DataService,
+    private dataSvc: BankService,
     private iziToast: Ng2IzitoastService
   ) {
     super();
   }
 
   ngOnInit() {
-    this.atmSub = this.dataSvc.getATMs<DataList<ATMData>>().subscribe(data => {
-      this.atmData = data;
-    });
+    this.atmSub = interval(5000)
+      .pipe(
+        startWith(0),
+        switchMap(() => this.dataSvc.getATMs())
+      )
+      .subscribe(data => (this.atmData = data));
     this.getSubscriptions().push(this.atmSub);
 
     this.setupHeight();
@@ -77,7 +81,7 @@ export class MyatmsComponent extends BaseComponent implements OnInit {
     }
 
     this.dataSvc
-      .addATM<Data<ATMData>>({
+      .addATM({
         name: this.atmName,
         city: this.atmlocation,
         lat: this.atmLat,

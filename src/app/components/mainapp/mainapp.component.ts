@@ -1,8 +1,8 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { fadeAnimation } from '../../app.animations';
-import { DataService } from '../../providers/data.service';
 import { Subscription } from 'rxjs';
-import { BankData } from '../../app.models';
+import { BankService } from '@atmhotspot/bank';
+import { BankData } from '@atmhotspot/bank/lib/bank.models';
 
 @Component({
   selector: 'app-mainapp',
@@ -16,11 +16,11 @@ export class MainappComponent implements OnInit, OnDestroy {
 
   private accountPoll: Subscription;
 
-  constructor(private dataSvc: DataService) {}
+  constructor(private dataSvc: BankService) {}
 
   ngOnInit() {
     this.accountPoll = this.dataSvc
-      .getMyAccount<BankData>()
+      .getMyAccount()
       .subscribe(data => (this.myData = data));
 
     this.subscriptions.push(this.accountPoll);

@@ -5,10 +5,7 @@ import { SigninComponent } from './signin/signin.component';
 import { ForgetpassComponent } from './forgetpass/forgetpass.component';
 import { RouterModule, Routes } from '@angular/router';
 import { FormsModule } from '@angular/forms';
-import { AuthService } from '../../providers/auth.service';
 import { AuthComponent } from './auth.component';
-import {NonAuthGuard} from '../../guards/non-auth.guard';
-import {AuthGuard} from '../../guards/auth.guard';
 
 const mainauthRoutes: Routes = [
   {
@@ -44,7 +41,6 @@ const mainauthRoutes: Routes = [
     AuthComponent
   ],
   imports: [CommonModule, FormsModule, RouterModule.forChild(mainauthRoutes)],
-  exports: [RouterModule],
-  providers: [AuthService]
+  exports: [RouterModule]
 })
 export class AuthModule {}

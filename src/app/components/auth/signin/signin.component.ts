@@ -1,8 +1,8 @@
-import { Component, OnInit, NgZone } from '@angular/core';
-import { AuthService } from '../../../providers/auth.service';
+import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { first } from 'rxjs/operators';
 import { Ng2IzitoastService } from 'ng2-izitoast';
+import { BankAuthService } from '@atmhotspot/bank';
 
 @Component({
   selector: 'app-signin',
@@ -18,7 +18,7 @@ export class SigninComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private router: Router,
-    private authSvc: AuthService,
+    private authSvc: BankAuthService,
     private iziToast: Ng2IzitoastService
   ) {}
 

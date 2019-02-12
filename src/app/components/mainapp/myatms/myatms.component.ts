@@ -1,11 +1,11 @@
 import { Component, OnInit, Input, ViewChild } from '@angular/core';
-import { Subscription, interval } from 'rxjs';
+import { Subscription, interval, Observable } from 'rxjs';
 import { BaseComponent } from '../../base/BaseComponent';
 import { Ng2IzitoastService } from 'ng2-izitoast';
 import * as $ from 'jquery';
 import { BankService } from '@atmhotspot/bank';
 import { PaginatedData, ATMData } from '@atmhotspot/bank/lib/bank.models';
-import { startWith, switchMap } from 'rxjs/operators';
+import { map, startWith, switchMap } from 'rxjs/operators';
 import { SwalComponent } from '@toverux/ngx-sweetalert2';
 import swal, { SweetAlertOptions } from 'sweetalert2';
 
@@ -16,23 +16,16 @@ import swal, { SweetAlertOptions } from 'sweetalert2';
 })
 export class MyatmsComponent extends BaseComponent implements OnInit {
   @ViewChild('addSwal') private addSwal: SwalComponent;
-
   @ViewChild('deleteSwal') private deleteSwal: SwalComponent;
+  @Input() showHeader = true;
 
   public alertOption1: SweetAlertOptions = {};
   public alertOption2: SweetAlertOptions = {};
 
-  @Input() showHeader = true;
-
-  atmData: PaginatedData<ATMData>;
-
-  atmSub: Subscription;
+  atmObservable: Observable<PaginatedData<ATMData>>;
 
   isAddLoading = false;
-  hasjustAdded = false;
-
   selectedATM: ATMData = null;
-
   atmName = '';
   atmlocation = '';
   atmLat = 0;
@@ -82,15 +75,10 @@ export class MyatmsComponent extends BaseComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.atmSub = interval(10000)
-      .pipe(
-        startWith(0),
-        switchMap(() => this.dataSvc.getATMs())
-      )
-      .subscribe(data => (this.atmData = data));
-    this.getSubscriptions().push(this.atmSub);
-
-    this.setupHeight();
+    this.atmObservable = interval(10000).pipe(
+      startWith(0),
+      switchMap(() => this.dataSvc.getATMs())
+    );
   }
 
   setupHeight() {

@@ -184,7 +184,12 @@
           </div>
         </div>
         <!-- /.box-header -->
-        <div class="box-body" slimScroll [enabled]="true">
+        <div
+          class="box-body"
+          slimScroll
+          [enabled]="true"
+          *ngIf="(atmObservable | async) as atmData; else loading"
+        >
           <table class="table table-bordered table-striped">
             <thead class="no-select">
               <tr>
@@ -194,42 +199,49 @@
                 <th>Status</th>
               </tr>
             </thead>
-            <tbody *ngIf="atmData">
-              <tr *ngFor="let atm of atmData.data">
-                <td>
-                  <a
-                    [swal]="detailSwal"
-                    (click)="this.selectedATM = atm"
-                    style="cursor: pointer;"
-                    >{{ atm.name }}</a
-                  >
-                </td>
-                <td>{{ atm.city }}</td>
-                <td>{{ atm.coordinate.lat }} , {{ atm.coordinate.lng }}</td>
-                <td>
-                  <span
-                    class="label"
-                    [class.label-success]="atm.status == 0"
-                    [class.label-warning]="atm.status == 1"
-                    [class.label-danger]="atm.status == 2"
-                  ></span>
-                  <span *ngIf="atm.status === 1">Online</span>
-                  <span *ngIf="atm.status === 0">Out Of Cash</span>
-                  <span *ngIf="atm.status === -1">Offline</span>
-                </td>
-                <td>
-                  <app-switch
-                    #switch
-                    class="center"
-                    [isChecked]="atm.status == 0 || atm.status == 1"
-                    (ontoggled)="toggle($event, atm.id)"
-                  ></app-switch>
-                </td>
-              </tr>
+            <tbody>
+            <tr *ngFor="let atm of atmData.data">
+              <td>
+                <a
+                  [swal]="detailSwal"
+                  (click)="this.selectedATM = atm"
+                  style="cursor: pointer;"
+                  >{{ atm.name }}</a
+                >
+              </td>
+              <td>{{ atm.city }}</td>
+              <td>{{ atm.coordinate.lat }} , {{ atm.coordinate.lng }}</td>
+              <td>
+                <span
+                  class="label"
+                  [class.label-success]="atm.status == 0"
+                  [class.label-warning]="atm.status == 1"
+                  [class.label-danger]="atm.status == 2"
+                ></span>
+                <span *ngIf="atm.status === 1">Online</span>
+                <span *ngIf="atm.status === 0">Out Of Cash</span>
+                <span *ngIf="atm.status === -1">Offline</span>
+              </td>
+              <td>
+                <app-switch
+                  #switch
+                  class="center"
+                  [isChecked]="atm.status == 0 || atm.status == 1"
+                  (ontoggled)="toggle($event, atm.id)"
+                ></app-switch>
+              </td>
+            </tr>
             </tbody>
           </table>
         </div>
-        <!-- /.box-body -->
+
+        <ng-template #loading>
+          <div class="loading">
+            <div class="overlay">
+              <i class="fa fa-refresh fa-spin"></i>
+            </div>
+          </div>
+        </ng-template>
       </div>
     </div>
   </div>

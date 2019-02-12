@@ -38,11 +38,13 @@
     [routerLink]="['/admin/settings']"
     [class.active]="apset.isActive"
   >
-    <a href=""> <i class="fa fa-gears"></i> <span> App Settings</span> </a>
+    <a [routerLink]="['/admin/settings']">
+      <i class="fa fa-gears"></i> <span> App Settings</span>
+    </a>
   </li>
 
   <li title="Sign Out" class="treeview">
-    <a href="#">
+    <a (click)="signout()">
       <i class="fa fa-sign-out" aria-hidden="true"></i>
       <span> Sign Out</span>
     </a>

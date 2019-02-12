@@ -31,6 +31,19 @@
   </li>
 
   <li
+    title="Managers"
+    class="treeview"
+    routerLinkActive
+    #man="routerLinkActive"
+    [routerLink]="['managers']"
+    [class.active]="man.isActive"
+  >
+    <a [routerLink]="['managers']">
+      <i class="fa fa-users"></i> <span> Managers</span>
+    </a>
+  </li>
+
+  <li
     title="App Settings"
     class="treeview"
     routerLinkActive

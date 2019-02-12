@@ -49,6 +49,7 @@ export class SigninComponent implements OnInit {
       });
       return;
     }
+
     this.authSvc
       .login(this.email, this.password)
       .pipe(first())
@@ -64,6 +65,7 @@ export class SigninComponent implements OnInit {
           setTimeout(() => this.router.navigateByUrl(this.returnUrl), 6000);
         },
         error => {
+          console.log(error);
           this.iziToast.error({
             id: 'error',
             title: 'Error',

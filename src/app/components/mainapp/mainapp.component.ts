@@ -1,8 +1,9 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { fadeAnimation } from '../../app.animations';
-import { DataService } from '../../providers/data.service';
 import { Subscription } from 'rxjs';
-import { BankData } from '../../app.models';
+import { BankService, BankAuthService } from '@atmhotspot/bank';
+import { BankData } from '@atmhotspot/bank/lib/bank.models';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-mainapp',
@@ -16,12 +17,12 @@ export class MainappComponent implements OnInit, OnDestroy {
 
   private accountPoll: Subscription;
 
-  constructor(private dataSvc: DataService) {}
+  constructor(private router: Router, private dataSvc: BankService, private authSvc: BankAuthService) {}
 
   ngOnInit() {
     this.accountPoll = this.dataSvc
-      .getMyAccount<BankData>()
-      .subscribe(data => (this.myData = data));
+      .getMyAccount()
+      .subscribe(data => (this.myData = data.data));
 
     this.subscriptions.push(this.accountPoll);
   }
@@ -32,5 +33,9 @@ export class MainappComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.subscriptions.forEach(subs => subs.unsubscribe());
+  }
+
+  signout(): void {
+    this.authSvc.logout().then(() => this.router.navigate(['/auth/signin']));
   }
 }

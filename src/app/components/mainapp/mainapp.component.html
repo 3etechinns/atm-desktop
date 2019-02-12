@@ -1,6 +1,6 @@
 <app-sidebar
   [userName]="myData == null ? '' : myData.name"
-  [moreText]="myData == null ? '' : myData.desc"
+  [moreText]="myData == null ? '' : myData.email"
 >
   <li class="header">MAIN NAVIGATION</li>
 
@@ -31,6 +31,19 @@
   </li>
 
   <li
+    title="Managers"
+    class="treeview"
+    routerLinkActive
+    #man="routerLinkActive"
+    [routerLink]="['managers']"
+    [class.active]="man.isActive"
+  >
+    <a [routerLink]="['managers']">
+      <i class="fa fa-users"></i> <span> Managers</span>
+    </a>
+  </li>
+
+  <li
     title="App Settings"
     class="treeview"
     routerLinkActive
@@ -38,11 +51,13 @@
     [routerLink]="['/admin/settings']"
     [class.active]="apset.isActive"
   >
-    <a href=""> <i class="fa fa-gears"></i> <span> App Settings</span> </a>
+    <a [routerLink]="['/admin/settings']">
+      <i class="fa fa-gears"></i> <span> App Settings</span>
+    </a>
   </li>
 
   <li title="Sign Out" class="treeview">
-    <a href="#">
+    <a (click)="signout()">
       <i class="fa fa-sign-out" aria-hidden="true"></i>
       <span> Sign Out</span>
     </a>

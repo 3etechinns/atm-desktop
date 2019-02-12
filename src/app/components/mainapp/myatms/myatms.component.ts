@@ -1,10 +1,13 @@
-import { Component, OnInit, OnDestroy, Input } from '@angular/core';
-import { DataService } from '../../../providers/data.service';
-import { ATMData, DataList, Data } from '../../../app.models';
-import { Subscription } from 'rxjs';
+import { Component, OnInit, Input, ViewChild } from '@angular/core';
+import { interval, Observable } from 'rxjs';
 import { BaseComponent } from '../../base/BaseComponent';
 import { Ng2IzitoastService } from 'ng2-izitoast';
 import * as $ from 'jquery';
+import { BankService } from '@atmhotspot/bank';
+import { PaginatedData, ATMData } from '@atmhotspot/bank/lib/bank.models';
+import { startWith, switchMap } from 'rxjs/operators';
+import { SwalComponent } from '@toverux/ngx-sweetalert2';
+import swal, { SweetAlertOptions } from 'sweetalert2';
 
 @Component({
   selector: 'app-myatms',
@@ -12,18 +15,17 @@ import * as $ from 'jquery';
   styleUrls: ['./myatms.component.scss']
 })
 export class MyatmsComponent extends BaseComponent implements OnInit {
+  @ViewChild('addSwal') private addSwal: SwalComponent;
+  @ViewChild('deleteSwal') private deleteSwal: SwalComponent;
   @Input() showHeader = true;
 
-  atmData: DataList<ATMData>;
+  public alertOption1: SweetAlertOptions = {};
+  public alertOption2: SweetAlertOptions = {};
 
-  atmSub: Subscription;
+  atmObservable: Observable<PaginatedData<ATMData>>;
 
-  canshowFull = true;
-  canshowAdd = false;
   isAddLoading = false;
-
   selectedATM: ATMData = null;
-
   atmName = '';
   atmlocation = '';
   atmLat = 0;
@@ -31,19 +33,52 @@ export class MyatmsComponent extends BaseComponent implements OnInit {
   atmStatus = 'Online';
 
   constructor(
-    private dataSvc: DataService,
+    private dataSvc: BankService,
     private iziToast: Ng2IzitoastService
   ) {
     super();
+
+    this.alertOption1 = {
+      preConfirm: () => {
+        return new Promise((resolve, reject) => {
+          if (this.validate()) {
+            this.isAddLoading = true;
+            return resolve(
+              this.dataSvc
+                .addATM({
+                  name: this.atmName,
+                  city: this.atmlocation,
+                  lat: this.atmLat,
+                  lng: this.atmLng,
+                  status: this.getStatus()
+                })
+                .toPromise()
+            );
+          } else {
+            return reject(
+              new Error('There was an error validating data. Check & Try again')
+            );
+          }
+        });
+      },
+      allowOutsideClick: () => !swal.isLoading()
+    };
+
+    this.alertOption2 = {
+      preConfirm: () => {
+        return this.dataSvc
+          .deleteATM(this.selectedATM.id.toString())
+          .toPromise();
+      },
+      allowOutsideClick: () => !swal.isLoading()
+    };
   }
 
   ngOnInit() {
-    this.atmSub = this.dataSvc.getATMs<DataList<ATMData>>().subscribe(data => {
-      this.atmData = data;
-    });
-    this.getSubscriptions().push(this.atmSub);
-
-    this.setupHeight();
+    this.atmObservable = interval(3000).pipe(
+      startWith(0),
+      switchMap(() => this.dataSvc.getATMs())
+    );
   }
 
   setupHeight() {
@@ -56,66 +91,8 @@ export class MyatmsComponent extends BaseComponent implements OnInit {
     });
   }
 
-  toggle($event, atmID) {}
-
-  showATMDetails($atm: ATMData) {
-    this.canshowFull = false;
-    this.canshowAdd = false;
-    setTimeout(() => {
-      this.selectedATM = $atm;
-    }, 30);
-  }
-
-  showAddNew() {
-    this.canshowAdd = true;
-    this.canshowFull = false;
-  }
-
-  addNewATM() {
-    if (!this.validate()) {
-      return;
-    }
-
-    this.dataSvc
-      .addATM<Data<ATMData>>({
-        name: this.atmName,
-        city: this.atmlocation,
-        lat: this.atmLat,
-        lng: this.atmLng,
-        status: this.getStatus()
-      })
-      .subscribe(
-        () => {
-          this.canshowFull = true;
-          this.iziToast.success({
-            id: 'success',
-            title: 'Success',
-            message: 'ATM was added successfully.',
-            position: 'bottomRight',
-            transitionIn: 'bounceInLeft'
-          });
-        },
-        err => {
-          this.iziToast.error({
-            id: 'error',
-            title: 'Error',
-            message: err.error,
-            position: 'bottomRight',
-            transitionIn: 'bounceInLeft'
-          });
-        }
-      );
-  }
-
   validate(): boolean {
     if (this.atmName.trim().length === 0) {
-      this.iziToast.error({
-        id: 'error',
-        title: 'Error',
-        message: 'ATM Name is required. Check & Try again',
-        position: 'bottomRight',
-        transitionIn: 'bounceInLeft'
-      });
       return false;
     }
     if (
@@ -133,13 +110,6 @@ export class MyatmsComponent extends BaseComponent implements OnInit {
       return false;
     }
     if (this.atmlocation.trim().length === 0) {
-      this.iziToast.error({
-        id: 'error',
-        title: 'Error',
-        message: 'ATM Location is required. Check & Try again',
-        position: 'bottomRight',
-        transitionIn: 'bounceInLeft'
-      });
       return false;
     }
     return true;
@@ -154,5 +124,48 @@ export class MyatmsComponent extends BaseComponent implements OnInit {
       case 'Out of Cash':
         return -1;
     }
+  }
+
+  showSwal(): void {
+    this.addSwal
+      .show()
+      .then(res => {
+        this.isAddLoading = false;
+        console.log(res);
+        swal({
+          type: 'success',
+          title: 'Wow, that was great',
+          text: 'ATM has been successfully added'
+        });
+      })
+      .catch(err => {
+        this.isAddLoading = false;
+        swal({
+          type: 'error',
+          title: 'Oops !',
+          text: err.message
+        });
+      });
+  }
+
+  toggle($event, $id): void {}
+
+  deleteATM() {
+    this.deleteSwal
+      .show()
+      .then(() => {
+        swal({
+          type: 'success',
+          title: 'Wow, that was great',
+          text: 'ATM has been successfully added'
+        });
+      })
+      .catch(err => {
+        swal({
+          type: 'success',
+          title: 'Wow, that was great',
+          text: 'ATM has been successfully added'
+        });
+      });
   }
 }

@@ -1,11 +1,11 @@
 import { Component, OnInit, Input, ViewChild } from '@angular/core';
-import { Subscription, interval, Observable } from 'rxjs';
+import { interval, Observable } from 'rxjs';
 import { BaseComponent } from '../../base/BaseComponent';
 import { Ng2IzitoastService } from 'ng2-izitoast';
 import * as $ from 'jquery';
 import { BankService } from '@atmhotspot/bank';
 import { PaginatedData, ATMData } from '@atmhotspot/bank/lib/bank.models';
-import { map, startWith, switchMap } from 'rxjs/operators';
+import { startWith, switchMap } from 'rxjs/operators';
 import { SwalComponent } from '@toverux/ngx-sweetalert2';
 import swal, { SweetAlertOptions } from 'sweetalert2';
 
@@ -75,7 +75,7 @@ export class MyatmsComponent extends BaseComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.atmObservable = interval(10000).pipe(
+    this.atmObservable = interval(3000).pipe(
       startWith(0),
       switchMap(() => this.dataSvc.getATMs())
     );

@@ -6,6 +6,7 @@ import { ForgetpassComponent } from './forgetpass/forgetpass.component';
 import { RouterModule, Routes } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { AuthComponent } from './auth.component';
+import { LockScreenComponent } from './lock-screen/lock-screen.component';
 
 const mainauthRoutes: Routes = [
   {
@@ -38,6 +39,7 @@ const mainauthRoutes: Routes = [
     SignupComponent,
     SigninComponent,
     ForgetpassComponent,
+    LockScreenComponent,
     AuthComponent
   ],
   imports: [CommonModule, FormsModule, RouterModule.forChild(mainauthRoutes)],

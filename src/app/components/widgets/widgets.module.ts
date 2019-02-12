@@ -10,6 +10,7 @@ import { RouterModule } from '@angular/router';
 import { SmallBoxComponent } from './small-box/small-box.component';
 import { SwitchComponent } from './switch/switch.component';
 import { PaginaterComponent } from './paginater/paginater.component';
+import { SweetAlert2Module } from '@toverux/ngx-sweetalert2';
 
 @NgModule({
   declarations: [

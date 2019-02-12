@@ -3,8 +3,9 @@ import '../polyfills';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { SweetAlert2Module } from '@toverux/ngx-sweetalert2';
 
-import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 
 import { AppRoutingModule } from './app-routing.module';
 
@@ -20,6 +21,7 @@ import * as bootstrap from 'bootstrap';
 import { WidgetsModule } from './components/widgets/widgets.module';
 import { Ng2IziToastModule } from 'ng2-izitoast';
 import { BankModule } from '@atmhotspot/bank';
+import { AppConfig } from '../environments/environment';
 
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(http: HttpClient) {
@@ -37,8 +39,16 @@ export function tokenGetter() {
     BrowserAnimationsModule,
     Ng2IziToastModule,
     WidgetsModule,
+    SweetAlert2Module.forRoot({
+      buttonsStyling: false,
+      customClass: 'modal-content',
+      confirmButtonClass: 'btn btn-primary',
+      cancelButtonClass: 'btn'
+    }),
     AppRoutingModule,
-    BankModule,
+    BankModule.forRoot({
+      isDevMode: AppConfig.production
+    }),
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,

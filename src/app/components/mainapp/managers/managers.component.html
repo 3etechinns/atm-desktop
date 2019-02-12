@@ -1,3 +1,200 @@
-<p>
-  managers works!
-</p>
+<app-content-header [title]="'Manager\'s List'"></app-content-header>
+
+<section class="content">
+  <div class="row">
+    <swal
+      #addSwal
+      title="Add New Manager"
+      confirmButtonText="Submit"
+      [showLoaderOnConfirm]="true"
+      [showCloseButton]="true"
+      [background]="'#ddd'"
+      [options]="alertOption1"
+    >
+      <form *swalPartial>
+        <br />
+        <div
+          class="form-group has-feedback"
+          [class.has-error]="name.invalid && (name.dirty || name.touched)"
+        >
+          <label>Username</label>
+          <div class="input-group">
+            <div class="input-group-addon">
+              <i class="fa fa-user"></i>
+            </div>
+
+            <input
+              type="text"
+              required
+              name="name"
+              #name="ngModel"
+              appForbiddenName="Kofi Manu"
+              [(ngModel)]="username"
+              minlength="4"
+              style="text-transform: capitalize;"
+              class="form-control"
+              placeholder="eg: Kofi Manu"
+              id="name"
+            />
+          </div>
+        </div>
+        <div
+          class="form-group has-feedback"
+          [class.has-error]="
+            myemail.invalid && (myemail.dirty || myemail.touched)
+          "
+        >
+          <label>Email</label>
+          <div class="input-group">
+            <div class="input-group-addon">
+              <i class="fa fa-envelope-o"></i>
+            </div>
+
+            <input
+              type="email"
+              required
+              #myemail="ngModel"
+              [(ngModel)]="email"
+              class="form-control"
+              placeholder="eg: hello@hoss.com"
+              name="email"
+            />
+          </div>
+        </div>
+        <div class="form-group has-feedback">
+          <label>Password</label>
+          <div class="input-group">
+            <div class="input-group-addon">
+              <i class="fa fa-lock"></i>
+            </div>
+            <input
+              value="Codemonster123"
+              type="password"
+              class="form-control"
+              name="password"
+              disabled
+            />
+          </div>
+          <span class="help-block"
+            >Using default password set for managers in settings</span
+          >
+        </div>
+      </form>
+    </swal>
+
+    <swal
+      #detailSwal
+      [showConfirmButton]="false"
+      [showCloseButton]="true"
+      [title]="'Manager Details'"
+    >
+      <br />
+      <div *swalPartial>
+        <div class="box box-primary">
+          <ul class="list-group list-group-unbordered">
+            <li class="list-group-item">
+              <b>Username</b>
+              <a class="pull-right">{{ selectedManager.name }}</a>
+            </li>
+
+            <li class="list-group-item">
+              <b>City</b> <a class="pull-right">{{ selectedManager.email }}</a>
+            </li>
+
+            <li class="list-group-item">
+              <b>Created On</b>
+              <a class="pull-right">{{ selectedManager.created_at }}</a>
+            </li>
+
+            <li class="list-group-item">
+              <b>Last Updated</b>
+              <a class="pull-right">{{ selectedManager.updated_at }}</a>
+            </li>
+
+            <div class="row">
+              <!-- /.col -->
+              <div class="col-xs-12">
+                <button
+                  (click)="deleteManager()"
+                  class="btn btn-danger btn-block btn-flat"
+                >
+                  DELETE MANAGER
+                </button>
+              </div>
+              <!-- /.col -->
+            </div>
+          </ul>
+        </div>
+      </div>
+    </swal>
+
+    <swal
+      #deleteSwal
+      title="Delete {{ selectedManager === null ? '' : selectedManager.name }}?"
+      text="This action cannot be undone"
+      [type]="'question'"
+      [showCancelButton]="true"
+      [showLoaderOnConfirm]="true"
+      [focusCancel]="true"
+      [options]="alertOption2"
+    >
+    </swal>
+
+    <div class="col-md-12">
+      <div class="box box-primary">
+        <div class="box-header with-border">
+          <h3 class="box-title">Showing list of Managers</h3>
+
+          <div class="box-tools pull-right">
+            <a
+              (click)="showAddDialog()"
+              type="button"
+              style="display:inline-block; width: auto; margin-top: 0;"
+              class="btn btn-block btn-success"
+              >Add New Manager</a
+            >
+          </div>
+        </div>
+
+        <div
+          class="box-body"
+          slimScroll
+          [enabled]="true"
+          *ngIf="(managerObservable | async) as managerData; else loading"
+        >
+          <ul
+            class="products-list product-list-in-box"
+            *ngFor="let manager of managerData.data"
+          >
+            <li class="item">
+              <div class="product-img">
+                <img src="assets/images/dp.png" alt="{{ manager.name }}" />
+              </div>
+              <div class="product-info">
+                <a
+                  [swal]="detailSwal"
+                  style="cursor: pointer;"
+                  (click)="this.selectedManager = manager"
+                  class="product-title"
+                  >{{ manager.name }}
+                  <span class="label label-warning pull-right">$1800</span></a
+                >
+                <span class="product-description">
+                  {{ manager.email }}
+                </span>
+              </div>
+            </li>
+          </ul>
+        </div>
+
+        <ng-template #loading>
+          <div class="loading">
+            <div class="overlay">
+              <i class="fa fa-refresh fa-spin"></i>
+            </div>
+          </div>
+        </ng-template>
+      </div>
+    </div>
+  </div>
+</section>

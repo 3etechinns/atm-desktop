@@ -29,14 +29,14 @@ export class DashboardComponent extends BaseComponent implements OnInit {
   ngOnInit() {
     this.init();
 
-    this.atmPoll = interval(5000)
+    this.atmPoll = interval(10000)
       .pipe(
         startWith(0),
         switchMap(() => this.dataSvc.getATMs())
       )
       .subscribe(data => (this.atmData = data));
 
-    this.managerPoll = interval(5000)
+    this.managerPoll = interval(10000)
       .pipe(
         startWith(0),
         switchMap(() => this.dataSvc.getManagers())

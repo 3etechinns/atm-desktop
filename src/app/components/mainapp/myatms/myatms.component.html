@@ -5,214 +5,101 @@
 
 <section class="content">
   <div class="row">
-    <div class="{{ canshowFull ? 'col-md-12 anim' : 'col-md-8 anim' }}">
-      <div class="box box-primary">
-        <div class="box-header with-border">
-          <h3 class="box-title">Showing All ATM's</h3>
-
-          <div class="box-tools pull-right" *ngIf="!canshowAdd">
-            <a
-              type="button"
-              style="display:inline-block; width: auto; margin-top: 0;"
-              (click)="showAddNew()"
-              class="btn btn-block btn-success"
-              >Add New ATM</a
-            >
-          </div>
-        </div>
-        <!-- /.box-header -->
-        <div class="box-body" slimScroll [enabled]="true">
-          <table class="table table-bordered table-striped">
-            <!-- <table class="table table-bordered table-hover dataTable"> -->
-            <thead class="no-select">
-              <tr>
-                <th>Name</th>
-                <th>Location</th>
-                <th>Coordinate</th>
-                <th>Status</th>
-              </tr>
-            </thead>
-            <tbody *ngIf="atmData">
-              <tr *ngFor="let atm of atmData.data">
-                <td>
-                  <a (click)="showATMDetails(atm)" style="cursor: pointer;">{{
-                    atm.name
-                  }}</a>
-                </td>
-                <td>{{ atm.city }}</td>
-                <td>{{ atm.coordinate.lat }} , {{ atm.coordinate.lng }}</td>
-                <td>
-                  <span
-                    class="label"
-                    [class.label-success]="atm.status == 0"
-                    [class.label-warning]="atm.status == 1"
-                    [class.label-danger]="atm.status == 2"
-                  ></span>
-                  <span *ngIf="atm.status === 1">Online</span>
-                  <span *ngIf="atm.status === 0">Out Of Cash</span>
-                  <span *ngIf="atm.status === -1">Offline</span>
-                </td>
-                <td>
-                  <app-switch
-                    #switch
-                    class="center"
-                    [isChecked]="atm.status == 0 || atm.status == 1"
-                    (ontoggled)="toggle($event, atm.id)"
-                  ></app-switch>
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-        <!-- /.box-body -->
-      </div>
-    </div>
-
-    <div class="col-md-4 col-sm-6 anim" *ngIf="canshowAdd">
-      <div class="box box-info">
-        <div class="box-header with-border">
-          <h3 class="box-title">Add New ATM</h3>
-          <div class="box-tools pull-right">
-            <button
-              type="button"
-              class="btn btn-box-tool"
-              (click)="this.canshowAdd = false; this.canshowFull = true"
-            >
-              <i class="fa fa-times"></i>
-            </button>
-          </div>
-        </div>
-
-        <div class="box-body">
-          <form (ngSubmit)="addNewATM()">
-            <div class="form-group has-feedback">
-              <label>ATM Name</label>
-              <div class="input-group">
-                <div class="input-group-addon">
-                  <i class="fa fa-credit-card"></i>
-                </div>
-
-                <input
-                  type="text"
-                  style="text-transform: capitalize;"
-                  class="form-control"
-                  placeholder="eg: xoxo ATM"
-                  name="name"
-                  [(ngModel)]="atmName"
-                />
-              </div>
-            </div>
-            <div class="form-group has-feedback">
-              <label>Location</label>
-              <div class="input-group">
-                <div class="input-group-addon">
-                  <i class="fa fa-map"></i>
-                </div>
-
-                <input
-                  type="text"
-                  style="text-transform: capitalize;"
-                  class="form-control"
-                  placeholder="eg: Accra"
-                  name="location"
-                  [(ngModel)]="atmlocation"
-                />
-              </div>
-            </div>
-            <div class="form-group has-feedback">
-              <label>Coordinate</label>
-              <div class="input-group">
-                <div class="input-group-addon">
-                  <i class="fa fa-map-marker"></i>
-                </div>
-
-                <div class="input-group">
-                  <span class="input-group-addon">Lat </span>
-                  <input
-                    type="number"
-                    class="form-control"
-                    name="lat"
-                    [(ngModel)]="atmLat"
-                  />
-                </div>
-
-                <div class="input-group">
-                  <span class="input-group-addon">Lng</span>
-                  <input
-                    type="number"
-                    class="form-control"
-                    name="lng"
-                    [(ngModel)]="atmLng"
-                  />
-                </div>
-
-                <!-- <input type="text" class="form-control" placeholder="eg: XX.X, XX.X" name="coordinate" [(ngModel)]="atmCoordinate"> -->
-              </div>
-            </div>
-            <div class="form-group">
-              <label>Set a Status</label>
-              <select
-                class="form-control"
-                style="width: 100%;"
-                [(ngModel)]="atmStatus"
-                name="status"
-              >
-                <option>Online</option>
-                <option>Offline</option>
-                <option>Out Of Cash</option>
-              </select>
-            </div>
-
-            <div class="row">
-              <!-- /.col -->
-              <div class="col-xs-12">
-                <button
-                  type="submit"
-                  class="btn btn-primary btn-block btn-flat"
-                >
-                  SUBMIT
-                </button>
-              </div>
-              <!-- /.col -->
-            </div>
-          </form>
-        </div>
-
-        <div class="overlay" *ngIf="isAddLoading">
-          <i class="fa fa-refresh fa-spin primary" style="color:#2196f3"></i>
-        </div>
-      </div>
-    </div>
-
-    <div
-      class="col-md-4 anim"
-      *ngIf="!canshowFull && !canshowAdd"
-      [class.loading]="selectedATM === null"
+    <swal
+      #addSwal
+      title="Fill the form, rapidly"
+      confirmButtonText="Submit"
+      [showLoaderOnConfirm]="true"
+      [options]="alertOption1"
+      [showCloseButton]="true"
     >
-      <div class="box box-primary">
-        <div class="box-header with-border">
-          <h3 class="box-title">ATM Details</h3>
+      <form *swalPartial>
+        <div class="form-group has-feedback">
+          <label>ATM Name</label>
+          <div class="input-group">
+            <div class="input-group-addon">
+              <i class="fa fa-credit-card"></i>
+            </div>
 
-          <div class="box-tools pull-right">
-            <button
-              type="button"
-              class="btn btn-box-tool"
-              data-widget="collapse"
-            >
-              <i class="fa fa-minus"></i>
-            </button>
-            <button
-              type="button"
-              class="btn btn-box-tool"
-              (click)="canshowFull = true"
-            >
-              <i class="fa fa-times"></i>
-            </button>
+            <input
+              type="text"
+              style="text-transform: capitalize;"
+              class="form-control"
+              placeholder="eg: xoxo ATM"
+              name="name"
+              [(ngModel)]="atmName"
+              [disabled]="isAddLoading"
+            />
           </div>
         </div>
-        <!-- /.box-header -->
-        <div class="box-body">
-          <ul class="list-group list-group-unbordered" *ngIf="selectedATM">
+        <div class="form-group has-feedback">
+          <label>Location</label>
+          <div class="input-group">
+            <div class="input-group-addon">
+              <i class="fa fa-map"></i>
+            </div>
+
+            <input
+              type="text"
+              style="text-transform: capitalize;"
+              class="form-control"
+              placeholder="eg: Accra"
+              name="location"
+              [(ngModel)]="atmlocation"
+              [disabled]="isAddLoading"
+            />
+          </div>
+        </div>
+        <div class="form-group has-feedback">
+          <label>Coordinate</label>
+          <div class="row">
+            <div class="col-xs-6">
+              <div class="input-group">
+                <span class="input-group-addon">Lat </span>
+                <input
+                  type="number"
+                  class="form-control"
+                  name="lat"
+                  [(ngModel)]="atmLat"
+                  [disabled]="isAddLoading"
+                />
+              </div>
+            </div>
+            <div class="col-xs-6">
+              <div class="input-group">
+                <span class="input-group-addon">Lng</span>
+                <input
+                  type="number"
+                  class="form-control"
+                  name="lng"
+                  [(ngModel)]="atmLng"
+                  [disabled]="isAddLoading"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Set a Status</label>
+          <select
+            class="form-control"
+            style="width: 100%;"
+            [(ngModel)]="atmStatus"
+            name="status"
+            [disabled]="isAddLoading"
+          >
+            <option>Online</option>
+            <option>Offline</option>
+            <option>Out Of Cash</option>
+          </select>
+        </div>
+      </form>
+    </swal>
+
+    <swal #detailSwal [showConfirmButton]="false" [showCloseButton]="true">
+      <div *swalPartial>
+        <div class="box box-primary">
+          <ul class="list-group list-group-unbordered">
             <li class="list-group-item">
               <b>ATM Name</b> <a class="pull-right">{{ selectedATM.name }}</a>
             </li>
@@ -255,7 +142,10 @@
             <div class="row">
               <!-- /.col -->
               <div class="col-xs-12">
-                <button class="btn btn-warning btn-block btn-flat">
+                <button
+                  (click)="deleteATM()"
+                  class="btn btn-warning btn-block btn-flat"
+                >
                   DELETE ATM
                 </button>
               </div>
@@ -263,11 +153,83 @@
             </div>
           </ul>
         </div>
-        <!-- /.box-body -->
+      </div>
+    </swal>
 
-        <div class="overlay" *ngIf="selectedATM === null">
-          <i class="fa fa-refresh fa-spin primary" style="color:#2196f3"></i>
+    <swal
+      #deleteSwal
+      title="Delete {{ selectedATM === null ? '' : selectedATM.name }}?"
+      text="This action cannot be undone"
+      [type]="'question'"
+      [showCancelButton]="true"
+      [showLoaderOnConfirm]="true"
+      [focusCancel]="true"
+      [options]="alertOption2"
+    >
+    </swal>
+
+    <div class="col-md-12 anim">
+      <div class="box box-primary">
+        <div class="box-header with-border">
+          <h3 class="box-title">Showing All ATM's</h3>
+
+          <div class="box-tools pull-right">
+            <a
+              (click)="showSwal()"
+              type="button"
+              style="display:inline-block; width: auto; margin-top: 0;"
+              class="btn btn-block btn-success"
+              >Add New ATM</a
+            >
+          </div>
         </div>
+        <!-- /.box-header -->
+        <div class="box-body" slimScroll [enabled]="true">
+          <table class="table table-bordered table-striped">
+            <thead class="no-select">
+              <tr>
+                <th>Name</th>
+                <th>Location</th>
+                <th>Coordinate</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody *ngIf="atmData">
+              <tr *ngFor="let atm of atmData.data">
+                <td>
+                  <a
+                    [swal]="detailSwal"
+                    (click)="this.selectedATM = atm"
+                    style="cursor: pointer;"
+                    >{{ atm.name }}</a
+                  >
+                </td>
+                <td>{{ atm.city }}</td>
+                <td>{{ atm.coordinate.lat }} , {{ atm.coordinate.lng }}</td>
+                <td>
+                  <span
+                    class="label"
+                    [class.label-success]="atm.status == 0"
+                    [class.label-warning]="atm.status == 1"
+                    [class.label-danger]="atm.status == 2"
+                  ></span>
+                  <span *ngIf="atm.status === 1">Online</span>
+                  <span *ngIf="atm.status === 0">Out Of Cash</span>
+                  <span *ngIf="atm.status === -1">Offline</span>
+                </td>
+                <td>
+                  <app-switch
+                    #switch
+                    class="center"
+                    [isChecked]="atm.status == 0 || atm.status == 1"
+                    (ontoggled)="toggle($event, atm.id)"
+                  ></app-switch>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <!-- /.box-body -->
       </div>
     </div>
   </div>

@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, ViewChild } from '@angular/core';
 import { Subscription, interval } from 'rxjs';
 import { BaseComponent } from '../../base/BaseComponent';
 import { Ng2IzitoastService } from 'ng2-izitoast';
@@ -6,6 +6,8 @@ import * as $ from 'jquery';
 import { BankService } from '@atmhotspot/bank';
 import { PaginatedData, ATMData } from '@atmhotspot/bank/lib/bank.models';
 import { startWith, switchMap } from 'rxjs/operators';
+import { SwalComponent } from '@toverux/ngx-sweetalert2';
+import swal, { SweetAlertOptions } from 'sweetalert2';
 
 @Component({
   selector: 'app-myatms',
@@ -13,15 +15,21 @@ import { startWith, switchMap } from 'rxjs/operators';
   styleUrls: ['./myatms.component.scss']
 })
 export class MyatmsComponent extends BaseComponent implements OnInit {
+  @ViewChild('addSwal') private addSwal: SwalComponent;
+
+  @ViewChild('deleteSwal') private deleteSwal: SwalComponent;
+
+  public alertOption1: SweetAlertOptions = {};
+  public alertOption2: SweetAlertOptions = {};
+
   @Input() showHeader = true;
 
   atmData: PaginatedData<ATMData>;
 
   atmSub: Subscription;
 
-  canshowFull = true;
-  canshowAdd = false;
   isAddLoading = false;
+  hasjustAdded = false;
 
   selectedATM: ATMData = null;
 
@@ -36,10 +44,45 @@ export class MyatmsComponent extends BaseComponent implements OnInit {
     private iziToast: Ng2IzitoastService
   ) {
     super();
+
+    this.alertOption1 = {
+      preConfirm: () => {
+        return new Promise((resolve, reject) => {
+          if (this.validate()) {
+            this.isAddLoading = true;
+            return resolve(
+              this.dataSvc
+                .addATM({
+                  name: this.atmName,
+                  city: this.atmlocation,
+                  lat: this.atmLat,
+                  lng: this.atmLng,
+                  status: this.getStatus()
+                })
+                .toPromise()
+            );
+          } else {
+            return reject(
+              new Error('There was an error validating data. Check & Try again')
+            );
+          }
+        });
+      },
+      allowOutsideClick: () => !swal.isLoading()
+    };
+
+    this.alertOption2 = {
+      preConfirm: () => {
+        return this.dataSvc
+          .deleteATM(this.selectedATM.id.toString())
+          .toPromise();
+      },
+      allowOutsideClick: () => !swal.isLoading()
+    };
   }
 
   ngOnInit() {
-    this.atmSub = interval(5000)
+    this.atmSub = interval(10000)
       .pipe(
         startWith(0),
         switchMap(() => this.dataSvc.getATMs())
@@ -60,66 +103,8 @@ export class MyatmsComponent extends BaseComponent implements OnInit {
     });
   }
 
-  toggle($event, atmID) {}
-
-  showATMDetails($atm: ATMData) {
-    this.canshowFull = false;
-    this.canshowAdd = false;
-    setTimeout(() => {
-      this.selectedATM = $atm;
-    }, 30);
-  }
-
-  showAddNew() {
-    this.canshowAdd = true;
-    this.canshowFull = false;
-  }
-
-  addNewATM() {
-    if (!this.validate()) {
-      return;
-    }
-
-    this.dataSvc
-      .addATM({
-        name: this.atmName,
-        city: this.atmlocation,
-        lat: this.atmLat,
-        lng: this.atmLng,
-        status: this.getStatus()
-      })
-      .subscribe(
-        () => {
-          this.canshowFull = true;
-          this.iziToast.success({
-            id: 'success',
-            title: 'Success',
-            message: 'ATM was added successfully.',
-            position: 'bottomRight',
-            transitionIn: 'bounceInLeft'
-          });
-        },
-        err => {
-          this.iziToast.error({
-            id: 'error',
-            title: 'Error',
-            message: err.error,
-            position: 'bottomRight',
-            transitionIn: 'bounceInLeft'
-          });
-        }
-      );
-  }
-
   validate(): boolean {
     if (this.atmName.trim().length === 0) {
-      this.iziToast.error({
-        id: 'error',
-        title: 'Error',
-        message: 'ATM Name is required. Check & Try again',
-        position: 'bottomRight',
-        transitionIn: 'bounceInLeft'
-      });
       return false;
     }
     if (
@@ -137,13 +122,6 @@ export class MyatmsComponent extends BaseComponent implements OnInit {
       return false;
     }
     if (this.atmlocation.trim().length === 0) {
-      this.iziToast.error({
-        id: 'error',
-        title: 'Error',
-        message: 'ATM Location is required. Check & Try again',
-        position: 'bottomRight',
-        transitionIn: 'bounceInLeft'
-      });
       return false;
     }
     return true;
@@ -158,5 +136,48 @@ export class MyatmsComponent extends BaseComponent implements OnInit {
       case 'Out of Cash':
         return -1;
     }
+  }
+
+  showSwal(): void {
+    this.addSwal
+      .show()
+      .then(res => {
+        this.isAddLoading = false;
+        console.log(res);
+        swal({
+          type: 'success',
+          title: 'Wow, that was great',
+          text: 'ATM has been successfully added'
+        });
+      })
+      .catch(err => {
+        this.isAddLoading = false;
+        swal({
+          type: 'error',
+          title: 'Oops !',
+          text: err.message
+        });
+      });
+  }
+
+  toggle($event, $id): void {}
+
+  deleteATM() {
+    this.deleteSwal
+      .show()
+      .then(() => {
+        swal({
+          type: 'success',
+          title: 'Wow, that was great',
+          text: 'ATM has been successfully added'
+        });
+      })
+      .catch(err => {
+        swal({
+          type: 'success',
+          title: 'Wow, that was great',
+          text: 'ATM has been successfully added'
+        });
+      });
   }
 }

@@ -8,6 +8,7 @@ import { SettingsComponent } from './settings/settings.component';
 import { MainappComponent } from './mainapp.component';
 import { FormsModule } from '@angular/forms';
 import { NgSlimScrollModule, SLIMSCROLL_DEFAULTS } from 'ngx-slimscroll';
+import { SweetAlert2Module } from '@toverux/ngx-sweetalert2';
 
 const mainapproutes: Routes = [
   {
@@ -42,6 +43,7 @@ const mainapproutes: Routes = [
   imports: [
     CommonModule,
     FormsModule,
+    SweetAlert2Module,
     NgSlimScrollModule,
     RouterModule.forChild(mainapproutes),
     WidgetsModule

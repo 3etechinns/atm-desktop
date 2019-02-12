@@ -21,7 +21,7 @@ export class MainappComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.accountPoll = this.dataSvc
       .getMyAccount()
-      .subscribe(data => (this.myData = data));
+      .subscribe(data => (this.myData = data.data));
 
     this.subscriptions.push(this.accountPoll);
   }

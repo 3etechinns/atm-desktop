@@ -198,7 +198,7 @@
           [enabled]="true"
           *ngIf="(atmObservable | async) as atmData; else loading"
         >
-          <table class="table table-bordered table-striped">
+          <table class="table table-bordered table-striped" *ngIf="atmData.data.length > 0; else noATM">
             <thead class="no-select">
               <tr>
                 <th>Name</th>
@@ -243,10 +243,18 @@
           </table>
         </div>
 
+        <ng-template #noATM>
+          <div class="loading">
+            <div class="overlay">
+              <i class="fa fa-chain-broken"></i>
+            </div>
+          </div>
+        </ng-template>
+
         <ng-template #loading>
           <div class="loading">
             <div class="overlay">
-              <i class="fa fa-refresh fa-spin"></i>
+              <i class="fa fa-circle-o-notch fa-spin" style="color: #0d6aad"></i>
             </div>
           </div>
         </ng-template>

@@ -23,6 +23,10 @@ export class TitlebarComponent implements OnInit {
     this.appwindow.minimize();
   }
 
+  openDevConsole() {
+    this.appwindow.webContents.openDevTools({mode: 'detach'});
+  }
+
   close() {
     this.appwindow.close();
   }

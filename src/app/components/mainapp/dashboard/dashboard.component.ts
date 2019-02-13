@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import * as $ from 'jquery';
-import {interval, Observable} from 'rxjs';
+import { interval, Observable } from 'rxjs';
 import { BankService } from '@atmhotspot/bank';
 import { startWith, switchMap } from 'rxjs/operators';
 import {
@@ -15,27 +15,23 @@ import {
   styleUrls: ['./dashboard.component.scss']
 })
 export class DashboardComponent implements OnInit {
-
   atmSub: Observable<PaginatedData<ATMData>>;
   managerSub: Observable<PaginatedData<ManagerData>>;
 
-  constructor(private dataSvc: BankService) {
-  }
+  constructor(private dataSvc: BankService) {}
 
   ngOnInit() {
     this.init();
 
-    this.atmSub = interval(10000)
-      .pipe(
-        startWith(0),
-        switchMap(() => this.dataSvc.getATMs())
-      );
+    this.atmSub = interval(10000).pipe(
+      startWith(0),
+      switchMap(() => this.dataSvc.getATMs())
+    );
 
-    this.managerSub = interval(10000)
-      .pipe(
-        startWith(0),
-        switchMap(() => this.dataSvc.getManagers())
-      );
+    this.managerSub = interval(10000).pipe(
+      startWith(0),
+      switchMap(() => this.dataSvc.getManagers())
+    );
   }
 
   init() {
@@ -51,6 +47,4 @@ export class DashboardComponent implements OnInit {
       );
     });
   }
-
-  toggle($event, $id) {}
 }

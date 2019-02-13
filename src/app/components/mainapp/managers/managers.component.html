@@ -162,35 +162,48 @@
           [enabled]="true"
           *ngIf="(managerObservable | async) as managerData; else loading"
         >
-          <ul
-            class="products-list product-list-in-box"
-            *ngFor="let manager of managerData.data"
-          >
-            <li class="item">
-              <div class="product-img">
-                <img src="assets/images/dp.png" alt="{{ manager.name }}" />
-              </div>
-              <div class="product-info">
-                <a
-                  [swal]="detailSwal"
-                  style="cursor: pointer;"
-                  (click)="this.selectedManager = manager"
-                  class="product-title"
-                  >{{ manager.name }}
-                  <span class="label label-warning pull-right">$1800</span></a
-                >
-                <span class="product-description">
-                  {{ manager.email }}
-                </span>
-              </div>
-            </li>
-          </ul>
+          <div *ngIf="managerData.data.length > 0; else noManager">
+            <ul
+              class="products-list product-list-in-box"
+              *ngFor="let manager of managerData.data"
+            >
+              <li class="item">
+                <div class="product-img">
+                  <img src="assets/images/dp.png" alt="{{ manager.name }}" />
+                </div>
+                <div class="product-info">
+                  <a
+                    [swal]="detailSwal"
+                    style="cursor: pointer;"
+                    (click)="this.selectedManager = manager"
+                    class="product-title"
+                    >{{ manager.name }}
+                    <span class="label label-warning pull-right">$1800</span></a
+                  >
+                  <span class="product-description">
+                    {{ manager.email }}
+                  </span>
+                </div>
+              </li>
+            </ul>
+          </div>
         </div>
+
+        <ng-template #noManager>
+          <div class="loading">
+            <div class="overlay">
+              <i class="fa fa-chain-broken"></i>
+            </div>
+          </div>
+        </ng-template>
 
         <ng-template #loading>
           <div class="loading">
             <div class="overlay">
-              <i class="fa fa-refresh fa-spin"></i>
+              <i
+                class="fa fa-circle-o-notch fa-spin"
+                style="color: #0d6aad"
+              ></i>
             </div>
           </div>
         </ng-template>

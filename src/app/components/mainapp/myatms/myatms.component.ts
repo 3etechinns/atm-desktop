@@ -131,12 +131,13 @@ export class MyatmsComponent extends BaseComponent implements OnInit {
       .show()
       .then(res => {
         this.isAddLoading = false;
-        console.log(res);
-        swal({
-          type: 'success',
-          title: 'Wow, that was great',
-          text: 'ATM has been successfully added'
-        });
+        if (res.value !== undefined && res.value.data !== undefined) {
+          swal({
+            type: 'success',
+            title: 'Wow, that was great',
+            text: 'ATM has been successfully added'
+          });
+        }
       })
       .catch(err => {
         this.isAddLoading = false;

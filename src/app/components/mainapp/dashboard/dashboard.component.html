@@ -6,7 +6,7 @@
         [title]="'ATM\'s Count'"
         [color]="'bg-aqua'"
         [icon]="'fa fa-credit-card'"
-        [value]="atmData == null ? 0 : atmData.data.length"
+        [value]="(atmSub | async)?.data.length"
       >
       </app-small-box>
     </div>
@@ -15,8 +15,8 @@
       <app-small-box
         [title]="'ATM Managers'"
         [color]="'bg-red'"
-        [icon]="'fa fa-user'"
-        [value]="managerData == null ? 0 : managerData.data.length"
+        [icon]="'fa fa-users'"
+        [value]="(managerSub | async)?.data.length"
       >
       </app-small-box>
     </div>

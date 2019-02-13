@@ -59,12 +59,14 @@ export class ManagersComponent implements OnInit {
   showAddDialog(): void {
     this.addSwal
       .show()
-      .then(() => {
-        swal({
-          type: 'success',
-          title: 'Wow, that was great',
-          text: 'Manager has been successfully added'
-        });
+      .then(res => {
+        if (res.value !== undefined && res.value.data !== undefined) {
+          swal({
+            type: 'success',
+            title: 'Wow, that was great',
+            text: 'Manager has been successfully added'
+          });
+        }
       })
       .catch(err => {
         console.log(err);

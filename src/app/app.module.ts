@@ -22,6 +22,7 @@ import { WidgetsModule } from './components/widgets/widgets.module';
 import { Ng2IziToastModule } from 'ng2-izitoast';
 import { BankModule } from '@atmhotspot/bank';
 import { AppConfig } from '../environments/environment';
+import { ServiceWorkerModule } from '@angular/service-worker';
 
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(http: HttpClient) {
@@ -51,6 +52,9 @@ export function HttpLoaderFactory(http: HttpClient) {
         useFactory: HttpLoaderFactory,
         deps: [HttpClient]
       }
+    }),
+    ServiceWorkerModule.register('ngsw-worker.js', {
+      enabled: AppConfig.production
     })
   ],
   providers: [ElectronService],

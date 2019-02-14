@@ -5,14 +5,14 @@ import {
   Router,
   RouterStateSnapshot
 } from '@angular/router';
-import { JwtHelperService } from '@auth0/angular-jwt';
+import { BankAuthService } from '@atmhotspot/bank';
 
 @Injectable()
 export class NonAuthGuard implements CanActivate {
-  constructor(private router: Router, private jwtHelper: JwtHelperService) {}
+  constructor(private router: Router, private authSvc: BankAuthService) {}
 
-  canActivate(next: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
-    if (this.jwtHelper.isTokenExpired()) {
+  canActivate() {
+    if (this.authSvc.isTokenExpired()) {
       return true;
     }
 

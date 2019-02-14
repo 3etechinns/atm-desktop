@@ -141,11 +141,13 @@
               <span
                 class="label pull-right"
                 [class.label-success]="selectedATM.status === 1"
-                [class.label-danger]="selectedATM.status !== 1"
+                [class.label-warning]="selectedATM.status === -1"
+                [class.label-danger]="selectedATM.status === 0"
+
               >
                 <span *ngIf="selectedATM.status === 1">Online</span>
-                <span *ngIf="selectedATM.status === 0">Out Of Cash</span>
-                <span *ngIf="selectedATM.status === -1">Offline</span>
+                <span *ngIf="selectedATM.status === -1">Out Of Cash</span>
+                <span *ngIf="selectedATM.status === 0">Offline</span>
               </span>
             </li>
 
@@ -327,17 +329,17 @@
                 <td>{{ atm.city }}</td>
                 <td>{{ atm.coordinate.lat }} , {{ atm.coordinate.lng }}</td>
                 <td>
-                  <span class="label" [class.label-danger]="atm.status === -1" [class.label-success]="atm.status === 1" [class.label-warning]="atm.status === 0">
+                  <span class="label" [class.label-danger]="atm.status === 0" [class.label-success]="atm.status === 1" [class.label-warning]="atm.status === -1">
                     <span *ngIf="atm.status === 1">Online</span>
-                    <span *ngIf="atm.status === 0">Out Of Cash</span>
-                    <span *ngIf="atm.status === -1">Offline</span>
+                    <span *ngIf="atm.status === -1">Out Of Cash</span>
+                    <span *ngIf="atm.status === 0">Offline</span>
                   </span>
                 </td>
                 <td>
                   <app-switch
                     #switch
                     class="center"
-                    [isChecked]="atm.status == 0 || atm.status == 1"
+                    [isChecked]="atm.status == -1 || atm.status == 1"
                     (ontoggled)="toggle($event, atm.id)"
                   ></app-switch>
                 </td>

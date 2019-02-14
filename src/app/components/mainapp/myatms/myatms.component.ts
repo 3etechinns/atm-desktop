@@ -79,7 +79,6 @@ export class MyatmsComponent extends BaseComponent implements OnInit {
       preConfirm: () => {
         return new Promise((resolve, reject) => {
           if (this.validate()) {
-            this.isAddLoading = true;
             return resolve(
               this.dataSvc
                 .updateATM(this.selectedATM.id.toString(), {
@@ -87,7 +86,7 @@ export class MyatmsComponent extends BaseComponent implements OnInit {
                   city: this.atmlocation,
                   lat: this.atmLat,
                   lng: this.atmLng,
-                  status: this.getStatusFromString(this.getStatus())
+                  status: this.getStatus()
                 })
                 .toPromise()
             );
@@ -144,12 +143,12 @@ export class MyatmsComponent extends BaseComponent implements OnInit {
   }
 
   getStatus(): number {
-    switch (this.atmStatus) {
+    switch (this.atmStatus.trim()) {
       case 'Online':
         return 1;
       case 'Offline':
         return 0;
-      case 'Out of Cash':
+      case 'Out Of Cash':
         return -1;
     }
   }
@@ -161,7 +160,7 @@ export class MyatmsComponent extends BaseComponent implements OnInit {
       case 1:
         return 'Online';
       case -1:
-        return 'Out of Cash';
+        return 'Out Of Cash';
     }
   }
 
@@ -188,7 +187,9 @@ export class MyatmsComponent extends BaseComponent implements OnInit {
       });
   }
 
-  toggle($event, $id): void {}
+  toggle($event: boolean, $id): void {
+    this.dataSvc.updateATM($id, { status: $event ? 1 : 0 }).toPromise();
+  }
 
   deleteATM(): void {
     this.deleteSwal
@@ -224,22 +225,25 @@ export class MyatmsComponent extends BaseComponent implements OnInit {
         this.atmStatus = 'Online';
         this.atmLat = 0;
         this.atmLng = 0;
-        swal({
-          type: 'success',
-          title: 'Wow, that was great',
-          text: 'ATM has been successfully added'
-        });
+        if (res.value !== undefined && res.value.data !== undefined) {
+          swal({
+            type: 'success',
+            title: 'Wow, that was great',
+            text: 'ATM has been successfully added'
+          });
+        }
       })
       .catch(err => {
+        console.log(err);
         this.atmName = '';
         this.atmlocation = '';
         this.atmStatus = 'Online';
         this.atmLat = 0;
         this.atmLng = 0;
         swal({
-          type: 'success',
-          title: 'Wow, that was great',
-          text: 'ATM has been successfully added'
+          type: 'error',
+          title: 'Oops !',
+          text: err.message
         });
       });
   }

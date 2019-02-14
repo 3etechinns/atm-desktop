@@ -6,12 +6,13 @@ import { ForgetpassComponent } from './forgetpass/forgetpass.component';
 import { RouterModule, Routes } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { AuthComponent } from './auth.component';
-import { LockScreenComponent } from './lock-screen/lock-screen.component';
+import { NonAuthGuard } from '../../guards/non-auth.guard';
 
 const mainauthRoutes: Routes = [
   {
     path: '',
     component: AuthComponent,
+    canActivateChild: [NonAuthGuard],
     children: [
       {
         path: '',
@@ -39,7 +40,6 @@ const mainauthRoutes: Routes = [
     SignupComponent,
     SigninComponent,
     ForgetpassComponent,
-    LockScreenComponent,
     AuthComponent
   ],
   imports: [CommonModule, FormsModule, RouterModule.forChild(mainauthRoutes)],

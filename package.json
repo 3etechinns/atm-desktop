@@ -40,6 +40,7 @@
     "version": "conventional-changelog -i CHANGELOG.mbd -s -r 0 && git add CHANGELOG.md"
   },
   "dependencies": {
+    "@angular/pwa": "^0.13.1",
     "@atmhotspot/bank": "file:dist/atmhotspot/bank/atmhotspot-bank-1.0.0.tgz",
     "@auth0/angular-jwt": "^2.1.0",
     "@toverux/ngx-sweetalert2": "^4.0.0",
@@ -69,6 +70,7 @@
     "@angular/platform-browser": "7.0.3",
     "@angular/platform-browser-dynamic": "7.0.3",
     "@angular/router": "7.0.3",
+    "@angular/service-worker": "7.0.3",
     "@ngx-translate/core": "10.0.1",
     "@ngx-translate/http-loader": "3.0.1",
     "@types/bootstrap": "^4.1.2",

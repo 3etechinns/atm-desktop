@@ -17,6 +17,6 @@ export class SwitchComponent implements OnInit {
   ngOnInit() {}
 
   onchange(event$) {
-    this.ontoggled.emit(!this.isChecked);
+    this.ontoggled.emit(event$.srcElement.checked);
   }
 }

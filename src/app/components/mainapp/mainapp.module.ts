@@ -10,11 +10,13 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgSlimScrollModule, SLIMSCROLL_DEFAULTS } from 'ngx-slimscroll';
 import { SweetAlert2Module } from '@toverux/ngx-sweetalert2';
 import { ManagersComponent } from './managers/managers.component';
+import { AuthGuard } from '../../guards/auth.guard';
 
 const mainapproutes: Routes = [
   {
     path: '',
     component: MainappComponent,
+    canActivateChild: [AuthGuard],
     children: [
       {
         path: '',

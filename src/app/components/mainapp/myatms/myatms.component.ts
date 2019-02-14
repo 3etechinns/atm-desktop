@@ -17,10 +17,12 @@ import swal, { SweetAlertOptions } from 'sweetalert2';
 export class MyatmsComponent extends BaseComponent implements OnInit {
   @ViewChild('addSwal') private addSwal: SwalComponent;
   @ViewChild('deleteSwal') private deleteSwal: SwalComponent;
+  @ViewChild('updateSwal') private updateSwal: SwalComponent;
   @Input() showHeader = true;
 
-  public alertOption1: SweetAlertOptions = {};
-  public alertOption2: SweetAlertOptions = {};
+  alertOption1: SweetAlertOptions = {};
+  alertOption2: SweetAlertOptions = {};
+  alertOption3: SweetAlertOptions = {};
 
   atmObservable: Observable<PaginatedData<ATMData>>;
 
@@ -72,10 +74,36 @@ export class MyatmsComponent extends BaseComponent implements OnInit {
       },
       allowOutsideClick: () => !swal.isLoading()
     };
+
+    this.alertOption3 = {
+      preConfirm: () => {
+        return new Promise((resolve, reject) => {
+          if (this.validate()) {
+            this.isAddLoading = true;
+            return resolve(
+              this.dataSvc
+                .updateATM(this.selectedATM.id.toString(), {
+                  name: this.atmName,
+                  city: this.atmlocation,
+                  lat: this.atmLat,
+                  lng: this.atmLng,
+                  status: this.getStatusFromString(this.getStatus())
+                })
+                .toPromise()
+            );
+          } else {
+            return reject(
+              new Error('There was an error validating data. Check & Try again')
+            );
+          }
+        });
+      },
+      allowOutsideClick: () => !swal.isLoading()
+    };
   }
 
   ngOnInit() {
-    this.atmObservable = interval(3000).pipe(
+    this.atmObservable = interval(100000).pipe(
       startWith(0),
       switchMap(() => this.dataSvc.getATMs())
     );
@@ -126,6 +154,17 @@ export class MyatmsComponent extends BaseComponent implements OnInit {
     }
   }
 
+  getStatusFromString(num: number): string {
+    switch (num) {
+      case 0:
+        return 'Offline';
+      case 1:
+        return 'Online';
+      case -1:
+        return 'Out of Cash';
+    }
+  }
+
   showSwal(): void {
     this.addSwal
       .show()
@@ -151,7 +190,7 @@ export class MyatmsComponent extends BaseComponent implements OnInit {
 
   toggle($event, $id): void {}
 
-  deleteATM() {
+  deleteATM(): void {
     this.deleteSwal
       .show()
       .then(() => {
@@ -162,6 +201,41 @@ export class MyatmsComponent extends BaseComponent implements OnInit {
         });
       })
       .catch(err => {
+        swal({
+          type: 'success',
+          title: 'Wow, that was great',
+          text: 'ATM has been successfully added'
+        });
+      });
+  }
+
+  updateATM(): void {
+    this.atmName = this.selectedATM.name;
+    this.atmlocation = this.selectedATM.city;
+    this.atmStatus = this.getStatusFromString(this.selectedATM.status);
+    this.atmLat = this.selectedATM.coordinate.lat;
+    this.atmLng = this.selectedATM.coordinate.lng;
+
+    this.updateSwal
+      .show()
+      .then(res => {
+        this.atmName = '';
+        this.atmlocation = '';
+        this.atmStatus = 'Online';
+        this.atmLat = 0;
+        this.atmLng = 0;
+        swal({
+          type: 'success',
+          title: 'Wow, that was great',
+          text: 'ATM has been successfully added'
+        });
+      })
+      .catch(err => {
+        this.atmName = '';
+        this.atmlocation = '';
+        this.atmStatus = 'Online';
+        this.atmLat = 0;
+        this.atmLng = 0;
         swal({
           type: 'success',
           title: 'Wow, that was great',

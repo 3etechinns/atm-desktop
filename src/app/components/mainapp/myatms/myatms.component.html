@@ -7,7 +7,7 @@
   <div class="row">
     <swal
       #addSwal
-      title="Add New ATM"
+      [title]="'Add New ATM'"
       confirmButtonText="Submit"
       [showLoaderOnConfirm]="true"
       [options]="alertOption1"
@@ -61,6 +61,7 @@
                 <input
                   type="number"
                   class="form-control"
+                  style="padding-right: 10.5px;"
                   name="lat"
                   [(ngModel)]="atmLat"
                   [disabled]="isAddLoading"
@@ -73,6 +74,7 @@
                 <input
                   type="number"
                   class="form-control"
+                  style="padding-right: 10.5px;"
                   name="lng"
                   [(ngModel)]="atmLng"
                   [disabled]="isAddLoading"
@@ -148,13 +150,20 @@
             </li>
 
             <div class="row">
-              <br/>
+              <br />
               <div class="col-xs-12">
+                <button
+                  (click)="updateATM()"
+                  class="btn btn-primary btn-block btn-flat"
+                >
+                  Update
+                </button>
+
                 <button
                   (click)="deleteATM()"
                   class="btn btn-danger btn-block btn-flat"
                 >
-                  DELETE ATM
+                  Delete ATM
                 </button>
               </div>
               <!-- /.col -->
@@ -174,6 +183,101 @@
       [focusCancel]="true"
       [options]="alertOption2"
     >
+    </swal>
+
+    <swal
+      title="Update ATM"
+      #updateSwal
+      confirmButtonText="Submit"
+      [showLoaderOnConfirm]="true"
+      [options]="alertOption3"
+      [showCloseButton]="true"
+      [background]="'#ddd'"
+    >
+      <form *swalPartial>
+        <br />
+        <div class="form-group has-feedback">
+          <label>ATM Name</label>
+          <div class="input-group">
+            <div class="input-group-addon">
+              <i class="fa fa-credit-card"></i>
+            </div>
+
+            <input
+              type="text"
+              style="text-transform: capitalize;"
+              class="form-control"
+              placeholder="eg: xoxo ATM"
+              name="name"
+              [(ngModel)]="atmName"
+              [disabled]="isAddLoading"
+            />
+          </div>
+        </div>
+        <div class="form-group has-feedback">
+          <label>Location</label>
+          <div class="input-group">
+            <div class="input-group-addon">
+              <i class="fa fa-map"></i>
+            </div>
+
+            <input
+              type="text"
+              style="text-transform: capitalize;"
+              class="form-control"
+              placeholder="eg: Accra"
+              name="location"
+              [(ngModel)]="atmlocation"
+              [disabled]="isAddLoading"
+            />
+          </div>
+        </div>
+        <div class="form-group has-feedback">
+          <label>Coordinate</label>
+          <div class="row">
+            <div class="col-xs-6">
+              <div class="input-group">
+                <span class="input-group-addon">Lat </span>
+                <input
+                  type="number"
+                  style="padding-right: 10.5px;"
+                  class="form-control"
+                  name="lat"
+                  [(ngModel)]="atmLat"
+                  [disabled]="isAddLoading"
+                />
+              </div>
+            </div>
+            <div class="col-xs-6">
+              <div class="input-group">
+                <span class="input-group-addon">Lng</span>
+                <input
+                  type="number"
+                  class="form-control"
+                  name="lng"
+                  style="padding-right: 10.5px;"
+                  [(ngModel)]="atmLng"
+                  [disabled]="isAddLoading"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Set a Status</label>
+          <select
+            class="form-control"
+            style="width: 100%;"
+            [(ngModel)]="atmStatus"
+            name="status"
+            [disabled]="isAddLoading"
+          >
+            <option>Online</option>
+            <option>Offline</option>
+            <option>Out Of Cash</option>
+          </select>
+        </div>
+      </form>
     </swal>
 
     <div class="col-md-12 anim">
@@ -198,7 +302,10 @@
           [enabled]="true"
           *ngIf="(atmObservable | async) as atmData; else loading"
         >
-          <table class="table table-bordered table-striped" *ngIf="atmData.data.length > 0; else noATM">
+          <table
+            class="table table-bordered table-striped"
+            *ngIf="atmData.data.length > 0; else noATM"
+          >
             <thead class="no-select">
               <tr>
                 <th>Name</th>
@@ -220,15 +327,11 @@
                 <td>{{ atm.city }}</td>
                 <td>{{ atm.coordinate.lat }} , {{ atm.coordinate.lng }}</td>
                 <td>
-                  <span
-                    class="label"
-                    [class.label-success]="atm.status == 0"
-                    [class.label-warning]="atm.status == 1"
-                    [class.label-danger]="atm.status == 2"
-                  ></span>
-                  <span *ngIf="atm.status === 1">Online</span>
-                  <span *ngIf="atm.status === 0">Out Of Cash</span>
-                  <span *ngIf="atm.status === -1">Offline</span>
+                  <span class="label" [class.label-danger]="atm.status === -1" [class.label-success]="atm.status === 1" [class.label-warning]="atm.status === 0">
+                    <span *ngIf="atm.status === 1">Online</span>
+                    <span *ngIf="atm.status === 0">Out Of Cash</span>
+                    <span *ngIf="atm.status === -1">Offline</span>
+                  </span>
                 </td>
                 <td>
                   <app-switch
@@ -254,7 +357,10 @@
         <ng-template #loading>
           <div class="loading">
             <div class="overlay">
-              <i class="fa fa-circle-o-notch fa-spin" style="color: #0d6aad"></i>
+              <i
+                class="fa fa-circle-o-notch fa-spin"
+                style="color: #0d6aad"
+              ></i>
             </div>
           </div>
         </ng-template>

@@ -28,10 +28,6 @@ export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
 }
 
-export function tokenGetter() {
-  return localStorage.getItem('access_token');
-}
-
 @NgModule({
   declarations: [AppComponent, WebviewDirective],
   imports: [

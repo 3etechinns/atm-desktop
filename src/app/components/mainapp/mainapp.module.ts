@@ -11,6 +11,8 @@ import { NgSlimScrollModule, SLIMSCROLL_DEFAULTS } from 'ngx-slimscroll';
 import { SweetAlert2Module } from '@toverux/ngx-sweetalert2';
 import { ManagersComponent } from './managers/managers.component';
 import { AuthGuard } from '../../guards/auth.guard';
+import { BillingComponent } from './billing/billing.component';
+import { NgxStripeModule } from 'ngx-stripe';
 
 const mainapproutes: Routes = [
   {
@@ -32,6 +34,10 @@ const mainapproutes: Routes = [
       {
         path: 'settings',
         component: SettingsComponent
+      },
+      {
+        path: 'billing',
+        component: BillingComponent
       }
     ]
   }
@@ -43,7 +49,8 @@ const mainapproutes: Routes = [
     DashboardComponent,
     MyatmsComponent,
     SettingsComponent,
-    ManagersComponent
+    ManagersComponent,
+    BillingComponent
   ],
   imports: [
     CommonModule,
@@ -51,6 +58,7 @@ const mainapproutes: Routes = [
     ReactiveFormsModule,
     SweetAlert2Module,
     NgSlimScrollModule,
+    NgxStripeModule.forRoot('pk_test_qCMHKLE6spBRdqDqdC48sEHS'),
     RouterModule.forChild(mainapproutes),
     WidgetsModule
   ],

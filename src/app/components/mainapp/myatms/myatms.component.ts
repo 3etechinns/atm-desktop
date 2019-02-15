@@ -1,6 +1,5 @@
 import { Component, OnInit, Input, ViewChild } from '@angular/core';
 import { interval, Observable } from 'rxjs';
-import { BaseComponent } from '../../base/BaseComponent';
 import { Ng2IzitoastService } from 'ng2-izitoast';
 import * as $ from 'jquery';
 import { BankService } from '@atmhotspot/bank';
@@ -14,7 +13,7 @@ import swal, { SweetAlertOptions } from 'sweetalert2';
   templateUrl: './myatms.component.html',
   styleUrls: ['./myatms.component.scss']
 })
-export class MyatmsComponent extends BaseComponent implements OnInit {
+export class MyatmsComponent implements OnInit {
   @ViewChild('addSwal') private addSwal: SwalComponent;
   @ViewChild('deleteSwal') private deleteSwal: SwalComponent;
   @ViewChild('updateSwal') private updateSwal: SwalComponent;
@@ -38,8 +37,6 @@ export class MyatmsComponent extends BaseComponent implements OnInit {
     private dataSvc: BankService,
     private iziToast: Ng2IzitoastService
   ) {
-    super();
-
     this.alertOption1 = {
       preConfirm: () => {
         return new Promise((resolve, reject) => {

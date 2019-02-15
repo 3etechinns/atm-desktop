@@ -1,0 +1,23 @@
+<app-content-header [title]="'Billing Information'"></app-content-header>
+<section class="content">
+  <div class="row">
+    <div class="col-md-12">
+      <app-detail-box
+        [color]="'bg-yellow'"
+        [icon]="'fa  fa-cc-stripe'"
+        [title]="'Your Current Plan'"
+        [value]="'Monthly Pack'"
+        [percent]="'20%'"
+      ></app-detail-box>
+    </div>
+
+    <div class="col-md-12">
+      <form novalidate (ngSubmit)="buy()">
+        <div id="card-element" class="field"></div>
+        <button type="submit">
+          BUY
+        </button>
+      </form>
+    </div>
+  </div>
+</section>

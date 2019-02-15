@@ -11,6 +11,7 @@ import { SmallBoxComponent } from './small-box/small-box.component';
 import { SwitchComponent } from './switch/switch.component';
 import { PaginaterComponent } from './paginater/paginater.component';
 import { SweetAlert2Module } from '@toverux/ngx-sweetalert2';
+import { DetailBoxComponent } from './detail-box/detail-box.component';
 
 @NgModule({
   declarations: [
@@ -22,7 +23,8 @@ import { SweetAlert2Module } from '@toverux/ngx-sweetalert2';
     SidebarComponent,
     SmallBoxComponent,
     SwitchComponent,
-    PaginaterComponent
+    PaginaterComponent,
+    DetailBoxComponent
   ],
   exports: [
     ContentHeaderComponent,
@@ -33,7 +35,8 @@ import { SweetAlert2Module } from '@toverux/ngx-sweetalert2';
     SidebarComponent,
     SmallBoxComponent,
     SwitchComponent,
-    PaginaterComponent
+    PaginaterComponent,
+    DetailBoxComponent
   ],
   imports: [CommonModule, RouterModule]
 })

@@ -38,9 +38,31 @@
         <!-- /.box-header -->
         <div class="box-body">
           <div class="row">
-            <div class="col-md-4"></div>
-            <div class="col-md-4"></div>
-            <div class="col-md-4"></div>
+            <div class="col-xs-4">
+              <app-package
+                [title]="'Basic'"
+                [desc]="'This package is $25 per month'"
+                [price]="'$25'"
+                [period]="'month'"
+              ></app-package>
+            </div>
+            <div class="col-xs-4">
+              <app-package
+                [title]="'Standard'"
+                [desc]="'This package is $50 per month'"
+                [price]="'$25'"
+                [class]="'btn-primary'"
+                [period]="'month'"
+              ></app-package>
+            </div>
+            <div class="col-xs-4">
+              <app-package
+                [title]="'Premium'"
+                [desc]="'This package is $100 per month'"
+                [price]="'$25'"
+                [period]="'month'"
+              ></app-package>
+            </div>
           </div>
         </div>
       </div>

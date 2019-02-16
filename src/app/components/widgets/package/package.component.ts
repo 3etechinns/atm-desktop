@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
 
 @Component({
   selector: 'app-package',
@@ -18,7 +18,13 @@ export class PackageComponent implements OnInit {
 
   @Input() class = 'btn-primary';
 
+  @Output() clickEvent = new EventEmitter<any>();
+
   constructor() {}
 
   ngOnInit() {}
+
+  click() {
+    this.clickEvent.emit(this.title);
+  }
 }

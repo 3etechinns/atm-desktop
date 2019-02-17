@@ -18,7 +18,7 @@
   "private": true,
   "scripts": {
     "npm_pack": "ng build @atmhotspot/bank && cd dist/atmhotspot/bank && npm pack",
-    "install_lib": "npm install dist/atmhotspot/bank/atmhotspot-bank-1.0.0.tgz",
+    "install_lib": "npm install dist/atmhotspot/bank/keyz-ng-atmhotspot-bank-1.0.1.tgz",
     "postinstall": "npm run postinstall:electron && npx electron-builder install-app-deps",
     "postinstall:web": "node postinstall-web",
     "postinstall:electron": "node postinstall",
@@ -43,6 +43,7 @@
     "@angular/pwa": "^0.13.1",
     "@atmhotspot/bank": "file:dist/atmhotspot/bank/atmhotspot-bank-1.0.0.tgz",
     "@auth0/angular-jwt": "^2.1.0",
+    "@keyz/ng-atmhotspot-bank": "file:dist/atmhotspot/bank/keyz-ng-atmhotspot-bank-1.0.1.tgz",
     "@toverux/ngx-sweetalert2": "^4.0.0",
     "bootstrap": "^3.3.7",
     "electron-settings": "^3.2.0",

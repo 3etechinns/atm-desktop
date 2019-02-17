@@ -4,7 +4,7 @@ import { Ng2IzitoastService } from 'ng2-izitoast';
 import * as $ from 'jquery';
 import { BankService } from '@atmhotspot/bank';
 import { PaginatedData, ATMData } from '@atmhotspot/bank/lib/bank.models';
-import { startWith, switchMap } from 'rxjs/operators';
+import { startWith, switchMap, distinctUntilChanged } from 'rxjs/operators';
 import { SwalComponent } from '@toverux/ngx-sweetalert2';
 import swal, { SweetAlertOptions } from 'sweetalert2';
 
@@ -101,7 +101,8 @@ export class MyatmsComponent implements OnInit {
   ngOnInit() {
     this.atmObservable = interval(100000).pipe(
       startWith(0),
-      switchMap(() => this.dataSvc.getATMs())
+      switchMap(() => this.dataSvc.getATMs()),
+      distinctUntilChanged()
     );
   }
 

@@ -16,7 +16,7 @@ import {
   styleUrls: ['./package-list.component.scss']
 })
 export class PackageListComponent implements OnInit {
-  @Output() packageClick = new EventEmitter<any>();
+  @Output() packageClick = new EventEmitter<PlanData>();
 
   packagesSub: Observable<PlanData[]>;
 
@@ -40,7 +40,7 @@ export class PackageListComponent implements OnInit {
     );
   }
 
-  click($event) {
+  click($event: PlanData) {
     this.packageClick.emit($event);
   }
 }

@@ -18,6 +18,19 @@
   </li>
 
   <li
+    title="My Branches"
+    class="treeview"
+    routerLinkActive
+    #bran="routerLinkActive"
+    [routerLink]="['branches']"
+    [class.active]="bran.isActive"
+  >
+    <a [routerLink]="['branches']">
+      <i class="fa fa-credit-card"></i> <span> My ATM's</span>
+    </a>
+  </li>
+
+  <li
     title="My ATM's"
     class="treeview"
     routerLinkActive

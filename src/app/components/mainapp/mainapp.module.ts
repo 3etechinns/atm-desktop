@@ -13,6 +13,8 @@ import { ManagersComponent } from './managers/managers.component';
 import { AuthGuard } from '../../guards/auth.guard';
 import { BillingComponent } from './billing/billing.component';
 import { NgxStripeModule } from 'ngx-stripe';
+import { PackageListComponent } from './package-list/package-list.component';
+import { BranchesComponent } from './branches/branches.component';
 
 const mainapproutes: Routes = [
   {
@@ -29,6 +31,7 @@ const mainapproutes: Routes = [
         path: 'dashboard',
         component: DashboardComponent
       },
+      { path: 'branches', component: BranchesComponent},
       { path: 'myatms', component: MyatmsComponent },
       { path: 'managers', component: ManagersComponent },
       {
@@ -50,7 +53,9 @@ const mainapproutes: Routes = [
     MyatmsComponent,
     SettingsComponent,
     ManagersComponent,
-    BillingComponent
+    BillingComponent,
+    PackageListComponent,
+    BranchesComponent
   ],
   imports: [
     CommonModule,

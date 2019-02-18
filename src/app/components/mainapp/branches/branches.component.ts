@@ -21,7 +21,7 @@ export class BranchesComponent implements OnInit {
 
   branchData: PaginatedData<BranchData>;
 
-  pageUrl = new Subject<string>();
+  pageNumber = new Subject<number>();
 
   name = '';
   city = '';
@@ -69,21 +69,16 @@ export class BranchesComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.pageUrl
+    this.pageNumber
       .pipe(
-        startWith(''),
+        startWith(1),
         distinctUntilChanged(),
-        map(page => {
-          return page.trim().length === 0
-            ? this.dataSvc.getBranches()
-            : this.dataSvc.getBranches(page);
+        map((page: number) => {
+          return this.dataSvc.getBranches({ paginate: 5, page });
         }),
         flatMap(res => res)
       )
-      .subscribe(data => {
-        this.branchData = data;
-        console.log(this.branchData);
-      });
+      .subscribe(data => (this.branchData = data));
   }
 
   showAddDialog() {

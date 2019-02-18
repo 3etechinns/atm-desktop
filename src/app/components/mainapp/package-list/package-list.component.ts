@@ -1,7 +1,7 @@
 import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
-import { BankBillingService } from '@atmhotspot/bank';
+import { BankBillingService } from '@keyz/ng-atmhotspot-bank';
 import { Observable, interval } from 'rxjs';
-import { PlanData } from '@atmhotspot/bank/lib/bank.models';
+import { PlanData } from '@keyz/ng-atmhotspot-bank/lib/bank.models';
 import {
   startWith,
   switchMap,

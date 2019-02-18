@@ -1,12 +1,22 @@
-import { Component, OnInit, Input, ViewChild } from '@angular/core';
-import { interval, Observable } from 'rxjs';
+import { Component, Input, OnInit, ViewChild } from '@angular/core';
+import { interval, Observable, Subject } from 'rxjs';
 import { Ng2IzitoastService } from 'ng2-izitoast';
 import * as $ from 'jquery';
-import { BankService } from '@atmhotspot/bank';
-import { PaginatedData, ATMData } from '@atmhotspot/bank/lib/bank.models';
-import { startWith, switchMap, distinctUntilChanged } from 'rxjs/operators';
+import { BankService } from '@keyz/ng-atmhotspot-bank';
+import {
+  ATMData,
+  PaginatedData
+} from '@keyz/ng-atmhotspot-bank/lib/bank.models';
+import {
+  debounceTime,
+  distinctUntilChanged,
+  map,
+  startWith,
+  switchMap
+} from 'rxjs/operators';
 import { SwalComponent } from '@toverux/ngx-sweetalert2';
 import swal, { SweetAlertOptions } from 'sweetalert2';
+import { flatMap } from 'rxjs/internal/operators';
 
 @Component({
   selector: 'app-myatms',
@@ -14,16 +24,14 @@ import swal, { SweetAlertOptions } from 'sweetalert2';
   styleUrls: ['./myatms.component.scss']
 })
 export class MyatmsComponent implements OnInit {
-  @ViewChild('addSwal') private addSwal: SwalComponent;
-  @ViewChild('deleteSwal') private deleteSwal: SwalComponent;
-  @ViewChild('updateSwal') private updateSwal: SwalComponent;
   @Input() showHeader = true;
-
   alertOption1: SweetAlertOptions = {};
   alertOption2: SweetAlertOptions = {};
   alertOption3: SweetAlertOptions = {};
 
-  atmObservable: Observable<PaginatedData<ATMData>>;
+  atmData: PaginatedData<ATMData>;
+
+  pageUrl = new Subject<string>();
 
   isAddLoading = false;
   selectedATM: ATMData = null;
@@ -32,6 +40,9 @@ export class MyatmsComponent implements OnInit {
   atmLat = 0;
   atmLng = 0;
   atmStatus = 'Online';
+  @ViewChild('addSwal') private addSwal: SwalComponent;
+  @ViewChild('deleteSwal') private deleteSwal: SwalComponent;
+  @ViewChild('updateSwal') private updateSwal: SwalComponent;
 
   constructor(
     private dataSvc: BankService,
@@ -99,11 +110,18 @@ export class MyatmsComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.atmObservable = interval(100000).pipe(
-      startWith(0),
-      switchMap(() => this.dataSvc.getATMs()),
-      distinctUntilChanged()
-    );
+    this.pageUrl
+      .pipe(
+        startWith(''),
+        distinctUntilChanged(),
+        map(page => {
+          return page.trim().length === 0
+            ? this.dataSvc.getATMs()
+            : this.dataSvc.getATMs(page);
+        }),
+        flatMap(res => res)
+      )
+      .subscribe(data => (this.atmData = data));
   }
 
   setupHeight() {
@@ -128,7 +146,7 @@ export class MyatmsComponent implements OnInit {
         id: 'error',
         title: 'Error',
         message:
-          'ATM Name shouldn\'t contain words like <b>Bank</b> or <b>International</b>. Check & Try again',
+          "ATM Name shouldn't contain words like <b>Bank</b> or <b>International</b>. Check & Try again",
         position: 'bottomRight',
         transitionIn: 'bounceInLeft'
       });

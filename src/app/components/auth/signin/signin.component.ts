@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { first } from 'rxjs/operators';
 import { Ng2IzitoastService } from 'ng2-izitoast';
-import { BankAuthService } from '@atmhotspot/bank';
+import { BankAuthService } from '@keyz/ng-atmhotspot-bank';
 
 @Component({
   selector: 'app-signin',

@@ -1,8 +1,8 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { fadeAnimation } from '../../app.animations';
 import { Subscription } from 'rxjs';
-import { BankService, BankAuthService } from '@atmhotspot/bank';
-import { BankData } from '@atmhotspot/bank/lib/bank.models';
+import { BankService, BankAuthService } from '@keyz/ng-atmhotspot-bank';
+import { BankData } from '@keyz/ng-atmhotspot-bank/lib/bank.models';
 import { Router } from '@angular/router';
 
 @Component({
@@ -17,7 +17,11 @@ export class MainappComponent implements OnInit, OnDestroy {
 
   private accountPoll: Subscription;
 
-  constructor(private router: Router, private dataSvc: BankService, private authSvc: BankAuthService) {}
+  constructor(
+    private router: Router,
+    private dataSvc: BankService,
+    private authSvc: BankAuthService
+  ) {}
 
   ngOnInit() {
     this.accountPoll = this.dataSvc

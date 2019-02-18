@@ -26,7 +26,7 @@
     [class.active]="bran.isActive"
   >
     <a [routerLink]="['branches']">
-      <i class="fa fa-credit-card"></i> <span> My ATM's</span>
+      <i class="fa fa fa-sitemap"></i> <span> Branches</span>
     </a>
   </li>
 
@@ -39,7 +39,7 @@
     [class.active]="atms.isActive"
   >
     <a [routerLink]="['myatms']">
-      <i class="fa fa-credit-card"></i> <span> My ATM's</span>
+      <i class="fa fa-credit-card"></i> <span> ATM's</span>
     </a>
   </li>
 
@@ -88,6 +88,7 @@
       <span> Sign Out</span>
     </a>
   </li>
+
 </app-sidebar>
 
 <div class="content-wrapper" [@fadeAnimation]="getRouterOutletState(o)">

@@ -1,9 +1,14 @@
-import {Component, OnInit} from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import * as $ from 'jquery';
-import {interval, Observable} from 'rxjs';
-import {BankService} from '@atmhotspot/bank';
-import {distinctUntilChanged, startWith, switchMap} from 'rxjs/operators';
-import {ATMData, ManagerData, PaginatedData} from '@atmhotspot/bank/lib/bank.models';
+import { interval, Observable } from 'rxjs';
+import { BankService } from '@keyz/ng-atmhotspot-bank';
+import { distinctUntilChanged, startWith, switchMap } from 'rxjs/operators';
+import {
+  ATMData,
+  ManagerData,
+  PaginatedData,
+  BranchData
+} from '@keyz/ng-atmhotspot-bank/lib/bank.models';
 
 @Component({
   selector: 'app-dashboard',
@@ -13,9 +18,9 @@ import {ATMData, ManagerData, PaginatedData} from '@atmhotspot/bank/lib/bank.mod
 export class DashboardComponent implements OnInit {
   atmSub: Observable<PaginatedData<ATMData>>;
   managerSub: Observable<PaginatedData<ManagerData>>;
+  branchSub: Observable<PaginatedData<BranchData>>;
 
-  constructor(private dataSvc: BankService) {
-  }
+  constructor(private dataSvc: BankService) {}
 
   ngOnInit() {
     this.init();
@@ -31,6 +36,12 @@ export class DashboardComponent implements OnInit {
       switchMap(() => this.dataSvc.getManagers()),
       distinctUntilChanged()
     );
+
+    this.branchSub = interval(10000).pipe(
+      startWith(0),
+      switchMap(() => this.dataSvc.getBranches()),
+      distinctUntilChanged()
+    );
   }
 
   init() {
@@ -39,7 +50,7 @@ export class DashboardComponent implements OnInit {
       $(window).height() - $('.main-header').height() - 140
     );
 
-    $(window).resize(function () {
+    $(window).resize(function() {
       jQuery('#myBox').css(
         'max-height',
         $(window).height() - $('.main-header').height() - 140

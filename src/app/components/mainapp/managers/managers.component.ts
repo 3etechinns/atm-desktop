@@ -1,7 +1,10 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Observable, interval } from 'rxjs';
-import { PaginatedData, ManagerData } from '@atmhotspot/bank/lib/bank.models';
-import { BankService } from '@atmhotspot/bank';
+import {
+  PaginatedData,
+  ManagerData
+} from '@keyz/ng-atmhotspot-bank/lib/bank.models';
+import { BankService } from '@keyz/ng-atmhotspot-bank';
 import { startWith, switchMap } from 'rxjs/operators';
 import { SwalComponent } from '@toverux/ngx-sweetalert2';
 import swal, { SweetAlertOptions } from 'sweetalert2';
@@ -91,8 +94,8 @@ export class ManagersComponent implements OnInit {
       .catch(err => {
         swal({
           type: 'error',
-          title: 'Oops !',
-          text: err.message
+          title: 'Oops ! An Error Occurred',
+          text: err.error.errorMessage
         });
       });
   }

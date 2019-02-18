@@ -302,7 +302,7 @@
           class="box-body"
           slimScroll
           [enabled]="true"
-          *ngIf="(atmObservable | async) as atmData; else loading"
+          *ngIf="atmData; else loading"
         >
           <table
             class="table table-bordered table-striped"
@@ -310,10 +310,11 @@
           >
             <thead class="no-select">
               <tr>
-                <th>Name</th>
-                <th>Location</th>
-                <th>Coordinate</th>
-                <th>Status</th>
+                <th style="width: 25%">Name</th>
+                <th style="width: 25%">Branch</th>
+                <th style="width: 20%">Location</th>
+                <th style="width: 15%;">Coordinate</th>
+                <th style="width: 10%;">Status</th>
               </tr>
             </thead>
             <tbody>
@@ -326,6 +327,7 @@
                     >{{ atm.name }}</a
                   >
                 </td>
+                <td>{{ atm.branch }}</td>
                 <td>{{ atm.city }}</td>
                 <td>{{ atm.coordinate.lat }} , {{ atm.coordinate.lng }}</td>
                 <td>
@@ -346,6 +348,10 @@
               </tr>
             </tbody>
           </table>
+        </div>
+
+        <div class="box-footer">
+          <app-paginater></app-paginater>
         </div>
 
         <ng-template #noATM>

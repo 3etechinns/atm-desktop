@@ -1,22 +1,32 @@
 <!-- <app-content-header [title]="'Dashboard'"></app-content-header> -->
 <section class="content">
   <div class="row">
-    <div class="col-md-6 col-sm-6 col-xs-12">
+    <div class="col-xs-4 col-sm-4 col-xs-12">
       <app-small-box
-        [title]="'ATM\'s Count'"
+        [title]="'ATM\'s'"
         [color]="'bg-aqua'"
         [icon]="'fa fa-credit-card'"
-        [value]="(atmSub | async)?.data.length || 0"
+        [value]="(atmSub | async)?.meta.total || 0"
       >
       </app-small-box>
     </div>
 
-    <div class="col-md-6 col-sm-6 col-xs-12">
+    <div class="col-xs-4 col-sm-4 col-xs-12">
       <app-small-box
-        [title]="'ATM Managers'"
+        [title]="'Branches'"
         [color]="'bg-red'"
+        [icon]="'fa fa-sitemap'"
+        [value]="(branchSub | async)?.meta.total || 0"
+      >
+      </app-small-box>
+    </div>
+
+    <div class="col-xs-4 col-sm-4 col-xs-12">
+      <app-small-box
+        [title]="'Managers'"
+        [color]="'bg-green'"
         [icon]="'fa fa-users'"
-        [value]="(managerSub | async)?.data.length || 0"
+        [value]="(managerSub | async)?.meta.total || 0"
       >
       </app-small-box>
     </div>

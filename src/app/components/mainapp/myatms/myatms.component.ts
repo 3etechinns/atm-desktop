@@ -117,9 +117,14 @@ export class MyatmsComponent implements OnInit {
 
     this.pageNumber
       .pipe(
-        startWith(1),
+        startWith(
+          localStorage['atmPageStore'] === undefined
+            ? 1
+            : localStorage['atmPageStore']
+        ),
         distinctUntilChanged(),
         map(page => {
+          localStorage['atmPageStore'] = page;
           return this.dataSvc.getATMs({ paginate: 5, page });
         }),
         flatMap(res => res)
@@ -265,5 +270,9 @@ export class MyatmsComponent implements OnInit {
           text: err.message
         });
       });
+  }
+
+  next(page: number) {
+    this.pageNumber.next(page);
   }
 }

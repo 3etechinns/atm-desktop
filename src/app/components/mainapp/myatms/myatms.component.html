@@ -386,8 +386,8 @@
           </table>
         </div>
 
-        <div class="box-footer">
-          <app-paginater></app-paginater>
+        <div *ngIf="atmData && atmData.data.length > 0" class="box-footer">
+          <app-paginater [last]="atmData.meta.last_page" [currentNumber]="atmData.meta.current_page" (next)="next($event)"></app-paginater>
         </div>
 
         <ng-template #noATM>

@@ -6,7 +6,7 @@
         [title]="'ATM\'s'"
         [color]="'bg-aqua'"
         [icon]="'fa fa-credit-card'"
-        [value]="(atmSub | async)?.meta.total || 0"
+        [value]="(atmSub | async)?.length || 0"
       >
       </app-small-box>
     </div>
@@ -16,7 +16,7 @@
         [title]="'Branches'"
         [color]="'bg-red'"
         [icon]="'fa fa-sitemap'"
-        [value]="(branchSub | async)?.meta.total || 0"
+        [value]="(branchSub | async)?.length || 0"
       >
       </app-small-box>
     </div>
@@ -26,7 +26,7 @@
         [title]="'Managers'"
         [color]="'bg-green'"
         [icon]="'fa fa-users'"
-        [value]="(managerSub | async)?.meta.total || 0"
+        [value]="(managerSub | async)?.length || 0"
       >
       </app-small-box>
     </div>

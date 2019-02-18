@@ -1,7 +1,24 @@
 <ul class="pagination pagination-sm no-margin pull-right">
-<li><a href="#">«</a></li>
-<li><a href="#">1</a></li>
-<li><a href="#">2</a></li>
-<li><a href="#">3</a></li>
-<li><a href="#">»</a></li>
+  <li (click)="clickEvent(currentNumber - 1 <= 0 ? 1 : currentNumber - 1)">
+    <a style="cursor: pointer;">
+      «
+    </a>
+  </li>
+  <li
+    [class.active]="currentNumber === item + 1"
+    *ngFor="let item of elements"
+    (click)="clickEvent(item + 1)"
+  >
+    <a style="cursor: pointer;">
+      {{ item + 1 }}
+    </a>
+  </li>
+
+  <li
+    (click)="
+      clickEvent(currentNumber + 1 <= last ? currentNumber + 1 : currentNumber)
+    "
+  >
+    <a style="cursor: pointer;"> »</a>
+  </li>
 </ul>

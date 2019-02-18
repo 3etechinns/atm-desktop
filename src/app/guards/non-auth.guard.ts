@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { CanActivate, Router, CanActivateChild } from '@angular/router';
-import { BankAuthService } from '@atmhotspot/bank';
+import { BankAuthService } from '@keyz/ng-atmhotspot-bank';
 
 @Injectable()
 export class NonAuthGuard implements CanActivate, CanActivateChild {

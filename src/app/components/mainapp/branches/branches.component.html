@@ -1,3 +1,338 @@
-<p>
-  branches works!
-</p>
+<app-content-header [title]="'Branches'"></app-content-header>
+
+<section class="content">
+  <div class="row">
+    <swal
+      #addSwal
+      title="Add New Branch"
+      confirmButtonText="Submit"
+      [showLoaderOnConfirm]="true"
+      [showCloseButton]="true"
+      [background]="'#ddd'"
+      [options]="alertOption1"
+    >
+      <form *swalPartial>
+        <br />
+        <div
+          class="form-group has-feedback"
+          [class.has-error]="
+            branchName.invalid && (branchName.dirty || branchName.touched)
+          "
+        >
+          <label>Branch Name</label>
+          <div class="input-group">
+            <div class="input-group-addon">
+              <i class="fa fa-user"></i>
+            </div>
+
+            <input
+              type="text"
+              required
+              name="name"
+              #branchName="ngModel"
+              [(ngModel)]="name"
+              minlength="4"
+              style="text-transform: capitalize;"
+              class="form-control"
+              placeholder="eg: Accra Branch"
+              id="branchName"
+            />
+          </div>
+        </div>
+        <div
+          class="form-group has-feedback"
+          [class.has-error]="
+            cityName.invalid && (cityName.dirty || cityName.touched)
+          "
+        >
+          <label>City</label>
+          <div class="input-group">
+            <div class="input-group-addon">
+              <i class="fa  fa-map"></i>
+            </div>
+
+            <input
+              type="text"
+              required
+              style="text-transform: capitalize;"
+              #cityName="ngModel"
+              [(ngModel)]="city"
+              class="form-control"
+              placeholder="eg: Legon"
+              name="cityName"
+            />
+          </div>
+        </div>
+        <div
+          class="form-group has-feedback"
+          [class.has-error]="
+            townName.invalid && (townName.dirty || townName.touched)
+          "
+        >
+          <label>Town</label>
+          <div class="input-group">
+            <div class="input-group-addon">
+              <i class="fa  fa-map-pin"></i>
+            </div>
+
+            <input
+              type="text"
+              style="text-transform: capitalize;"
+              #townName="ngModel"
+              [(ngModel)]="town"
+              class="form-control"
+              placeholder="eg: Legon"
+              name="townName"
+            />
+          </div>
+          <span class="help-block">This is optional. You can ignore it.</span>
+        </div>
+      </form>
+    </swal>
+
+    <swal
+      #detailSwal
+      [showConfirmButton]="false"
+      [showCloseButton]="true"
+      title="Branch Details"
+    >
+      <br />
+      <div *swalPartial>
+        <div class="box box-primary">
+          <ul class="list-group list-group-unbordered">
+            <li class="list-group-item">
+              <b>Branch Name</b>
+              <a class="pull-right">{{ selectedBranch.name }}</a>
+            </li>
+
+            <li class="list-group-item">
+              <b>City</b> <a class="pull-right">{{ selectedBranch.city }}</a>
+            </li>
+
+            <li class="list-group-item">
+              <b>Total Managers</b>
+              <a class="pull-right">{{ selectedBranch.total_managers }}</a>
+            </li>
+
+            <li class="list-group-item">
+              <b>Total ATM's</b>
+              <a class="pull-right">{{ selectedBranch.total_atms }}</a>
+            </li>
+
+            <li class="list-group-item">
+              <b>Created On</b>
+              <a class="pull-right">{{ selectedBranch.created_at }}</a>
+            </li>
+
+            <li class="list-group-item">
+              <b>Last Updated</b>
+              <a class="pull-right">{{ selectedBranch.updated_at }}</a>
+            </li>
+
+            <div class="row">
+              <br />
+              <div class="col-xs-12">
+                <button
+                  (click)="updateBranch()"
+                  class="btn btn-primary btn-block btn-flat"
+                >
+                  Update
+                </button>
+
+                <button
+                  (click)="deleteBranch()"
+                  class="btn btn-danger btn-block btn-flat"
+                >
+                  Delete Branch
+                </button>
+              </div>
+              <!-- /.col -->
+            </div>
+          </ul>
+        </div>
+      </div>
+    </swal>
+
+    <swal
+      #deleteSwal
+      title="Delete {{ selectedBranch === null ? '' : selectedBranch.name }}?"
+      text="This action cannot be undone"
+      [type]="'question'"
+      [showCancelButton]="true"
+      [showLoaderOnConfirm]="true"
+      [focusCancel]="true"
+      [options]="alertOption2"
+    >
+    </swal>
+
+    <swal
+    #updateSwal
+    title="Update Branch"
+    confirmButtonText="Submit"
+    [showLoaderOnConfirm]="true"
+    [showCloseButton]="true"
+    [background]="'#ddd'"
+    [options]="alertOption3"
+  >
+    <form *swalPartial>
+      <br />
+      <div
+        class="form-group has-feedback"
+        [class.has-error]="
+          branchName.invalid && (branchName.dirty || branchName.touched)
+        "
+      >
+        <label>Branch Name</label>
+        <div class="input-group">
+          <div class="input-group-addon">
+            <i class="fa fa-user"></i>
+          </div>
+
+          <input
+            type="text"
+            required
+            name="name"
+            #branchName="ngModel"
+            [(ngModel)]="name"
+            minlength="4"
+            style="text-transform: capitalize;"
+            class="form-control"
+            placeholder="eg: Accra Branch"
+            id="branchName"
+          />
+        </div>
+      </div>
+      <div
+        class="form-group has-feedback"
+        [class.has-error]="
+          cityName.invalid && (cityName.dirty || cityName.touched)
+        "
+      >
+        <label>City</label>
+        <div class="input-group">
+          <div class="input-group-addon">
+            <i class="fa  fa-map"></i>
+          </div>
+
+          <input
+            type="text"
+            required
+            style="text-transform: capitalize;"
+            #cityName="ngModel"
+            [(ngModel)]="city"
+            class="form-control"
+            placeholder="eg: Legon"
+            name="cityName"
+          />
+        </div>
+      </div>
+      <div
+        class="form-group has-feedback"
+        [class.has-error]="
+          townName.invalid && (townName.dirty || townName.touched)
+        "
+      >
+        <label>Town</label>
+        <div class="input-group">
+          <div class="input-group-addon">
+            <i class="fa  fa-map-pin"></i>
+          </div>
+
+          <input
+            type="text"
+            style="text-transform: capitalize;"
+            #townName="ngModel"
+            [(ngModel)]="town"
+            class="form-control"
+            placeholder="eg: Legon"
+            name="townName"
+          />
+        </div>
+        <span class="help-block">This is optional. You can ignore it.</span>
+      </div>
+    </form>
+  </swal>
+
+    <div class="col-md-12">
+      <div class="box box-primary">
+        <div class="box-header with-border">
+          <h3 class="box-title">Showing list of Branches</h3>
+
+          <div class="box-tools pull-right">
+            <a
+              (click)="showAddDialog()"
+              type="button"
+              style="display:inline-block; width: auto; margin-top: 0;"
+              class="btn btn-block btn-success"
+              >Add New Branch</a
+            >
+          </div>
+        </div>
+
+        <div
+          class="box-body"
+          slimScroll
+          [enabled]="true"
+          *ngIf="branchData; else loading"
+        >
+          <table
+            class="table table-bordered table-striped"
+            *ngIf="branchData.data.length > 0; else noBranch"
+          >
+            <thead class="no-select">
+              <tr>
+                <th style="width: 30%">Name</th>
+                <th style="width: 20%">City</th>
+                <th style="width: 20%">Town</th>
+                <th style="width: 12%">Managers</th>
+                <th style="width: 12%">ATM's</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let branch of branchData.data">
+                <td>
+                  <a
+                    [swal]="detailSwal"
+                    (click)="this.selectedBranch = branch"
+                    style="cursor: pointer;"
+                    >{{ branch.name }}</a
+                  >
+                </td>
+                <td>{{ branch.city }}</td>
+                <td>
+                  <span *ngIf="branch.town; else noTown">{{
+                    branch.town
+                  }}</span>
+                  <ng-template #noTown>
+                    <span class="label label-primary">Not Set</span>
+                  </ng-template>
+                </td>
+                <td>{{ branch.total_managers }}</td>
+                <td>{{ branch.total_atms }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <ng-template #noBranch>
+          <div class="loading">
+            <div class="overlay">
+              <i class="fa fa-chain-broken"></i>
+            </div>
+          </div>
+        </ng-template>
+
+        <ng-template #loading>
+          <div class="loading">
+            <div class="overlay">
+              <i
+                class="fa fa-circle-o-notch fa-spin"
+                style="color: #0d6aad"
+              ></i>
+            </div>
+          </div>
+        </ng-template>
+      </div>
+    </div>
+  </div>
+</section>

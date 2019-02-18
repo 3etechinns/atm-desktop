@@ -1,4 +1,13 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import {
+  BranchData,
+  PaginatedData
+} from '@keyz/ng-atmhotspot-bank/lib/bank.models';
+import { Subject } from 'rxjs';
+import { startWith, distinctUntilChanged, map, flatMap } from 'rxjs/operators';
+import { BankService } from '@keyz/ng-atmhotspot-bank';
+import swal, { SweetAlertOptions } from 'sweetalert2';
+import { SwalComponent } from '@toverux/ngx-sweetalert2';
 
 @Component({
   selector: 'app-branches',
@@ -6,10 +15,118 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./branches.component.scss']
 })
 export class BranchesComponent implements OnInit {
+  @ViewChild('addSwal') private addSwal: SwalComponent;
+  @ViewChild('deleteSwal') private deleteSwal: SwalComponent;
+  @ViewChild('updateSwal') private updateSwal: SwalComponent;
 
-  constructor() { }
+  branchData: PaginatedData<BranchData>;
 
-  ngOnInit() {
+  pageUrl = new Subject<string>();
+
+  name = '';
+  city = '';
+  town = '';
+
+  selectedBranch: BranchData = null;
+
+  public alertOption1: SweetAlertOptions = {};
+  public alertOption2: SweetAlertOptions = {};
+  public alertOption3: SweetAlertOptions = {};
+
+  constructor(private dataSvc: BankService) {
+    this.alertOption1 = {
+      preConfirm: () => {
+        return this.dataSvc
+          .addBranch({
+            name: this.name,
+            city: this.city,
+            town: this.town
+          })
+          .toPromise();
+      },
+      allowOutsideClick: () => !swal.isLoading()
+    };
+    this.alertOption2 = {
+      preConfirm: () => {
+        return this.dataSvc
+          .deleteBranch(this.selectedBranch.id.toString())
+          .toPromise();
+      },
+      allowOutsideClick: () => !swal.isLoading()
+    };
+    this.alertOption3 = {
+      preConfirm: () => {
+        return this.dataSvc
+          .updateBranch(this.selectedBranch.id.toString(), {
+            name: this.name,
+            city: this.city,
+            town: this.town
+          })
+          .toPromise();
+      },
+      allowOutsideClick: () => !swal.isLoading()
+    };
   }
 
+  ngOnInit() {
+    this.pageUrl
+      .pipe(
+        startWith(''),
+        distinctUntilChanged(),
+        map(page => {
+          return page.trim().length === 0
+            ? this.dataSvc.getBranches()
+            : this.dataSvc.getBranches(page);
+        }),
+        flatMap(res => res)
+      )
+      .subscribe(data => {
+        this.branchData = data;
+        console.log(this.branchData);
+      });
+  }
+
+  showAddDialog() {
+    this.addSwal
+      .show()
+      .then(res => {
+        if (res.value !== undefined && res.value.data !== undefined) {
+          swal({
+            type: 'success',
+            title: 'Wow, that was great',
+            text: 'Branch has been successfully added'
+          });
+        }
+      })
+      .catch(err => console.log(err));
+  }
+
+  updateBranch() {
+    this.name = this.selectedBranch.name;
+    this.city = this.selectedBranch.city;
+    this.town = this.selectedBranch.town;
+    this.updateSwal
+      .show()
+      .then(suc => console.log(suc))
+      .catch(err => console.log(err));
+  }
+
+  deleteBranch() {
+    this.deleteSwal
+      .show()
+      .then(() => {
+        swal({
+          type: 'success',
+          title: 'Wow, that was great',
+          text: 'Branch has been successfully deleted'
+        });
+      })
+      .catch(err => {
+        swal({
+          type: 'error',
+          title: 'Oops ! An Error Occurred',
+          text: err.error.errorMessage
+        });
+      });
+  }
 }

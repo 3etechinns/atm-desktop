@@ -20,7 +20,7 @@ import { AppComponent } from './app.component';
 import * as bootstrap from 'bootstrap';
 import { WidgetsModule } from './components/widgets/widgets.module';
 import { Ng2IziToastModule } from 'ng2-izitoast';
-import { BankModule } from '@atmhotspot/bank';
+import { BankModule } from '@keyz/ng-atmhotspot-bank';
 import { AppConfig } from '../environments/environment';
 import { ServiceWorkerModule } from '@angular/service-worker';
 

@@ -41,7 +41,6 @@
   },
   "dependencies": {
     "@angular/pwa": "^0.13.1",
-    "@atmhotspot/bank": "file:dist/atmhotspot/bank/atmhotspot-bank-1.0.0.tgz",
     "@auth0/angular-jwt": "^2.1.0",
     "@keyz/ng-atmhotspot-bank": "file:dist/atmhotspot/bank/keyz-ng-atmhotspot-bank-1.0.1.tgz",
     "@toverux/ngx-sweetalert2": "^4.0.0",

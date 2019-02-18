@@ -84,6 +84,20 @@
           </div>
         </div>
         <div class="form-group">
+          <label>Choose Branch</label>
+          <select
+            class="form-control"
+            style="width: 100%;"
+            name="branch"
+            [(ngModel)]="selectedBranch"
+            [disabled]="isAddLoading"
+          >
+            <option *ngFor="let branch of branchData" [value]="branch.id">{{
+              branch.name
+            }}</option>
+          </select>
+        </div>
+        <div class="form-group">
           <label>Set a Status</label>
           <select
             class="form-control"
@@ -115,6 +129,10 @@
             </li>
 
             <li class="list-group-item">
+              <b>Branch</b> <a class="pull-right">{{ selectedATM.branch }}</a>
+            </li>
+
+            <li class="list-group-item">
               <b>City</b> <a class="pull-right">{{ selectedATM.city }}</a>
             </li>
 
@@ -143,7 +161,6 @@
                 [class.label-success]="selectedATM.status === 1"
                 [class.label-warning]="selectedATM.status === -1"
                 [class.label-danger]="selectedATM.status === 0"
-
               >
                 <span *ngIf="selectedATM.status === 1">Online</span>
                 <span *ngIf="selectedATM.status === -1">Out Of Cash</span>
@@ -266,6 +283,20 @@
           </div>
         </div>
         <div class="form-group">
+          <label>Choose a Branch</label>
+          <select
+            class="form-control"
+            style="width: 100%;"
+            [(ngModel)]="selectedBranch"
+            name="status"
+            [disabled]="isAddLoading"
+          >
+            <option *ngFor="let branch of branchData" [value]="branch.id">{{
+              branch.name
+            }}</option>
+          </select>
+        </div>
+        <div class="form-group">
           <label>Set a Status</label>
           <select
             class="form-control"
@@ -331,7 +362,12 @@
                 <td>{{ atm.city }}</td>
                 <td>{{ atm.coordinate.lat }} , {{ atm.coordinate.lng }}</td>
                 <td>
-                  <span class="label" [class.label-danger]="atm.status === 0" [class.label-success]="atm.status === 1" [class.label-warning]="atm.status === -1">
+                  <span
+                    class="label"
+                    [class.label-danger]="atm.status === 0"
+                    [class.label-success]="atm.status === 1"
+                    [class.label-warning]="atm.status === -1"
+                  >
                     <span *ngIf="atm.status === 1">Online</span>
                     <span *ngIf="atm.status === -1">Out Of Cash</span>
                     <span *ngIf="atm.status === 0">Offline</span>

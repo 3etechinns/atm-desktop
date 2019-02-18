@@ -5,15 +5,11 @@ import * as $ from 'jquery';
 import { BankService } from '@keyz/ng-atmhotspot-bank';
 import {
   ATMData,
-  PaginatedData
+  PaginatedData,
+  Data,
+  BranchData
 } from '@keyz/ng-atmhotspot-bank/lib/bank.models';
-import {
-  debounceTime,
-  distinctUntilChanged,
-  map,
-  startWith,
-  switchMap
-} from 'rxjs/operators';
+import { distinctUntilChanged, map, startWith } from 'rxjs/operators';
 import { SwalComponent } from '@toverux/ngx-sweetalert2';
 import swal, { SweetAlertOptions } from 'sweetalert2';
 import { flatMap } from 'rxjs/internal/operators';
@@ -30,11 +26,13 @@ export class MyatmsComponent implements OnInit {
   alertOption3: SweetAlertOptions = {};
 
   atmData: PaginatedData<ATMData>;
+  branchData: BranchData[];
 
-  pageUrl = new Subject<string>();
+  pageNumber = new Subject<number>();
 
   isAddLoading = false;
   selectedATM: ATMData = null;
+  selectedBranch: number;
   atmName = '';
   atmlocation = '';
   atmLat = 0;
@@ -60,7 +58,8 @@ export class MyatmsComponent implements OnInit {
                   city: this.atmlocation,
                   lat: this.atmLat,
                   lng: this.atmLng,
-                  status: this.getStatus()
+                  status: this.getStatus(),
+                  branch_id: this.selectedBranch
                 })
                 .toPromise()
             );
@@ -94,7 +93,8 @@ export class MyatmsComponent implements OnInit {
                   city: this.atmlocation,
                   lat: this.atmLat,
                   lng: this.atmLng,
-                  status: this.getStatus()
+                  status: this.getStatus(),
+                  branch_id: this.selectedBranch
                 })
                 .toPromise()
             );
@@ -110,14 +110,17 @@ export class MyatmsComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.pageUrl
+    this.dataSvc
+      .getBranches()
+      .pipe(map(res => res.data))
+      .subscribe(res => (this.branchData = res));
+
+    this.pageNumber
       .pipe(
-        startWith(''),
+        startWith(1),
         distinctUntilChanged(),
         map(page => {
-          return page.trim().length === 0
-            ? this.dataSvc.getATMs()
-            : this.dataSvc.getATMs(page);
+          return this.dataSvc.getATMs({ paginate: 5, page });
         }),
         flatMap(res => res)
       )
@@ -146,7 +149,7 @@ export class MyatmsComponent implements OnInit {
         id: 'error',
         title: 'Error',
         message:
-          "ATM Name shouldn't contain words like <b>Bank</b> or <b>International</b>. Check & Try again",
+          'ATM Name shouldn\'t contain words like <b>Bank</b> or <b>International</b>. Check & Try again',
         position: 'bottomRight',
         transitionIn: 'bounceInLeft'
       });

@@ -1,11 +1,12 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { Observable, interval } from 'rxjs';
+import { Subject } from 'rxjs';
 import {
   PaginatedData,
-  ManagerData
+  ManagerData,
+  BranchData
 } from '@keyz/ng-atmhotspot-bank/lib/bank.models';
 import { BankService } from '@keyz/ng-atmhotspot-bank';
-import { startWith, switchMap } from 'rxjs/operators';
+import { startWith, distinctUntilChanged, map, flatMap } from 'rxjs/operators';
 import { SwalComponent } from '@toverux/ngx-sweetalert2';
 import swal, { SweetAlertOptions } from 'sweetalert2';
 
@@ -18,12 +19,17 @@ export class ManagersComponent implements OnInit {
   @ViewChild('addSwal') private addSwal: SwalComponent;
   @ViewChild('deleteSwal') private deleteSwal: SwalComponent;
 
-  managerObservable: Observable<PaginatedData<ManagerData>>;
+  managerData: PaginatedData<ManagerData>;
   selectedManager: ManagerData = null;
+  branchData: BranchData[];
+
+  selectedBranch: number;
 
   username = '';
   email: '';
   password = '';
+
+  pageNumber = new Subject<number>();
 
   public alertOption1: SweetAlertOptions = {};
   public alertOption2: SweetAlertOptions = {};
@@ -35,7 +41,8 @@ export class ManagersComponent implements OnInit {
           .addManager({
             name: this.username,
             email: this.email,
-            password: 'Codemonster123'
+            password: 'Codemonster123',
+            branch_id: this.selectedBranch
           })
           .toPromise();
       },
@@ -53,10 +60,21 @@ export class ManagersComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.managerObservable = interval(10000).pipe(
-      startWith(0),
-      switchMap(() => this.dataSvc.getManagers())
-    );
+    this.dataSvc
+      .getBranches()
+      .pipe(map(res => res.data))
+      .subscribe(res => (this.branchData = res));
+
+    this.pageNumber
+      .pipe(
+        startWith(1),
+        distinctUntilChanged(),
+        map((page: number) => {
+          return this.dataSvc.getManagers({ paginate: 5, page });
+        }),
+        flatMap(res => res)
+      )
+      .subscribe(data => (this.managerData = data));
   }
 
   showAddDialog(): void {

@@ -166,92 +166,92 @@
     </swal>
 
     <swal
-    #updateSwal
-    title="Update Branch"
-    confirmButtonText="Submit"
-    [showLoaderOnConfirm]="true"
-    [showCloseButton]="true"
-    [background]="'#ddd'"
-    [options]="alertOption3"
-  >
-    <form *swalPartial>
-      <br />
-      <div
-        class="form-group has-feedback"
-        [class.has-error]="
-          branchName.invalid && (branchName.dirty || branchName.touched)
-        "
-      >
-        <label>Branch Name</label>
-        <div class="input-group">
-          <div class="input-group-addon">
-            <i class="fa fa-user"></i>
-          </div>
+      #updateSwal
+      title="Update Branch"
+      confirmButtonText="Submit"
+      [showLoaderOnConfirm]="true"
+      [showCloseButton]="true"
+      [background]="'#ddd'"
+      [options]="alertOption3"
+    >
+      <form *swalPartial>
+        <br />
+        <div
+          class="form-group has-feedback"
+          [class.has-error]="
+            branchName.invalid && (branchName.dirty || branchName.touched)
+          "
+        >
+          <label>Branch Name</label>
+          <div class="input-group">
+            <div class="input-group-addon">
+              <i class="fa fa-user"></i>
+            </div>
 
-          <input
-            type="text"
-            required
-            name="name"
-            #branchName="ngModel"
-            [(ngModel)]="name"
-            minlength="4"
-            style="text-transform: capitalize;"
-            class="form-control"
-            placeholder="eg: Accra Branch"
-            id="branchName"
-          />
-        </div>
-      </div>
-      <div
-        class="form-group has-feedback"
-        [class.has-error]="
-          cityName.invalid && (cityName.dirty || cityName.touched)
-        "
-      >
-        <label>City</label>
-        <div class="input-group">
-          <div class="input-group-addon">
-            <i class="fa  fa-map"></i>
+            <input
+              type="text"
+              required
+              name="name"
+              #branchName="ngModel"
+              [(ngModel)]="name"
+              minlength="4"
+              style="text-transform: capitalize;"
+              class="form-control"
+              placeholder="eg: Accra Branch"
+              id="branchName"
+            />
           </div>
-
-          <input
-            type="text"
-            required
-            style="text-transform: capitalize;"
-            #cityName="ngModel"
-            [(ngModel)]="city"
-            class="form-control"
-            placeholder="eg: Legon"
-            name="cityName"
-          />
         </div>
-      </div>
-      <div
-        class="form-group has-feedback"
-        [class.has-error]="
-          townName.invalid && (townName.dirty || townName.touched)
-        "
-      >
-        <label>Town</label>
-        <div class="input-group">
-          <div class="input-group-addon">
-            <i class="fa  fa-map-pin"></i>
+        <div
+          class="form-group has-feedback"
+          [class.has-error]="
+            cityName.invalid && (cityName.dirty || cityName.touched)
+          "
+        >
+          <label>City</label>
+          <div class="input-group">
+            <div class="input-group-addon">
+              <i class="fa  fa-map"></i>
+            </div>
+
+            <input
+              type="text"
+              required
+              style="text-transform: capitalize;"
+              #cityName="ngModel"
+              [(ngModel)]="city"
+              class="form-control"
+              placeholder="eg: Legon"
+              name="cityName"
+            />
           </div>
-
-          <input
-            type="text"
-            style="text-transform: capitalize;"
-            #townName="ngModel"
-            [(ngModel)]="town"
-            class="form-control"
-            placeholder="eg: Legon"
-            name="townName"
-          />
         </div>
-        <span class="help-block">This is optional. You can ignore it.</span>
-      </div>
-    </form>
-  </swal>
+        <div
+          class="form-group has-feedback"
+          [class.has-error]="
+            townName.invalid && (townName.dirty || townName.touched)
+          "
+        >
+          <label>Town</label>
+          <div class="input-group">
+            <div class="input-group-addon">
+              <i class="fa  fa-map-pin"></i>
+            </div>
+
+            <input
+              type="text"
+              style="text-transform: capitalize;"
+              #townName="ngModel"
+              [(ngModel)]="town"
+              class="form-control"
+              placeholder="eg: Legon"
+              name="townName"
+            />
+          </div>
+          <span class="help-block">This is optional. You can ignore it.</span>
+        </div>
+      </form>
+    </swal>
 
     <div class="col-md-12">
       <div class="box box-primary">
@@ -312,6 +312,17 @@
               </tr>
             </tbody>
           </table>
+        </div>
+
+        <div
+          *ngIf="branchData && branchData.data.length > 0"
+          class="box-footer"
+        >
+          <app-paginater
+            [last]="branchData.meta.last_page"
+            [currentNumber]="branchData.meta.current_page"
+            (next)="next($event)"
+          ></app-paginater>
         </div>
 
         <ng-template #noBranch>

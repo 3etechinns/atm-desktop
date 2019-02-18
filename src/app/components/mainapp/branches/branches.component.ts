@@ -71,9 +71,14 @@ export class BranchesComponent implements OnInit {
   ngOnInit() {
     this.pageNumber
       .pipe(
-        startWith(1),
+        startWith(
+          localStorage['branchPageStore'] === undefined
+            ? 1
+            : localStorage['branchPageStore']
+        ),
         distinctUntilChanged(),
         map((page: number) => {
+          localStorage['branchPageStore'] = page;
           return this.dataSvc.getBranches({ paginate: 5, page });
         }),
         flatMap(res => res)
@@ -123,5 +128,9 @@ export class BranchesComponent implements OnInit {
           text: err.error.errorMessage
         });
       });
+  }
+
+  next(page: number) {
+    this.pageNumber.next(page);
   }
 }

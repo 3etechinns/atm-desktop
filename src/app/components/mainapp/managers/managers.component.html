@@ -112,7 +112,12 @@
             </li>
 
             <li class="list-group-item">
-              <b>City</b> <a class="pull-right">{{ selectedManager.email }}</a>
+              <b>Email</b> <a class="pull-right">{{ selectedManager.email }}</a>
+            </li>
+
+            <li class="list-group-item">
+              <b>Branch</b>
+              <a class="pull-right">{{ selectedManager.branchData.name }}</a>
             </li>
 
             <li class="list-group-item">
@@ -203,6 +208,17 @@
               </li>
             </ul>
           </div>
+        </div>
+
+        <div
+          *ngIf="managerData && managerData.data.length > 0"
+          class="box-footer"
+        >
+          <app-paginater
+            [last]="managerData.meta.last_page"
+            [currentNumber]="managerData.meta.current_page"
+            (next)="next($event)"
+          ></app-paginater>
         </div>
 
         <ng-template #noManager>

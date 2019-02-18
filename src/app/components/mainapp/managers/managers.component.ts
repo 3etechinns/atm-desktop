@@ -67,9 +67,14 @@ export class ManagersComponent implements OnInit {
 
     this.pageNumber
       .pipe(
-        startWith(1),
+        startWith(
+          localStorage['managerPageStore'] === undefined
+            ? 1
+            : localStorage['managerPageStore']
+        ),
         distinctUntilChanged(),
         map((page: number) => {
+          localStorage['managerPageStore'] = page;
           return this.dataSvc.getManagers({ paginate: 5, page });
         }),
         flatMap(res => res)
@@ -116,5 +121,9 @@ export class ManagersComponent implements OnInit {
           text: err.error.errorMessage
         });
       });
+  }
+
+  next(page: number) {
+    this.pageNumber.next(page);
   }
 }

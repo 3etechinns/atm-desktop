@@ -57,19 +57,6 @@
   </li>
 
   <li
-    title="Billing"
-    class="treeview"
-    routerLinkActive
-    #bill="routerLinkActive"
-    [routerLink]="['billing']"
-    [class.active]="bill.isActive"
-  >
-    <a [routerLink]="['billing']">
-      <i class="fa fa-cc-stripe"></i> <span> Billing</span>
-    </a>
-  </li>
-
-  <li
     title="App Settings"
     class="treeview"
     routerLinkActive
@@ -88,7 +75,6 @@
       <span> Sign Out</span>
     </a>
   </li>
-
 </app-sidebar>
 
 <div class="content-wrapper" [@fadeAnimation]="getRouterOutletState(o)">

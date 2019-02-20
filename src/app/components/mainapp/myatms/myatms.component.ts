@@ -2,13 +2,13 @@ import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { interval, Observable, Subject } from 'rxjs';
 import { Ng2IzitoastService } from 'ng2-izitoast';
 import * as $ from 'jquery';
-import { BankService } from '@keyz/ng-atmhotspot-bank';
+import { BankService } from '@codekeyz/ng-atmbank';
 import {
   ATMData,
   PaginatedData,
   Data,
   BranchData
-} from '@keyz/ng-atmhotspot-bank/lib/bank.models';
+} from '@codekeyz/ng-atmbank/lib/bank.models';
 import { distinctUntilChanged, map, startWith } from 'rxjs/operators';
 import { SwalComponent } from '@toverux/ngx-sweetalert2';
 import swal, { SweetAlertOptions } from 'sweetalert2';

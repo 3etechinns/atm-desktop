@@ -4,8 +4,8 @@ import {
   PaginatedData,
   ManagerData,
   BranchData
-} from '@keyz/ng-atmhotspot-bank/lib/bank.models';
-import { BankService } from '@keyz/ng-atmhotspot-bank';
+} from '@codekeyz/ng-atmbank/lib/bank.models';
+import { BankService } from '@codekeyz/ng-atmbank';
 import { startWith, distinctUntilChanged, map, flatMap } from 'rxjs/operators';
 import { SwalComponent } from '@toverux/ngx-sweetalert2';
 import swal, { SweetAlertOptions } from 'sweetalert2';

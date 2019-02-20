@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import * as $ from 'jquery';
 import { interval, Observable } from 'rxjs';
-import { BankService } from '@keyz/ng-atmhotspot-bank';
+import { BankService } from '@codekeyz/ng-atmbank';
 import {
   distinctUntilChanged,
   startWith,
@@ -13,7 +13,7 @@ import {
   ManagerData,
   PaginatedData,
   BranchData
-} from '@keyz/ng-atmhotspot-bank/lib/bank.models';
+} from '@codekeyz/ng-atmbank/lib/bank.models';
 
 @Component({
   selector: 'app-dashboard',

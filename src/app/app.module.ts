@@ -18,11 +18,10 @@ import { WebviewDirective } from './directives/webview.directive';
 
 import { AppComponent } from './app.component';
 import * as bootstrap from 'bootstrap';
-import { WidgetsModule } from './components/widgets/widgets.module';
 import { Ng2IziToastModule } from 'ng2-izitoast';
-import { BankModule } from '@keyz/ng-atmhotspot-bank';
+import { BankModule } from '@codekeyz/ng-atmbank';
 import { AppConfig } from '../environments/environment';
-import { ServiceWorkerModule } from '@angular/service-worker';
+import { CoreModule } from './components/core/core.module';
 
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(http: HttpClient) {
@@ -35,7 +34,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     BrowserModule,
     BrowserAnimationsModule,
     Ng2IziToastModule,
-    WidgetsModule,
+    CoreModule,
     SweetAlert2Module.forRoot({
       buttonsStyling: false,
       customClass: 'modal-content',
@@ -52,9 +51,6 @@ export function HttpLoaderFactory(http: HttpClient) {
         useFactory: HttpLoaderFactory,
         deps: [HttpClient]
       }
-    }),
-    ServiceWorkerModule.register('ngsw-worker.js', {
-      enabled: AppConfig.production
     })
   ],
   providers: [ElectronService],

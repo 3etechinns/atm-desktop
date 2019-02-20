@@ -1,6 +1,5 @@
 import { app, BrowserWindow } from 'electron';
 import * as windowStateKeeper from 'electron-window-state';
-import { AppConfig } from './src/environments/environment';
 
 import * as path from 'path';
 import * as url from 'url';

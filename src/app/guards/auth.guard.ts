@@ -6,7 +6,7 @@ import {
   RouterStateSnapshot,
   CanActivateChild
 } from '@angular/router';
-import { BankAuthService } from '@keyz/ng-atmhotspot-bank';
+import { BankAuthService } from '@codekeyz/ng-atmbank';
 import { SwalComponent } from '@toverux/ngx-sweetalert2';
 
 @Injectable()

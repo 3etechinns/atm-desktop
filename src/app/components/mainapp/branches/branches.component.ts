@@ -2,10 +2,10 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import {
   BranchData,
   PaginatedData
-} from '@keyz/ng-atmhotspot-bank/lib/bank.models';
+} from '@codekeyz/ng-atmbank/lib/bank.models';
 import { Subject } from 'rxjs';
 import { startWith, distinctUntilChanged, map, flatMap } from 'rxjs/operators';
-import { BankService } from '@keyz/ng-atmhotspot-bank';
+import { BankService } from '@codekeyz/ng-atmbank';
 import swal, { SweetAlertOptions } from 'sweetalert2';
 import { SwalComponent } from '@toverux/ngx-sweetalert2';
 

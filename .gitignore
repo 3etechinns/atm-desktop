@@ -8,7 +8,6 @@
 /app-builds
 /release
 main.js
-src/**/*.js
 *.js.map
 
 # dependencies

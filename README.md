@@ -3,6 +3,10 @@
   <p align="center">Cross platform desktop app for banks useful for managing atms, reports and managers built by
 <a href="https://codekeyz.netlify.com">Precious Keyz</a></p>
 </p>
+
+<p align="center">
+<img alt="demo" width="auto" height="auto" src="./screenshot.png"/>
+</p>
  
 ## Installation
 

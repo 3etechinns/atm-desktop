@@ -9,7 +9,9 @@
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
     "target": "es5",
-    "typeRoots": ["node_modules/@types"],
+    "typeRoots": [
+      "node_modules/@types"
+    ],
     "types": [
       "bootstrap",
       "datatables.net",
@@ -18,9 +20,26 @@
       "jquery",
       "node"
     ],
-    "lib": ["es2017", "es2016", "es2015", "dom"],
-    "paths": {}
+    "lib": [
+      "es2017",
+      "es2016",
+      "es2015",
+      "dom"
+    ],
+    "paths": {
+      "ng-atmbank": [
+        "dist/ng-atmbank"
+      ],
+      "ng-atmbank/*": [
+        "dist/ng-atmbank/*"
+      ]
+    }
   },
-  "include": ["main.ts", "src/**/*"],
-  "exclude": ["node_modules"]
+  "include": [
+    "main.ts",
+    "src/**/*"
+  ],
+  "exclude": [
+    "node_modules"
+  ]
 }

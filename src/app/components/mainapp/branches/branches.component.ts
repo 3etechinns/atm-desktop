@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import {
   BranchData,
   PaginatedData
-} from '@codekeyz/ng-atmbank/lib/bank.models';
+} from '@codekeyz/ng-atmbank';
 import { Subject } from 'rxjs';
 import { startWith, distinctUntilChanged, map, flatMap } from 'rxjs/operators';
 import { BankService } from '@codekeyz/ng-atmbank';

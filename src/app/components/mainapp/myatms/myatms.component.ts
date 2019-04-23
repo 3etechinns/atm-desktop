@@ -8,7 +8,7 @@ import {
   PaginatedData,
   Data,
   BranchData
-} from '@codekeyz/ng-atmbank/lib/bank.models';
+} from '@codekeyz/ng-atmbank';
 import { distinctUntilChanged, map, startWith } from 'rxjs/operators';
 import { SwalComponent } from '@toverux/ngx-sweetalert2';
 import swal, { SweetAlertOptions } from 'sweetalert2';

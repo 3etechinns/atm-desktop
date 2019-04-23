@@ -2,7 +2,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { fadeAnimation } from '../../app.animations';
 import { Subscription } from 'rxjs';
 import { BankService, BankAuthService } from '@codekeyz/ng-atmbank';
-import { BankData } from '@codekeyz/ng-atmbank/lib/bank.models';
+import { BankData } from '@codekeyz/ng-atmbank';
 import { Router } from '@angular/router';
 
 @Component({

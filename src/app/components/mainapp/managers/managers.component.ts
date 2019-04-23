@@ -4,7 +4,7 @@ import {
   PaginatedData,
   ManagerData,
   BranchData
-} from '@codekeyz/ng-atmbank/lib/bank.models';
+} from '@codekeyz/ng-atmbank';
 import { BankService } from '@codekeyz/ng-atmbank';
 import { startWith, distinctUntilChanged, map, flatMap } from 'rxjs/operators';
 import { SwalComponent } from '@toverux/ngx-sweetalert2';

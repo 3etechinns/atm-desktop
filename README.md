@@ -35,6 +35,14 @@ Use the following credentials to signin and test the application
 __email__: admin@admin.com
 __password__:  admin12345
 
+## Included Commands
+
+|Command|Description|
+|--|--|
+|`npm run electron:local`| Builds your application and start electron
+|`npm run electron:linux`| Builds your application and creates an app consumable on linux system |
+|`npm run electron:windows`| On a Windows OS, builds your application and creates an app consumable in windows 32/64 bit systems |
+|`npm run electron:mac`|  On a MAC OS, builds your application and generates a `.app` file of your application that can be run on Mac |
 
 ## Contributing
 
